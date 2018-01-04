@@ -133,7 +133,7 @@ fungraph_glasseel=function(report_mig,table,time.sequence,taxa,stage,dc=null,sil
   
   legend(x="topright",
 	  inset=0.01,
-	  legend= gettext("weight of the daily number","daily number counted",domain="R-stacomiR"),
+	  legend= gettext("weighted","counted",domain="R-stacomiR"),
 	  pch=c(16,16),
 	  col=mypalette[c("weight","eff")])
   ######################################

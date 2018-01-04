@@ -43,8 +43,10 @@ roxygen2::roxygenise("C:/workspace/stacomir/pkg/stacomir");warnings()[1:10]
 
 # using roxygen with stacomirtools
 #roxygen2::roxygenise("C:/Users/logrami/workspace/stacomir/pkg/stacomir");warnings()[1:10]
-require(Rd2roxygen)
-setwd("C:/workspace/stacomir/pkg")
-Rd2roxygen(pkg="stacomirtools")
+#require(Rd2roxygen)
+#setwd("C:/workspace/stacomir/pkg")
+#Rd2roxygen(pkg="stacomirtools")
 
-    
+# TODO sinew package check when building functions
+# https://www.r-bloggers.com/automating-roxygen2-package-documentation/
+# makeOxygen(myfun)   

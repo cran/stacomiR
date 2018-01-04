@@ -24,7 +24,11 @@ report_mig_mult with a list in slot calcdata. For each dc one will find a list w
 \item{method}{In the case of instantaneous periods (video counting) the sum of daily values is done by the \link{fun_report_mig_mult} method and the value indicated in method is "sum".
  If any migration monitoring period is longer than a day, then the migration is split using the \link{fun_report_mig_mult_overlaps} function and the value indicated in the 
 method is "overlaps" as the latter method uses the overlap package to split migration period.}
-\item{data}{the calculated data.}
+\item{data}{the calculated data. If weight are present, the columns display weight or numbers, the total number is 
+"Effectif_total" and corresponds to the addition of numbers and numbers converted from weight,
+the total weight is "Poids_total"+"poids_depuis_effectifs" and corresponds to weighed glass eel plus glass eel number converted in weights.
+CALCULE corresponds to calulated number, MESURE to measured numbers, EXPERT to punctual expertise of migration (for instance measured in other path, or known migration
+of fishes passing the dam but not actually counted, PONCTUEL to fishes counted by visual identification but not by the counting apparatus (in case of technical problem for instance)}
 \item{contient_poids}{A boolean which indicates, in the case of glass eel, that the function \link{fun_weight_conversion} has been run to convert the weights to numbers using the weight
 to number coefficients in the database (see link{report_ge_weight}).}
 \item{negative}{A parameter indicating if negative migration (downstream in the case of upstream migration devices) have been converted to positive numbers,

@@ -276,7 +276,7 @@ load_stacomi=function(h,...){
 #' 			through the command line.}
 #'  }
 #' When \code{database_expected=FALSE} a connection to the database is not expected. Therefore test are run by calling examples object stored in Rdata.
-#' 
+#' To change the language use Sys.setenv(LANG = "fr") or Sys.setenv(LANG = "en")
 #' @param gr_interface Boolean, if \code{TRUE} the program will launch the graphical interface
 #' @param login_window Boolean, if \code{TRUE} a login window will be displayed asking the user to specify
 #' user name.
@@ -354,6 +354,7 @@ load_stacomi=function(h,...){
 #' }  
 #' #launch stacomi without connection to the database
 #' stacomi(gr_interface=FALSE,login_window=FALSE,database_expected=FALSE)
+#' 
 #' @export
 stacomi=function(gr_interface=TRUE,login_window=TRUE,database_expected=TRUE){
   # first loading of connection and odbc info using chargexml()
@@ -558,5 +559,11 @@ utils::globalVariables(c("coef_durif"))
 #						"uid", "pwd", "sqldf.uid", "sqldf.pwd", "sqldf.dbname", "sqldf.host", 
 #						"sqldf.port", "pgwd", "datawd", "lang"), class = "data.frame", row.names = c(NA, 
 #						-1L))
+#' Working environment for stacomiR created when launching stacomi()
+#' 
+#' This is where the graphical interface stores its objects
+#' try \code{ls(envir=envir_stacomi)}
+#' @keywords environment
+#' @export
 envir_stacomi <- new.env(parent = asNamespace("stacomiR"))
 #calcmig<-data.frame()

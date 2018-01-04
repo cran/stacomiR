@@ -18,6 +18,9 @@ historical dataset.}
 
 \item{...}{Additional parameters (not used there)}
 }
+\value{
+A list, one element per DC
+}
 \description{
 summary for report_mig_interannual
 provides summary statistics for the latest year (if silent=TRUE), or the year selected in the interface,

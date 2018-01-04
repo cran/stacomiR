@@ -513,8 +513,8 @@ setMethod("model",signature(object = "report_ge_weight"),definition=function(obj
 			"coe_tax_code"='2038',
 			"coe_std_code"='CIV',
 			"coe_qte_code"=1,
-			"coe_date_debut"=Hmisc::round.POSIXt(predata$date,digits="days"),
-			"coe_date_fin"=Hmisc::round.POSIXt(predata$date,digits="days")+as.difftime(1,units="days"),
+			"coe_date_debut"=Hmisc::roundPOSIXt(predata$date,digits="days"),
+			"coe_date_fin"=Hmisc::roundPOSIXt(predata$date,digits="days")+as.difftime(1,units="days"),
 			"coe_valeur_coefficient"=1/predata$pred_weight,
 			"coe_commentaires"=com)
 		# will write only if the database is present

@@ -24,7 +24,7 @@ validity_ref_horodate=function(object)
 setClass(Class="ref_horodate",representation=
 		representation(horodate="POSIXt"),
 	validity=validity_ref_horodate,
-	prototype=prototype(horodate=Hmisc::round.POSIXt(Sys.time(),"years")))
+	prototype=prototype(horodate=Hmisc::roundPOSIXt(Sys.time(),"years")))
 # date= new("Horodate")
 #retourne la date en format character
 setGeneric("getref_horodate",def=function(object,...) standardGeneric("getref_horodate"))

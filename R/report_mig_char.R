@@ -43,7 +43,8 @@ setClass(Class="report_mig_char",
 		parquan="ref_parquan"),
 	prototype=list(
 		data=list(),
-		echantillon=new("ref_choice","listechoice"=c(gettext(c("with","without"),domain="stacomiR")),
+		echantillon=new("ref_choice",
+            "listechoice"=gettext(c("with","without"),domain="stacomiR"),
 			selectedvalue=gettext("with",domain="stacomiR")),
 		calcdata<-list(),
 		parqual=new("ref_parqual"),
@@ -72,7 +73,8 @@ setValidity("report_mig_char",function(object)
 #' @param parqual Qualitative parameter
 #' @param horodatedebut The starting date as a character, formats like \code{\%Y-\%m-\%d} or \code{\%d-\%m-\%Y} can be used as input
 #' @param horodatefin The finishing date of the report, for this class this will be used to calculate the number of daily steps.
-#' @param echantillon Default TRUE, 
+#' @param echantillon Default "with" can be "without" (values "avec" and "sans") are accepted, checking without modifies the query
+#' in the connect method so that subsamples are not allowed, 
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return An object of class \link{report_sea_age-class}
 #' The choice_c method fills in the data slot for classes \link{ref_dc-class}, \link{ref_taxa-class}, \link{ref_stage-class}, \link{ref_par-class} and two slots of \link{ref_horodate-class} and then 
@@ -205,7 +207,7 @@ setMethod("charge",signature=signature("report_mig_char"),definition=function(ob
 #' @export
 setMethod("connect",signature=signature("report_mig_char"),definition=function(object,silent=FALSE){
 	  r_mig_char<-object
-	  if (r_mig_char@echantillon@selectedvalue==r_mig_char@echantillon@listechoice[1]) {
+	  if (r_mig_char@echantillon@selectedvalue==r_mig_char@echantillon@listechoice[2]) {
 		echantillons=" AND lot_pere IS NULL"      
 	  } else {
 		echantillons=""      
@@ -237,7 +239,7 @@ setMethod("connect",signature=signature("report_mig_char"),definition=function(o
 			  echantillons,
 			  " AND lot_tax_code in ",vector_to_listsql(r_mig_char@taxa@data$tax_code),
 			  " AND lot_std_code in ",vector_to_listsql(r_mig_char@stage@data$std_code),
-			  " AND car_par_code in ",vector_to_listsql(r_mig_char@parqual@data$par_code),
+			  " AND car_par_code in ",vector_to_listsql(parqual),
 			  " AND (ope_date_debut, ope_date_fin) OVERLAPS (TIMESTAMP '" ,
 			  r_mig_char@horodatedebut@horodate ,
 			  "', TIMESTAMP '" , r_mig_char@horodatefin@horodate  , "')" 
@@ -265,7 +267,7 @@ setMethod("connect",signature=signature("report_mig_char"),definition=function(o
 			  echantillons,
 			  " AND lot_tax_code in ",vector_to_listsql(r_mig_char@taxa@data$tax_code),
 			  " AND lot_std_code in ",vector_to_listsql(r_mig_char@stage@data$std_code),
-			  " AND car_par_code in ",vector_to_listsql(r_mig_char@parquan@data$par_code),
+			  " AND car_par_code in ",vector_to_listsql(parquan),
 			  " AND (ope_date_debut, ope_date_fin) OVERLAPS (TIMESTAMP '" ,
 			  r_mig_char@horodatedebut@horodate ,
 			  "', TIMESTAMP '" , r_mig_char@horodatefin@horodate  , "')" 
@@ -323,7 +325,7 @@ setMethod("setasqualitative",signature=signature("report_mig_char"),definition=f
 	  # resetting the right values for valqual
 	  r_mig_char@parqual@valqual<-rbind(r_mig_char@parqual@valqual,
 		  data.frame(val_identifiant=levels(tab$car_val_identifiant),
-			  val_qual_code=par,
+			  val_qal_code=par,
 			  val_rang=1:length(levels(tab$car_val_identifiant)),
 			  val_libelle=NA))
 	  
@@ -460,6 +462,7 @@ setMethod("plot",signature=signature(x="report_mig_char",y="missing"),definition
 	  } #end plot.type = "qual"
 	  if (plot.type=="quant") { 
 		calcdata<-r_mig_char@calcdata
+        calcdata$car_par_code_quan[is.na(calcdata$car_par_code_quan)]<-"NA"
 		the_parms<-unique(calcdata$car_par_code_quan)
 		cs<-colortable(color=color_parm,vec=the_parms,palette="Dark2")
 		cs<-stacomirtools::chnames(cs,"name","car_par_code_quan")
@@ -467,7 +470,7 @@ setMethod("plot",signature=signature(x="report_mig_char",y="missing"),definition
 		g<-ggplot(calcdata)+
 			geom_point(aes(x=ope_date_debut,y=car_valeur_quantitatif,col=color),stat='identity')+
 			xlab(gettext("Month"))+
-			ylab(gettext("Number"))+
+			ylab(gettext("Quantitative parameter"))+
 			scale_colour_identity(name=gettext("Param"),
 				labels=cs[,"car_par_code_quan"],
 				breaks=cs[,"color"],

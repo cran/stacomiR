@@ -36,6 +36,7 @@ The defaut behaviour of the program is to run through the following elements
 			through the command line.}
  }
 When \code{database_expected=FALSE} a connection to the database is not expected. Therefore test are run by calling examples object stored in Rdata.
+To change the language use Sys.setenv(LANG = "fr") or Sys.setenv(LANG = "en")
 }
 \examples{
 
@@ -50,6 +51,7 @@ When \code{database_expected=FALSE} a connection to the database is not expected
 }  
 #launch stacomi without connection to the database
 stacomi(gr_interface=FALSE,login_window=FALSE,database_expected=FALSE)
+
 }
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}

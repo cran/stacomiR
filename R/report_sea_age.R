@@ -234,7 +234,7 @@ setMethod("calcule",signature=signature("report_sea_age"),definition=function(ob
 	  #r_seaa<-r_sample_char
 	  r_seaa<-object
 	  if(nrow(r_seaa@data)==0) {
-		funout(gettext("you are in deep shit",domain="R-stacomiR"), arret=TRUE)
+		funout(gettext("you have no line in the database for this period",domain="R-stacomiR"), arret=TRUE)
 	  }   
 	  adm=r_seaa@data # we get the data.frame
 	  # the age already present in the database don't interest us there

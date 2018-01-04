@@ -78,7 +78,7 @@ validity_ref_timestep=function(object)
 setClass(Class="ref_timestep",representation=
 		representation(dateDebut="POSIXlt",step_duration="numeric",nb_step="numeric",nocurrent_step="integer"),
 	validity=validity_ref_timestep,
-	prototype=prototype(dateDebut=as.POSIXlt(Hmisc::trunc.POSIXt(Sys.time(),"year")),
+	prototype=prototype(dateDebut=as.POSIXlt(Hmisc::truncPOSIXt(Sys.time(),"year")),
 		step_duration=as.numeric(86400),
 		nb_step=as.numeric(1),
 		nocurrent_step=as.integer(0) ) )
@@ -166,7 +166,7 @@ setMethod("currentstart_date",signature=signature("ref_timestep"),definition=fun
 	  current_start_date=object@dateDebut+ object@step_duration*object@nocurrent_step
 	  # bug cht heure
 	  if (object@step_duration==86400) {
-		current_start_date=Hmisc::round.POSIXt(current_start_date,"days")
+		current_start_date=Hmisc::roundPOSIXt(current_start_date,"days")
 	  }			
 	  return(current_start_date)
 	})
@@ -182,7 +182,7 @@ setGeneric("current_end_date",def=function(object,...) standardGeneric("current_
 setMethod("current_end_date",signature=signature("ref_timestep"),definition=function(object){
 	  the_current_end_date=object@dateDebut+ object@step_duration*(object@nocurrent_step+as.integer(1))
 	  if (object@step_duration==86400) {
-		the_current_end_date=Hmisc::round.POSIXt(the_current_end_date,"days")
+		the_current_end_date=Hmisc::roundPOSIXt(the_current_end_date,"days")
 	  }
 	  return(the_current_end_date)
 	})

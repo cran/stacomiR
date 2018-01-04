@@ -203,7 +203,7 @@ setMethod("plot", signature(x = "report_mig_env", y = "missing"),
 			stations[stations$stm_identifiant==unique(tableauCE$env_stm_identifiant)[i],"stm_libelle"]
 	  }
 	  # the data can be in the POSIXct format, we need to round them
-	  tableauCE$date<-as.POSIXct(Hmisc::round.POSIXt(tableauCE$env_date_debut,digits="days"))
+	  tableauCE$date<-as.POSIXct(Hmisc::roundPOSIXt(tableauCE$env_date_debut,digits="days"))
 	  qualitative<-!is.na(tableauCE$env_val_identifiant)
 	  tableauCEquan<-tableauCE[!qualitative,]
 	  tableauCEqual<-tableauCE[qualitative,]

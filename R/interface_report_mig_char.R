@@ -45,8 +45,6 @@ interface_report_mig_char = function()
   choicemult(r_mig_char@horodatefin,,nomassign="bmC_date_fin",label=gettext("to",domain="R-stacomiR"),decal=0)
   choicemult(r_mig_char@echantillon)
   choicemult(r_mig_char@dc,objectreport=r_mig_char,is.enabled=TRUE)
-# FIXME Error in .local(object, ...) : 
-#  unused arguments (label = "Qualitative feature", frameassign = "frame_parqual") verify
   svalue(notebook)<-1	
   ggroupboutons<-get("ggroupboutons",envir=envir_stacomi)
   gWidgets::add(ggroupboutons,group)

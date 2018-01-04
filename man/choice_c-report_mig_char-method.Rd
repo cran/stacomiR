@@ -28,7 +28,8 @@ these should match the ref.tr_taxon_tax referential table in the stacomi databas
 
 \item{horodatefin}{The finishing date of the report, for this class this will be used to calculate the number of daily steps.}
 
-\item{echantillon}{Default TRUE,}
+\item{echantillon}{Default "with" can be "without" (values "avec" and "sans") are accepted, checking without modifies the query
+in the connect method so that subsamples are not allowed,}
 
 \item{silent}{Default FALSE, if TRUE the program should no display messages}
 }

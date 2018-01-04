@@ -196,7 +196,11 @@ setMethod("choice_c",signature=signature("report_mig_mult"),definition=function(
 #' \item{method}{In the case of instantaneous periods (video counting) the sum of daily values is done by the \link{fun_report_mig_mult} method and the value indicated in method is "sum".
 #'  If any migration monitoring period is longer than a day, then the migration is split using the \link{fun_report_mig_mult_overlaps} function and the value indicated in the 
 #' method is "overlaps" as the latter method uses the overlap package to split migration period.}
-#' \item{data}{the calculated data.}
+#' \item{data}{the calculated data. If weight are present, the columns display weight or numbers, the total number is 
+#' "Effectif_total" and corresponds to the addition of numbers and numbers converted from weight,
+#' the total weight is "Poids_total"+"poids_depuis_effectifs" and corresponds to weighed glass eel plus glass eel number converted in weights.
+#' CALCULE corresponds to calulated number, MESURE to measured numbers, EXPERT to punctual expertise of migration (for instance measured in other path, or known migration
+#' of fishes passing the dam but not actually counted, PONCTUEL to fishes counted by visual identification but not by the counting apparatus (in case of technical problem for instance)}
 #' \item{contient_poids}{A boolean which indicates, in the case of glass eel, that the function \link{fun_weight_conversion} has been run to convert the weights to numbers using the weight
 #' to number coefficients in the database (see link{report_ge_weight}).}
 #' \item{negative}{A parameter indicating if negative migration (downstream in the case of upstream migration devices) have been converted to positive numbers,
@@ -227,6 +231,7 @@ setMethod("calcule",signature=signature("report_mig_mult"),definition=function(o
 		  lestableaux[[stringr::str_c("dc_",dic)]][["method"]]<-"overlaps"
 		  contient_poids<-"poids"%in%datasub$type_de_quantite
 		  lestableaux[[stringr::str_c("dc_",dic)]][["contient_poids"]]<-contient_poids
+         
 		  lestableaux[[stringr::str_c("dc_",dic)]][["negative"]]<-negative
 		  if (contient_poids){
 			coe<-report_mig_mult@coef_conversion[,c("coe_date_debut","coe_valeur_coefficient")]
@@ -898,7 +903,7 @@ fun_report_mig_mult_overlaps <- function(time.sequence, datasub,negative=FALSE) 
   dfts<-merge(df.ts,df,by="ts_id")
   datasub1<-merge(dfts,datasub,by="lot_identifiant")
 # to do a group by it is good to use sqldf
-  datasub1$value<-as.numeric(datasub1$value) # sinon arrondis e des entiers
+  datasub1$value<-as.numeric(datasub1$value) # sinon arrondis a des entiers
   if (negative){
 	datasub2<-sqldf::sqldf(x="SELECT  debut_pas,
 			fin_pas,
@@ -974,7 +979,9 @@ fun_report_mig_mult_overlaps <- function(time.sequence, datasub,negative=FALSE) 
 #' test (the username and password for test are set in the calcmig.csv configuration file). 
 #' @return A data.frame with number summed over over the time.sequence. 
 #' The function returns the same output than \link{fun_report_mig_mult_overlaps}
-#' but is intended to work faster
+#' but is intended to work faster. In the data.frame, the total number is 
+#' "Effectif_total" and corresponds to the addition of numbers and numbers converted from weight,
+#' the total weight is "Poids_total"+"poids_depuis_effectifs" and corresponds to weighed glass eel plus glass eel number converted in weights.
 #' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
 #' @export
 fun_report_mig_mult <- function(time.sequence, datasub,negative=FALSE) {
@@ -1051,8 +1058,8 @@ fun_report_mig_mult <- function(time.sequence, datasub,negative=FALSE) {
 fun_weight_conversion=function(tableau,time.sequence,silent) { 
   if (!silent) funout(gettextf("dc=%s Conversion weight / number\n",unique(tableau$ope_dic_identifiant)))
   nr<-nrow(unique(tableau[,c("debut_pas","lot_tax_code","lot_std_code")]))
-  tableaupoids=subset(tableau,tableau$type_de_quantite==unique(tableau$type_de_quantite)[2])
-  tableaueffectif=subset(tableau,tableau$type_de_quantite==unique(tableau$type_de_quantite)[1])
+  tableaupoids=subset(tableau,tableau$type_de_quantite=="poids")
+  tableaueffectif=subset(tableau,tableau$type_de_quantite=="effectif")
   tableaueffectif= tableaueffectif[,c("No.pas", "lot_tax_code","lot_std_code","CALCULE","MESURE","EXPERT","PONCTUEL","Effectif_total")]       
   tableaudesdeux=tableau[,c("No.pas","debut_pas","fin_pas","ope_dic_identifiant","lot_tax_code","lot_std_code","coe_valeur_coefficient")]
   tableaudesdeux=tableaudesdeux[!duplicated(tableaudesdeux[,c("No.pas","lot_tax_code","lot_std_code")]),]
