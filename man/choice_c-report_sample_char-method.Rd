@@ -38,4 +38,3 @@ command line interface for report_sample_char class
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
 }
-

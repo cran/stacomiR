@@ -6,9 +6,9 @@
 \alias{choice_c.report_mig_char}
 \title{command line interface for report_mig_char class}
 \usage{
-\S4method{choice_c}{report_mig_char}(object, dc, taxa, stage, parquan = NULL,
-  parqual = NULL, horodatedebut, horodatefin, echantillon = gettext("with",
-  domain = "R-stacomiR"), silent = FALSE)
+\S4method{choice_c}{report_mig_char}(object, dc, taxa, stage,
+  parquan = NULL, parqual = NULL, horodatedebut, horodatefin,
+  echantillon = gettext("with", domain = "R-stacomiR"), silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_mig_char-class}}
@@ -44,4 +44,3 @@ command line interface for report_mig_char class
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
 }
-

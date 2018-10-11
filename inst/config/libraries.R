@@ -9,7 +9,7 @@ if(!all(necessary %in% installed.packages()[, 'Package']))
 #if (!'XML'%in%installed.packages()[, 'Package']) install.packages("XML", repos = "http://www.omegahat.org/R")
 #require('tcltk2')
 require('ggplot2')
-#require('gWidgets') # already called by depends
+require('gWidgets') # already called by depends
 require('RODBC')
 ##require('Hmisc')
 options(guiToolkit = "RGtk2")

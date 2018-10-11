@@ -431,6 +431,7 @@ setMethod("plot",signature(x = "report_dc", y = "ANY"), definition=
 #' @keywords internal
 #' @author cedric.briand
 funbarchartDC = function(h,...) {
+  report_dc<-get("report_dc",envir=envir_stacomi)  
   report_dc=charge(report_dc)
   report_dc=connect(report_dc)
   if( nrow(report_dc@data)==0 ) {
@@ -464,6 +465,7 @@ funbarchart1DC = function(h,...) {
 #' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
 #' @keywords internal
 funboxDC = function(h,...) {  
+  report_dc<-get("report_dc",envir=envir_stacomi)  
   report_dc=charge(report_dc)
   report_dc=connect(report_dc)
   

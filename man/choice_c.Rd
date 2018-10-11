@@ -18,4 +18,3 @@ Generic method for manual choice using the command line
 cedric.briand
 }
 \keyword{internal}
-

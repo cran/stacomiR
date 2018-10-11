@@ -7,8 +7,8 @@
 \title{command line interface for report_silver_eel class}
 \usage{
 \S4method{choice_c}{report_silver_eel}(object, dc, taxa = 2038,
-  stage = "AGG", par = c("1786", "CCCC", "BBBB", "CONT", "LINP", "A111",
-  "PECT"), horodatedebut, horodatefin, silent = FALSE)
+  stage = "AGG", par = c("1786", "CCCC", "BBBB", "CONT", "LINP",
+  "A111", "PECT"), horodatedebut, horodatefin, silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_silver_eel-class}}
@@ -40,4 +40,3 @@ command line interface for report_silver_eel class
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
 }
-

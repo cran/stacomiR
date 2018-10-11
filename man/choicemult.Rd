@@ -18,4 +18,3 @@ Generic method for multiple choice (using the gwidget notebook for multiple choi
 cedric.briand
 }
 \keyword{internal}
-

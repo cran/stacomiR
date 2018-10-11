@@ -6,9 +6,10 @@
 \alias{choice_c.report_sea_age}
 \title{command line interface for report_sea_age class}
 \usage{
-\S4method{choice_c}{report_sea_age}(object, dc, taxa = 2220, stage = c("5",
-  "11", "BEC", "BER", "IND"), par = c("1786", "1785", "C001", "A124"),
-  horodatedebut, horodatefin, limit1hm, limit2hm, silent = FALSE)
+\S4method{choice_c}{report_sea_age}(object, dc, taxa = 2220,
+  stage = c("5", "11", "BEC", "BER", "IND"), par = c("1786", "1785",
+  "C001", "A124"), horodatedebut, horodatefin, limit1hm, limit2hm,
+  silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_sea_age-class}}
@@ -43,4 +44,3 @@ command line interface for report_sea_age class
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
 }
-
