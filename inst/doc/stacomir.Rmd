@@ -277,7 +277,7 @@ the periods and type of operation for DF and DC, and the operation (trapping
 periods) (middle), a summary of migration per month (bottom).
 
 
-```{r rmmstd,eval=TRUE,echo=TRUE,message=FALSE,fig.height=8,fig.with=8}
+```{r rmmstd,eval=TRUE,echo=TRUE,message=FALSE,fig.height=6,fig.with=8}
 # Without a connection at the database we can launch these lines to generate the graph
 # To obtain titles in french use Sys.setenv(LANG = "fr")
 stacomi(gr_interface=FALSE,

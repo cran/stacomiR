@@ -46,7 +46,7 @@ setClass(Class="report_mig_char",
 		echantillon=new("ref_choice",
             "listechoice"=gettext(c("with","without"),domain="stacomiR"),
 			selectedvalue=gettext("with",domain="stacomiR")),
-		calcdata<-list(),
+		calcdata=list(),
 		parqual=new("ref_parqual"),
 		parquan=new("ref_parquan")),
 	contains="report_sample_char")

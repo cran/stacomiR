@@ -1,4 +1,4 @@
-6b82da5576e8dfb8727ec1bf274a9e43 *DESCRIPTION
+99585229e8d2aa75faa3b1201f996100 *DESCRIPTION
 871ee2889681f443cd56646b680db579 *NAMESPACE
 1008d9fb2cd74a7bb34b04e0129ad2bb *R/create_generic.R
 3685cb5bee11844476d98603bcb68d5a *R/data.R
@@ -49,7 +49,7 @@ c5debe44a0ad1cb1130b22879433d1a6 *R/report_df.R
 f7da9c9e3ac37548a41d5e80b4641998 *R/report_env.R
 0aa29a73de3b21cc4e3192ec3a7eb525 *R/report_ge_weight.R
 b805fa1446a2a2580e23f8c86fd31bd6 *R/report_mig.R
-9304ff2fddb87cf9fb6c1495071aabd8 *R/report_mig_char.R
+11cee21bfce82fda635af9d08960d72c *R/report_mig_char.R
 c3bc196351bcd0a711f069ca03e7a5ea *R/report_mig_env.R
 b99c333be92d5f3ce658d4759c18b0ef *R/report_mig_interannual.R
 722ce1156eef3c357e4ba81806b527a4 *R/report_mig_mult.R
@@ -61,8 +61,8 @@ f0bbfd9d8102694d4ec05e4ceeb83a9b *R/report_species.R
 e13207aee6e28fd8e26e4d2c8a5044a8 *R/setAs.R
 1126237a10e17e78b15cb0628b674ddc *R/stacomi.R
 4a341afc91a25d175d0df8f1bcb1fbf1 *R/utilities.R
-fb34e237a50132febbfdbeb265aab204 *build/partial.rdb
-b74e5b18b2cf2e5148a419ad3bcadbaa *build/vignette.rds
+bff13bd35c5b7335305238ce3407c172 *build/partial.rdb
+091520fcee974d385b9c8c6974998959 *build/vignette.rds
 f4b546d09eab9cda1ed7c27215225fe9 *data/calcmig.csv.gz
 c567217d69cba90d11574a9a9a9805cf *data/calcmig.rda
 829fd61f9cbe8fffc35906a92c1cfb32 *data/coef_durif.rda
@@ -95,9 +95,9 @@ fd14d73e27d86c2ea1bac964e1708f54 *data/r_silver.rda
 dd6533eb4677f2935b9703246aef0661 *inst/config/stacomi_manual_launch.r
 28bbfc656f656a1cf85f139b88f94b9d *inst/config/test_vignette.R
 7a1505978a0fead7d78b2ea33045913f *inst/cran-comments/cran-comments-v0.5.3.1.md
-34e923771e3b37fee7ab41fa5244329f *inst/cran-comments/cran-comments-v0.5.4.0.md
-f08cef0bd88f3556e3b4d0092a46e433 *inst/doc/stacomir.Rmd
-9162a8a400746f90dd3c49221a8274ae *inst/doc/stacomir.html
+cf258e0877861dda83194c042e392bab *inst/cran-comments/cran-comments-v0.5.4.0.md
+a8fd835b7421591ff30af3fd6fb4975d *inst/doc/stacomir.Rmd
+6a46cb250c4beb8c4ae2c1c23bcbf9fb *inst/doc/stacomir.html
 f0f4771a8ec0bd773017d7c56972f9c1 *inst/examples/report_annual-example.R
 255047eeaff64c8a014b88f3a76c5a75 *inst/examples/report_dc-example.R
 dffdd4d199e80b3d3cb086c6edeea143 *inst/examples/report_df-example.R
@@ -244,7 +244,7 @@ fa5cbb059eec548d3c914fceeefb0e0b *man/connect-report_mig_interannual-method.Rd
 640c3ab65106e94bece84d3669197d8f *man/end_date.Rd
 32273f1125b6df16c2c84fb8b60d0504 *man/envir_stacomi.Rd
 03c1a3a1dcfc254656e1d1fbb77fe28d *man/figures/README-rmmmult-1.png
-5f49123d18e01fab884a98caa959ac3b *man/figures/README-rmmstd-1.png
+560be85bed35addadd13cf06811a5163 *man/figures/README-rmmstd-1.png
 1ca47c31d5715b1cc91f3003b5a565e0 *man/figures/README-silver-1.png
 223242c8b80f40e6f1705e003d64bfb3 *man/figures/StationComptage.png
 f0554dbe94d49de634dc2a058d313744 *man/figures/interface_graph_taille_sat.png
@@ -501,4 +501,4 @@ d0eb9cd05f33d913fa3527cee615d572 *tests/testthat/test-11-report_mig_env.R
 8bbf7e67cfb25955d0e9d388569d1616 *tests/testthat/test-12-report_mig_char.R
 5019556ca7d8fe33ef93d8871af6d38b *tests/testthat/test-13-report_species.R
 fbc1e05c3a6e42ed3d39e11e54978b61 *tests/testthat/test-50-spell_checking.R
-f08cef0bd88f3556e3b4d0092a46e433 *vignettes/stacomir.Rmd
+a8fd835b7421591ff30af3fd6fb4975d *vignettes/stacomir.Rmd
