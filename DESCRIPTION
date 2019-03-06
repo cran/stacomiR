@@ -1,6 +1,6 @@
 Package: stacomiR
-Version: 0.5.4.1
-Date: 2019-01-25
+Version: 0.5.4.2
+Date: 2019-02-12
 Title: Fish Migration Monitoring
 Authors@R: c(person("Cedric", "Briand", role = c("aut", "cre"), email = "cedric.briand00@gmail.com"),
 	      person("Marion", "Legrand", role = "aut", email="tableau-salt-loire@logrami.fr"),
@@ -52,7 +52,7 @@ NeedsCompilation: no
 VignetteBuilder: knitr
 Repository: CRAN
 Repository/R-Forge/Project: stacomir
-Repository/R-Forge/Revision: 547
-Repository/R-Forge/DateTimeStamp: 2019-01-25 10:25:46
-Date/Publication: 2019-01-27 15:40:03 UTC
-Packaged: 2019-01-25 10:32:45 UTC; rforge
+Repository/R-Forge/Revision: 548
+Repository/R-Forge/DateTimeStamp: 2019-02-12 09:08:05
+Date/Publication: 2019-03-06 15:20:06 UTC
+Packaged: 2019-02-12 09:12:33 UTC; rforge

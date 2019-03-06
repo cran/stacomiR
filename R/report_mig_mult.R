@@ -951,7 +951,7 @@ fun_report_mig_mult_overlaps <- function(time.sequence, datasub,negative=FALSE) 
   # then the calculation will have hampered our numbers of a small amount
   # and the following test is not expected to be TRUE.
   if (!overlapping_samples_between_year)
-	stopifnot(all.equal(sum(datasub$value,na.rm=TRUE),sum(datasub2$value,na.rm=TRUE)))
+	stopifnot(all.equal(round(sum(datasub$value,na.rm=TRUE),2),round(sum(datasub2$value,na.rm=TRUE),2)))
   datasub3<-reshape2::dcast(datasub2, debut_pas+fin_pas+ope_dic_identifiant+lot_tax_code+lot_std_code+type_de_quantite~lot_methode_obtention,value.var="value")
   if (!"MESURE"%in%colnames(datasub3)) 	datasub3$MESURE=0
   if (!"CALCULE"%in%colnames(datasub3)) 	datasub3$CALCULE=0
