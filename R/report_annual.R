@@ -109,11 +109,11 @@ setMethod("connect",signature=signature("report_annual"),
 	  reqdiff=new("RequeteODBC")
 	  reqdiff@baseODBC<-get("baseODBC", envir=envir_stacomi)
 	  #For Marion
-	  #sch<-get("sch",envir=envir_stacomi) # "iav."
+	  #sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  #assign("sch","iav.",envir_stacomi)
 	  
 	  reqdiff@sql= paste("select *, extract(year  from ope_date_debut) as annee_debut, extract(year  from ope_date_fin) as annee_fin 
-			  FROM ",get("sch",envir=envir_stacomi),"t_operation_ope  join ", get("sch",envir=envir_stacomi),"t_lot_lot on lot_ope_identifiant=ope_identifiant 
+			  FROM ",rlang::env_get(envir_stacomi, "sch"),"t_operation_ope  join ", rlang::env_get(envir_stacomi, "sch"),"t_lot_lot on lot_ope_identifiant=ope_identifiant 
 			  where ope_dic_identifiant in ",dc, 
 		  " and extract(year from ope_date_debut)>=",anneedebut,
 		  " and	 extract(year from ope_date_debut)<=", anneefin, 
@@ -163,8 +163,8 @@ setMethod("connect",signature=signature("report_annual"),
 		
 		
 		req@sql = paste(" select sum(lot_effectif) as effectif, annee, ope_dic_identifiant,lot_tax_code, lot_std_code  from 
-				(select *, extract(year  from ope_date_debut) as annee FROM ",get("sch",envir=envir_stacomi),"t_operation_ope ",
-			" join ",get("sch",envir=envir_stacomi),"t_lot_lot on lot_ope_identifiant=ope_identifiant where ope_dic_identifiant in",dc,
+				(select *, extract(year  from ope_date_debut) as annee FROM ",rlang::env_get(envir_stacomi, "sch"),"t_operation_ope ",
+			" join ",rlang::env_get(envir_stacomi, "sch"),"t_lot_lot on lot_ope_identifiant=ope_identifiant where ope_dic_identifiant in",dc,
 			" and extract(year from ope_date_debut)>=", anneedebut,
 			" and extract(year from ope_date_fin)<=", anneefin,	
 			" and ope_dic_identifiant in ", dc,

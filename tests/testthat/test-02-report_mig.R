@@ -6,7 +6,7 @@ test_that("Test an instance of report_mig",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)			
 	  report_mig<-new("report_mig")
 	  options(warn = -1)
@@ -30,7 +30,7 @@ test_that("Test an instance of report_mig, check that operations accross two yea
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  
 	  report_mig<-new("report_mig")
@@ -60,7 +60,7 @@ test_that("Test another instance of report_mig, check that operations accross tw
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  
 	  report_mig<-new("report_mig")
@@ -92,7 +92,7 @@ test_that("Test connect method",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  r_mig=new("report_mig")
@@ -131,7 +131,7 @@ test_that("Summary method works",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  data("r_mig")
@@ -150,7 +150,7 @@ test_that("Test writing an example to the database",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  data("r_mig")
@@ -169,7 +169,7 @@ test_that("Test that different sums are the same, for report_mig, report_mig_int
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  data("r_mig")
@@ -224,7 +224,7 @@ test_that("test example for fd80",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("fd80",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","fd80.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  bM_EclusierVaux=new("report_mig")
@@ -253,7 +253,7 @@ test_that("test example with glass eel",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  bM_Arzal_civ=new("report_mig")
@@ -281,7 +281,7 @@ test_that("test example with glass eel",
 #			baseODBC[1]<- "BD_CONTMIG_SERVEUR"
 #			baseODBC[c(2,3)]<-rep('logrami',2)
 #			assign("baseODBC",baseODBC,envir_stacomi)
-#			sch<-get("sch",envir=envir_stacomi)
+#			sch<-rlang::env_get(envir_stacomi, "sch")
 #			assign("sch",paste('logrami',".", sep=""),envir_stacomi)		
 #			sqldf.options<-get("sqldf.options",envir=envir_stacomi)
 #			getpassword<-function(){  

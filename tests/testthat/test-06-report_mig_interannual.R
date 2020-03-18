@@ -8,7 +8,7 @@ test_that("Test an instance of report_mig_interannual loaded with choice_c",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  r_mig_interannual<-new("report_mig_interannual")
 	  # the following will load data for size, 
@@ -37,7 +37,7 @@ test_that("Test method summary in report_mig_interannual",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  r_mig_interannual<-new("report_mig_interannual")
 	  # the following will load data for size, 
@@ -78,7 +78,7 @@ test_that("Test that loading two taxa will fail",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  r_mig_interannual<-new("report_mig_interannual")
 	  # the following will load data for size, 
@@ -106,7 +106,7 @@ test_that("Test that report_mig_interannual loads missing data with correct warn
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("logrami",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","logrami.",envir_stacomi)
 	  
 	  bmi_cha<-new("report_mig_interannual") #châtelrault
@@ -135,7 +135,7 @@ test_that("Test that different sums are the same, for  report_mig_interannual, r
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  # this chunk is not launched from examples but loads the r_mig dataset if connection works	
 	  r_mig_interannual<-new("report_mig_interannual")
@@ -192,7 +192,7 @@ test_that("Test bmi step plot",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  r_mig_interannual<-new("report_mig_interannual")
 	  # the following will load data for size, 

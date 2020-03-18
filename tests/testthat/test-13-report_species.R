@@ -11,7 +11,7 @@ test_that("test creating an instance of report_species",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  bilesp<-new("report_species")
 	  # split is one of "none", "year", "week", "month
@@ -40,7 +40,7 @@ test_that("test calcule method report_species",{
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("iav",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi) # "iav."
+  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
   assign("sch","iav.",envir_stacomi)
 	  bilesp<-new("report_species")
 	  # split is one of "none", "year", "week", "month

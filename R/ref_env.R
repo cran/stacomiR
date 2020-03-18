@@ -32,7 +32,7 @@ setMethod("charge",
 	  requete=new("RequeteODBC")
 	  requete@baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  requete@sql= paste("SELECT stm_identifiant, stm_libelle, stm_sta_code, stm_par_code, stm_description",
-		  " FROM ",get("sch",envir=envir_stacomi),"tj_stationmesure_stm", 
+		  " FROM ",rlang::env_get(envir_stacomi, "sch"),"tj_stationmesure_stm", 
 		  " ORDER BY stm_identifiant;",sep="")
 	  requete@silent = TRUE;
 	  requete<-stacomirtools::connect(requete)    

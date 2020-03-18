@@ -9,7 +9,7 @@ stacomi(gr_interface=FALSE,
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("logrami",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","logrami.",envir_stacomi)
   # here parqual is not in the list
   # so this is equivalent to parqual=NULL
@@ -48,7 +48,7 @@ xt<-xtable(r_mig_char)
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("logrami",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","logrami.",envir_stacomi)
 # here parqual is not in the list
 # so this is equivalent to parqual=NULL

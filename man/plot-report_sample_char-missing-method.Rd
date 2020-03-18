@@ -17,7 +17,6 @@
 
 \item{silent}{Stops displaying the messages.}
 
-\item{...}{Additional arguments, see \code{plot}, \code{plot.default} and \code{par}}
 }
 \description{
 Plots of various type for reportcarlot

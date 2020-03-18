@@ -9,7 +9,7 @@ test_that("test creating an instance of report_sea_age with data loaded (logrami
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("logrami",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","logrami.",envir_stacomi)
 	  r_seaa<-suppressWarnings(choice_c(r_seaa,
 			  dc=c(107,108,101),			
@@ -32,7 +32,7 @@ test_that("test that loading bad limits fails",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("logrami",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","logrami.",envir_stacomi)
 	  expect_error(
 		  r_seaa<-choice_c(r_seaa,

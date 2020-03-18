@@ -8,7 +8,7 @@ test_that("test creating an instance of report_env",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  r_env<-new("report_env")
 	  r_env<-choice_c(r_env,
@@ -28,7 +28,7 @@ test_that("test plot method",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  r_env<-new("report_env")
 	  r_env<-choice_c(r_env,

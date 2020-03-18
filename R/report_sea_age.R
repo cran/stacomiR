@@ -77,7 +77,7 @@ setValidity("report_sea_age",function(object)
 setMethod("connect",signature=signature("report_sea_age"),definition=function(object,silent=FALSE) {
 	  requete<-new("RequeteODBCwheredate")
 	  requete@baseODBC=get("baseODBC",envir=envir_stacomi)
-	  requete@select= paste("SELECT * FROM ",get("sch",envir=envir_stacomi),"vue_lot_ope_car",sep="")
+	  requete@select= paste("SELECT * FROM ",rlang::env_get(envir_stacomi, "sch"),"vue_lot_ope_car",sep="")
 	  requete@colonnedebut="ope_date_debut"
 	  requete@colonnefin="ope_date_fin"
 	  requete@datedebut<-object@horodatedebut@horodate
@@ -394,13 +394,13 @@ setMethod("write_database",signature=signature("report_sea_age"),definition=func
 		  r_seaa@calcdata$data$age,
 		  as.integer(NA),
 		  comment,
-		  substr(toupper(get("sch",envir=envir_stacomi)),1,nchar(toupper(get("sch",envir=envir_stacomi)))-1)
+		  substr(toupper(rlang::env_get(envir_stacomi, "sch")),1,nchar(toupper(rlang::env_get(envir_stacomi, "sch")))-1)
 	  )
 	  #--------------
 	  # writing the table in the database
 	  #--------------
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
-	  sql<-stringr::str_c("INSERT INTO ",get("sch",envir=envir_stacomi),
+	  sql<-stringr::str_c("INSERT INTO ",rlang::env_get(envir_stacomi, "sch"),
 		  "tj_caracteristiquelot_car 	SELECT * FROM  bam;")
 	  invisible(utils::capture.output(
 			  sqldf::sqldf(x=sql,
@@ -493,7 +493,7 @@ setMethod("supprime",signature=signature("report_sea_age"),
 	  }
 	  requete=new("RequeteODBCwhere")
 	  requete@baseODBC<-get("baseODBC",envir=envir_stacomi)
-	  requete@select=stringr::str_c("DELETE from ",get("sch",envir=envir_stacomi),"tj_caracteristiquelot_car ")
+	  requete@select=stringr::str_c("DELETE from ",rlang::env_get(envir_stacomi, "sch"),"tj_caracteristiquelot_car ")
 	  requete@where=paste("WHERE car_lot_identifiant IN ",
 		  vector_to_listsql(data_in_base$lot_identifiant),
 		  " AND car_par_code='A124';",

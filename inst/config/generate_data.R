@@ -44,7 +44,7 @@ r_mig_mult=new("report_mig_mult")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("iav",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi) # "iav."
+sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 assign("sch","iav.",envir_stacomi)
 r_mig_mult=choice_c(r_mig_mult,
 	dc=c(5,6,12),
@@ -103,7 +103,7 @@ r_mig=new("report_mig")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("iav",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi) # "iav."
+sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 assign("sch","iav.",envir_stacomi)
 r_mig=choice_c(r_mig,
 	dc=5,
@@ -265,7 +265,7 @@ stacomi(gr_interface=FALSE,login_window=FALSE,database_expected=TRUE)
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("pmp",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","pmp.",envir_stacomi)
 r_mig_interannual<-new("report_mig_interannual")
 
@@ -300,7 +300,7 @@ stacomi(gr_interface=FALSE,
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("iav",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","iav.",envir_stacomi)
 r_ann<-new("report_annual")
 r_ann<-choice_c(r_ann,
@@ -329,7 +329,7 @@ devtools::use_data(r_ann,internal=FALSE,overwrite=TRUE)
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("migradour",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","migradour.",envir_stacomi)
 r_ann_adour<-new("report_annual")
 r_ann_adour<-choice_c(r_ann_adour,
@@ -365,7 +365,7 @@ r_silver<-new("report_silver_eel")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("fd80",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","fd80.",envir_stacomi)
 r_silver<-choice_c(r_silver,
 	dc=c(2,6),			
@@ -402,7 +402,7 @@ r_gew<-new("report_ge_weight")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("iav",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","iav.",envir_stacomi)
 r_gew@liste<-charge(object=r_gew@liste,listechoice=c("=1",">1","tous"),label="")
 r_gew<-choice_c(r_gew,
@@ -433,7 +433,7 @@ r_seaa<-new("report_sea_age")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("logrami",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","logrami.",envir_stacomi)
 
 r_seaa<-choice_c(r_seaa,
@@ -474,7 +474,7 @@ r_mig_interannual_vichy<-new("report_mig_interannual")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("logrami",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","logrami.",envir_stacomi)
 
 r_mig_interannual_vichy<-choice_c(r_mig_interannual_vichy,
@@ -523,7 +523,7 @@ r_mig_char<-new("report_mig_char")
 baseODBC<-get("baseODBC",envir=envir_stacomi)
 baseODBC[c(2,3)]<-rep("logrami",2)
 assign("baseODBC",baseODBC,envir_stacomi)
-sch<-get("sch",envir=envir_stacomi)
+sch<-rlang::env_get(envir_stacomi, "sch")
 assign("sch","logrami.",envir_stacomi)
 # here parqual is not in the list
 # so this is equivalent to parqual=NULL

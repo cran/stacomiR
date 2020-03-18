@@ -59,7 +59,7 @@ setMethod("connect",signature=signature("report_df"),definition=function(object,
 		  " per_etat_fonctionnement,",
 		  " per_tar_code,",
 		  " tar_libelle AS libelle",
-		  " FROM  ",get("sch",envir=envir_stacomi),"t_periodefonctdispositif_per per",
+		  " FROM  ",rlang::env_get(envir_stacomi, "sch"),"t_periodefonctdispositif_per per",
 		  " INNER JOIN ref.tr_typearretdisp_tar tar ON tar.tar_code=per.per_tar_code",sep="")
 	  req@colonnedebut="per_date_debut"
 	  req@colonnefin="per_date_fin"

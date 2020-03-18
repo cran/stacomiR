@@ -27,7 +27,7 @@ funstat=function(tableau,time.sequence,taxa,stage,DC,silent){
 	Poids_total=poids_depuis_effectif+ poids_mesure
 	resum=rbind(somme,moyennes_journalieres,poids_depuis_effectif,poids_mesure,Poids_total)		
   }
-  resum=resum[,moislab]
+  resum=resum[,moislab, drop=FALSE]
   resum=as.data.frame(resum)
   resum["somme","report"]=round(sum(tableau$Effectif_total, na.rm=TRUE),2)
   resum["moyennes_journalieres","report"]=mean(tableau$Effectif_total,na.rm=TRUE)

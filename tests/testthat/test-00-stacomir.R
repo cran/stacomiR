@@ -111,7 +111,7 @@ test_that("gWidget gr_interface is loaded, with pre launch_test, but without log
 	})
 
 
-# pour schema get("sch",envir=envir_stacomi)
+# pour schema rlang::env_get(envir_stacomi, "sch")
 context(stringr::str_c("Database integrity"))
 
 
@@ -122,7 +122,7 @@ test_that("Test that tickets have been launched",
 	  stacomi(gr_interface=FALSE,login_window=FALSE,database_expected=FALSE)
 	  req<-new("RequeteODBC")
 	  req@baseODBC<-get("baseODBC", envir=envir_stacomi)		
-	  sch=get("sch",envir=envir_stacomi)
+	  sch=rlang::env_get(envir_stacomi, "sch")
 	  req@sql=paste("select * from ",sch," ts_maintenance_main")
 	  req<-stacomirtools::connect(req)
 	  result<-req@query
@@ -182,7 +182,7 @@ test_that("All foreign keys are present",
 				  ON tc.constraint_name = kcu.constraint_name
 				  JOIN information_schema.constraint_column_usage AS ccu
 				  ON ccu.constraint_name = tc.constraint_name
-				  WHERE constraint_type = 'FOREIGN KEY' and  tc.constraint_schema='",gsub("\\.","",get("sch",envir=envir_stacomi)),"';"))
+				  WHERE constraint_type = 'FOREIGN KEY' and  tc.constraint_schema='",gsub("\\.","",rlang::env_get(envir_stacomi, "sch")),"';"))
 	  req<-stacomirtools::connect(req)
 	  result<-req@query
 	  fk<-structure(list(constraint_name = c("c_fk_act_lot_identifiant", 

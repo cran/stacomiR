@@ -70,14 +70,14 @@ setMethod("charge",signature=signature("ref_year"),definition=function(object,ob
 		  and3=""
 		}
 		requete@sql=paste("select  DISTINCT ON (bjo_annee) bjo_annee from ",
-			get("sch",envir=envir_stacomi),
+			rlang::env_get(envir_stacomi, "sch"),
 			"t_bilanmigrationjournalier_bjo where bjo_identifiant>0 ",
 			# I want and statements to not have to choose the order
 			# the where statement is always verified
 			and1,and2,and3, sep="")	
 	  } else if (objectreport=="report_ge_weight") {
 		requete@sql=paste("select  DISTINCT ON (year) year from( select date_part('year', ope_date_debut) as year from ",
-			get("sch",envir=envir_stacomi),
+			rlang::env_get(envir_stacomi, "sch"),
 			"t_operation_ope) as tabletemp",sep="")
 	  } else if (objectreport=="report_annual"|objectreport=="report_species") {
 		if (exists("ref_dc",envir_stacomi)) {
@@ -100,9 +100,9 @@ setMethod("charge",signature=signature("ref_year"),definition=function(object,ob
 		  and3=""
 		}
 		requete@sql=paste("select  DISTINCT ON (year) year from (select date_part('year', ope_date_debut) as year from ",
-			get("sch",envir=envir_stacomi),
+			rlang::env_get(envir_stacomi, "sch"),
 			"t_operation_ope JOIN ",
-			get("sch",envir=envir_stacomi),
+			rlang::env_get(envir_stacomi, "sch"),
 			"t_lot_lot on lot_ope_identifiant=ope_identifiant",
 			" WHERE lot_lot_identifiant is null",
 			and1,and2,and3, ") as tabletemp", sep="")					

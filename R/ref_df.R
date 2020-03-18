@@ -56,10 +56,10 @@ setMethod("charge",signature=signature("ref_df"),definition=function(object) {
 		  " dif_localisation,",
 		  " dif_orientation,",
 		  " tdf_libelle as type_DF",
-		  " from ",get("sch",envir=envir_stacomi),"tg_dispositif_dis",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_dispositiffranchissement_dif ON dif_dis_identifiant=dis_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"tj_dfesttype_dft ON dif_dis_identifiant=dft_df_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_ouvrage_ouv on dif_ouv_identifiant=ouv_identifiant",   
+		  " from ",rlang::env_get(envir_stacomi, "sch"),"tg_dispositif_dis",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_dispositiffranchissement_dif ON dif_dis_identifiant=dis_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"tj_dfesttype_dft ON dif_dis_identifiant=dft_df_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_ouvrage_ouv on dif_ouv_identifiant=ouv_identifiant",   
 		  " JOIN ref.tr_typedf_tdf ON tdf_code=dft_tdf_code",
 		  " ORDER BY dis_identifiant;",sep="")
 	  requete<-stacomirtools::connect(requete) 

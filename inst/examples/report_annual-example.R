@@ -9,7 +9,7 @@ stacomi(gr_interface=FALSE,
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("iav",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","iav.",envir_stacomi)
   r_ann<-new("report_annual")
   r_ann<-choice_c(r_ann,

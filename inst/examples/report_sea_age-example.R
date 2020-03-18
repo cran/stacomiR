@@ -8,7 +8,7 @@ stacomi(gr_interface=FALSE,
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("logrami",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","logrami.",envir_stacomi)
   r_seaa<-choice_c(r_seaa,
 	  dc=c(107,108,101),			

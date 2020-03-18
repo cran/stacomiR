@@ -56,7 +56,7 @@ setMethod("connect",signature=signature("report_env"),definition=function(object
 		  " val_libelle as env_val_identifiant,",
 		  " env_valeur_quantitatif,",
 		  " env_stm_identifiant",
-		  " FROM ",get("sch",envir=envir_stacomi),"tj_conditionenvironnementale_env",
+		  " FROM ",rlang::env_get(envir_stacomi, "sch"),"tj_conditionenvironnementale_env",
 		  " LEFT JOIN ref.tr_valeurparametrequalitatif_val on env_val_identifiant=val_identifiant",sep="")
 	  requete@order_by<-"ORDER BY env_stm_identifiant, env_date_debut"			
 	  tmp<-vector_to_listsql(object@stationMesure@data$stm_identifiant)

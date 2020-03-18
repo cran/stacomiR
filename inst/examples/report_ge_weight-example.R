@@ -9,7 +9,7 @@ stacomi(gr_interface=FALSE,
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("iav",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","iav.",envir_stacomi)
   r_gew@liste<-charge(object=r_gew@liste,listechoice=c("=1",">1","tous"),label="")
   # here I'm using weights when number are larger than 1 ie wet weight

@@ -49,10 +49,10 @@ setMethod("charge_with_filter",signature=signature("ref_stage"),definition=funct
 	  requete=new("RequeteODBCwhere")
 	  requete@baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  requete@select=paste("SELECT DISTINCT ON (std_code) std_code, std_libelle", 
-		  " FROM ",get("sch",envir=envir_stacomi),"tg_dispositif_dis",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_dispositifcomptage_dic on dis_identifiant=dic_dis_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_operation_ope on ope_dic_identifiant=dic_dis_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_lot_lot on lot_ope_identifiant=ope_identifiant",
+		  " FROM ",rlang::env_get(envir_stacomi, "sch"),"tg_dispositif_dis",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_dispositifcomptage_dic on dis_identifiant=dic_dis_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_operation_ope on ope_dic_identifiant=dic_dis_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_lot_lot on lot_ope_identifiant=ope_identifiant",
 		  " JOIN ref.tr_stadedeveloppement_std on lot_std_code=std_code",sep="")
 	  requete@where=paste("where dis_identifiant in ",vector_to_listsql(dc_selectionne),sep="")
 	  requete@and=paste("and lot_tax_code in ",vector_to_listsql(taxa_selectionne),sep="")

@@ -6,7 +6,7 @@ test_that("Test an instance of report_mig_mult",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  report_mig_mult<-new("report_mig_mult")
 	  #options(warn = -1)
@@ -31,7 +31,7 @@ test_that("Test another instance of report_mig_mult",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  report_mig_mult<-new("report_mig_mult")
 	  #options(warn = -1)
@@ -55,7 +55,7 @@ test_that("Tests one instance with error (dc does not exist)",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  report_mig_mult<-new("report_mig_mult")
 	  options(warn = -1)
@@ -78,7 +78,7 @@ test_that("Test charge method for report_mig_mult",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  report_mig_mult<-new("report_mig_mult")
 	  options(warn = -1)
@@ -105,7 +105,7 @@ test_that("Test connect method for report_mig_mult",
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  report_mig_mult<-new("report_mig_mult")
 	  options(warn = -1)

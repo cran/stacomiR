@@ -8,7 +8,7 @@ test_that("Test an instance of report_annual loaded with choice_c",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","iav.",envir_stacomi)
 	  r_ann<-new("report_annual")
 	  r_ann<-choice_c(r_ann,
@@ -31,7 +31,7 @@ test_that("Test methods in report_annual",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","iav.",envir_stacomi)
 	  r_ann<-new("report_annual")
 	  r_ann<-choice_c(r_ann,
@@ -123,7 +123,7 @@ test_that("test xtable method for report_annual",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","iav.",envir_stacomi)
 	  r_ann<-new("report_annual")
 	  r_ann<-choice_c(r_ann,

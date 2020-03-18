@@ -438,7 +438,7 @@ getdbname<-function(){
   req <- new("RequeteODBC")
   req@baseODBC <- get("baseODBC",envir=envir_stacomi)
   req@sql <- str_c("select * from ", 
-	  get("sch",envir=envir_stacomi), 
+	  rlang::env_get(envir_stacomi, "sch"), 
 	  "t_bilanmigrationjournalier_bjo limit 1")
   res <- connect(req)
   odbc <- res@connection

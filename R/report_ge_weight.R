@@ -74,7 +74,7 @@ setMethod("connect",signature=signature("report_ge_weight"),definition=function(
 		  " ope_date_debut+(ope_date_fin-ope_date_debut)/2 as datemoy,",
 		  " date_part('year', ope_date_debut) as annee,",
 		  " date_part('month',ope_date_debut) as mois",
-		  " FROM ",get("sch",envir=envir_stacomi),"vue_lot_ope_car_qan",sep="")
+		  " FROM ",rlang::env_get(envir_stacomi, "sch"),"vue_lot_ope_car_qan",sep="")
 	  requete@and=paste(" AND ope_dic_identifiant=",object@dc@dc_selectionne,
 		  " AND std_libelle='civelle'",
 		  ifelse(object@liste@selectedvalue=="tous", "",paste(" AND  lot_effectif", object@liste@selectedvalue)),
@@ -585,7 +585,7 @@ setMethod("write_database",signature=signature("report_ge_weight"),definition=fu
 	  import_coe<-r_gew@calcdata$import_coe
 	  import_coe$coe_org_code<-toupper(gsub("\\.","",get("sch",envir_stacomi)))
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
-	  sql<-stringr::str_c("INSERT INTO ",get("sch",envir=envir_stacomi),"tj_coefficientconversion_coe (",			
+	  sql<-stringr::str_c("INSERT INTO ",rlang::env_get(envir_stacomi, "sch"),"tj_coefficientconversion_coe (",			
 		  "coe_tax_code,coe_std_code,coe_qte_code,coe_date_debut,coe_date_fin,coe_valeur_coefficient,
 			  coe_commentaires,coe_org_code)",
 		  " SELECT coe_tax_code,coe_std_code,coe_qte_code,coe_date_debut,coe_date_fin,coe_valeur_coefficient::real,

@@ -10,7 +10,7 @@ test_that("test creating an instance of report_mig_char and connect method (logr
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("logrami",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","logrami.",envir_stacomi)
 # here parqual is not in the list
 # so this is equivalent to parqual=NULL
@@ -39,7 +39,7 @@ test_that("test setasqualitative method",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("logrami",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","logrami.",envir_stacomi)
 # here parqual is not in the list
 # so this is equivalent to parqual=NULL
@@ -77,7 +77,7 @@ test_that("test calcule method",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("logrami",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi)
+	  sch<-rlang::env_get(envir_stacomi, "sch")
 	  assign("sch","logrami.",envir_stacomi)
 	  r_mig_char<-choice_c(r_mig_char,
 		  dc=c(107,108,101),

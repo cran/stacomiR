@@ -60,7 +60,7 @@ stacomi(gr_interface=FALSE,
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("fd80",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","fd80.",envir_stacomi)
   r_silver<-choice_c(r_silver,
 	  dc=c(2,6),			

@@ -5,7 +5,7 @@ test_that("Test that view lot_ope_car exists",{
 	  stacomi(gr_interface=FALSE,login_window=FALSE,database_expected=TRUE)
 	  req<-new("RequeteODBC")
 	  req@baseODBC<-get("baseODBC", envir=envir_stacomi)		
-	  sch=get("sch",envir=envir_stacomi)
+	  sch=rlang::env_get(envir_stacomi, "sch")
 	  req@sql=paste("select * from ",sch," vue_lot_ope_car limit 10")
 	  req<-stacomirtools::connect(req)
 	  result<-req@query	
@@ -20,7 +20,7 @@ test_that("Test an instance of report_sample_char loaded with choice_c",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  
 	  r_sample_char<-new("report_sample_char")
@@ -48,7 +48,7 @@ test_that("Test methods in report_sample_char",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  
 	  r_sample_char<-new("report_sample_char")
@@ -77,7 +77,7 @@ test_that("Test charge method for report_sample_char",{
 	  baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  baseODBC[c(2,3)]<-rep("iav",2)
 	  assign("baseODBC",baseODBC,envir_stacomi)
-	  sch<-get("sch",envir=envir_stacomi) # "iav."
+	  sch<-rlang::env_get(envir_stacomi, "sch") # "iav."
 	  assign("sch","iav.",envir_stacomi)
 	  
 	  r_sample_char<-new("report_sample_char")

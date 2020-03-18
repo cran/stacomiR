@@ -47,11 +47,11 @@ setMethod("charge_with_filter",signature=signature("ref_parqual"),definition=fun
 	  requete=new("RequeteODBCwhere")
 	  requete@baseODBC<-get("baseODBC",envir=envir_stacomi)
 	  requete@select=paste("SELECT DISTINCT ON (par_code) par_code, par_nom", 
-		  " FROM ",get("sch",envir=envir_stacomi),"tg_dispositif_dis",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_dispositifcomptage_dic on dis_identifiant=dic_dis_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_operation_ope on ope_dic_identifiant=dic_dis_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"t_lot_lot on lot_ope_identifiant=ope_identifiant",
-		  " JOIN ",get("sch",envir=envir_stacomi),"tj_caracteristiquelot_car on car_lot_identifiant=lot_identifiant",
+		  " FROM ",rlang::env_get(envir_stacomi, "sch"),"tg_dispositif_dis",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_dispositifcomptage_dic on dis_identifiant=dic_dis_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_operation_ope on ope_dic_identifiant=dic_dis_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"t_lot_lot on lot_ope_identifiant=ope_identifiant",
+		  " JOIN ",rlang::env_get(envir_stacomi, "sch"),"tj_caracteristiquelot_car on car_lot_identifiant=lot_identifiant",
 		  " JOIN ref.tg_parametre_par on par_code=car_par_code",
 		  " JOIN ref.tr_parametrequalitatif_qal ON tr_parametrequalitatif_qal.qal_par_code::text = tg_parametre_par.par_code::text",sep="")
 	  requete@where=paste("where dis_identifiant in ",vector_to_listsql(dc_selectionne))

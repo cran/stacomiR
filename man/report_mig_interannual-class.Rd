@@ -53,7 +53,7 @@ stacomi(gr_interface=FALSE,
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("pmp",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","pmp.",envir_stacomi)
   # Note in some cases you will want to change host and port setting
 #   sqldf.options<-get("sqldf.options",envir=envir_stacomi)  
@@ -192,7 +192,7 @@ plot(r_mig_interannual,plot.type="density",silent=TRUE)
   baseODBC<-get("baseODBC",envir=envir_stacomi)
   baseODBC[c(2,3)]<-rep("logrami",2)
   assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-get("sch",envir=envir_stacomi)
+  sch<-rlang::env_get(envir_stacomi, "sch")
   assign("sch","logrami.",envir_stacomi)
   bmi_des<-new("report_mig_interannual")
   bmi_des<-choice_c(bmi_des,

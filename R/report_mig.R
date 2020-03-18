@@ -627,12 +627,14 @@ setMethod("write_database",signature=signature("report_mig"),definition=function
 	  if (class(silent)!="logical") stop("the silent argument should be a logical")
 	  dc=as.numeric(report_mig@dc@dc_selectionne)[1]
 	  data=report_mig@calcdata[[stringr::str_c("dc_",dc)]][["data"]]
-	  data=data[data$Effectif_total!=0,]
+		# keep one line if there is one species in one day with as much up as down...
+		if (nrow(data)>1) 	  data=data[data$Effectif_total!=0,]
 	  jour_dans_lannee_non_nuls=data$debut_pas	
 	  col_a_retirer=match(c("No.pas","type_de_quantite","debut_pas","fin_pas"),colnames(data))
 	  col_a_retirer=col_a_retirer[!is.na(col_a_retirer)] # as in the case of glass eel and weight
 	  # the columns are not the same
 	  data=data[,-col_a_retirer]
+
 	  # below again the taux_d_echappement not there if glass eel and weights
 	  if (is.null(data$taux_d_echappement)) data$taux_d_echappement<-NA
 	  data$taux_d_echappement[data$taux_d_echappement==-1]<-NA 
@@ -640,7 +642,7 @@ setMethod("write_database",signature=signature("report_mig"),definition=function
 		data$coe_valeur_coefficient[data$"coe_valeur_coefficient"==1]<-NA 
 	  }else {data$coe_valeur_coefficient<-NA}
 	  cannotbenull=match(c("taux_d_echappement","coe_valeur_coefficient"),colnames(data))
-	  data[,-cannotbenull][data[,-cannotbenull]==0]<-NA
+		if (nrow(data)>1) data[,-cannotbenull][data[,-cannotbenull]==0]<-NA
 	  annee<-as.numeric(unique(strftime(as.POSIXlt(report_mig@time.sequence),"%Y"))[1])
 	  if ("Poids_total"%in%colnames(data)){
 		aat_reportmigrationjournalier_bjo=cbind(
@@ -651,7 +653,7 @@ setMethod("write_database",signature=signature("report_mig"),definition=function
 			rep(jour_dans_lannee_non_nuls,ncol(data[,c("MESURE","CALCULE","EXPERT","PONCTUEL","Effectif_total","Effectif_total.p","Effectif_total.e","poids_depuis_effectifs","Poids_total","taux_d_echappement","coe_valeur_coefficient")])),
 			utils::stack(data[,c("MESURE","CALCULE","EXPERT","PONCTUEL","Effectif_total","Effectif_total.p","Effectif_total.e","poids_depuis_effectifs","Poids_total","taux_d_echappement","coe_valeur_coefficient")]),  
 			Sys.time(),
-			substr(toupper(get("sch",envir=envir_stacomi)),1,nchar(toupper(get("sch",envir=envir_stacomi)))-1)
+			substr(toupper(rlang::env_get(envir_stacomi, "sch")),1,nchar(toupper(rlang::env_get(envir_stacomi, "sch")))-1)
 		)	
 	  } else{
 		aat_reportmigrationjournalier_bjo=cbind(
@@ -662,7 +664,7 @@ setMethod("write_database",signature=signature("report_mig"),definition=function
 			rep(jour_dans_lannee_non_nuls,ncol(data[,c("MESURE","CALCULE","EXPERT","PONCTUEL","Effectif_total","taux_d_echappement","coe_valeur_coefficient")])),
 			utils::stack(data[,c("MESURE","CALCULE","EXPERT","PONCTUEL","Effectif_total","taux_d_echappement","coe_valeur_coefficient")]),  
 			Sys.time(),
-			substr(toupper(get("sch",envir=envir_stacomi)),1,nchar(toupper(get("sch",envir=envir_stacomi)))-1)
+			substr(toupper(rlang::env_get(envir_stacomi, "sch")),1,nchar(toupper(rlang::env_get(envir_stacomi, "sch")))-1)
 		)	
 	  }
 	  aat_reportmigrationjournalier_bjo= stacomirtools::killfactor(aat_reportmigrationjournalier_bjo[!is.na(aat_reportmigrationjournalier_bjo$values),])
@@ -682,7 +684,7 @@ setMethod("write_database",signature=signature("report_mig"),definition=function
 	  hconfirm=function(h,...){			
 		if (check_for_bjo) supprime(bil)			
 		baseODBC<-get("baseODBC",envir=envir_stacomi)
-		sql<-stringr::str_c("INSERT INTO ",get("sch",envir=envir_stacomi),"t_bilanmigrationjournalier_bjo (",			
+		sql<-stringr::str_c("INSERT INTO ",rlang::env_get(envir_stacomi, "sch"),"t_bilanmigrationjournalier_bjo (",			
 			"bjo_dis_identifiant,bjo_tax_code,bjo_std_code,bjo_annee,bjo_jour,bjo_valeur,bjo_labelquantite,bjo_horodateexport,bjo_org_code)",
 			" SELECT * FROM  aat_reportmigrationjournalier_bjo;")
 		invisible(utils::capture.output(
@@ -725,7 +727,7 @@ setMethod("write_database",signature=signature("report_mig"),definition=function
 	  {
 		
 		baseODBC<-get("baseODBC",envir=envir_stacomi)
-		sql<-stringr::str_c("INSERT INTO ",get("sch",envir=envir_stacomi),"t_bilanmigrationjournalier_bjo (",			
+		sql<-stringr::str_c("INSERT INTO ",rlang::env_get(envir_stacomi, "sch"),"t_bilanmigrationjournalier_bjo (",			
 			"bjo_dis_identifiant,bjo_tax_code,bjo_std_code,bjo_annee,bjo_jour,bjo_valeur,bjo_labelquantite,bjo_horodateexport,bjo_org_code)",
 			" SELECT * FROM  aat_reportmigrationjournalier_bjo;")
 		
