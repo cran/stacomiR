@@ -13,6 +13,9 @@ fun_write_monthly(report_mig, resum, silent)
 
 \item{silent}{Suppresses messages}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 This writes monthly data in t_reportmensuel_mens table
 }

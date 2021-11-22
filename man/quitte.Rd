@@ -10,6 +10,9 @@ quitte(...)
 \arguments{
 \item{\dots}{additional arguments passed to the function}
 }
+\value{
+Nothing
+}
 \description{
 function used to clean the objects within the group and the graphs and
 also elements remaining in the envir_stacomi environment

@@ -4,20 +4,21 @@
 \alias{load_stacomi}
 \title{Internal function, tests the connection and if it works loads the stacomi interface}
 \usage{
-load_stacomi(h, ...)
+load_stacomi(...)
 }
 \arguments{
-\item{h}{A handler}
-
 \item{...}{Other arguments}
+}
+\value{
+Nothing
 }
 \description{
 Internal function, tests the connection and if it works loads the stacomi interface
 }
 \note{
-\code{gr_interface} is copied by stacomi into envir_stacomi. Same for \code{database_expected}
+\code{base} is copied by stacomi into envir_stacomi. Same for \code{database_expected}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \keyword{internal}

@@ -5,7 +5,9 @@
 \alias{r_ann}
 \title{Annual migration of yellow and silver eel for three fishways / counting devices at the
 Arzal dam (data from 1995 to 2016)}
-\format{An object of class \link{report_annual-class} with data slot loaded.}
+\format{
+An object of class \link{report_annual-class} with data slot loaded.
+}
 \usage{
 r_ann
 }

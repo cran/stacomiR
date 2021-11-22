@@ -10,7 +10,7 @@ allows to a put a value within a glabel
 \section{Slots}{
 
 \describe{
-\item{\code{title="character"}}{the title of the box giving the possible choices}
+\item{\code{title='character'}}{the title of the box giving the possible choices}
 
 \item{\code{labels}}{the logical parameters choice}
 
@@ -18,5 +18,5 @@ allows to a put a value within a glabel
 }}
 
 \author{
-cedric.briand"at"eptb-vilaine.fr
+cedric.briand'at'eptb-vilaine.fr
 }

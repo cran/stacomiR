@@ -21,18 +21,18 @@
 #'   \item{stage}{the \code{ref_stage} object filled in with data corresponding to dc, and taxa}
 #'   \item{timestep}{the \code{ref_timestep_daily} calculated for all 2011}
 #'   \item{data}{ A dataframe with 400 rows and 11 variables
-#' 			\describe{
-#'   			\item{ope_identifiant}{operation id}
-#'   			\item{lot_identifiant}{sample id}
-#'   			\item{lot_identifiant}{sample id}
-#'   			\item{ope_dic_identifiant}{dc id}
-#'   			\item{lot_tax_code}{species id}
-#'   			\item{lot_std_code}{stage id}
-#'   			\item{value}{the value}
-#'   			\item{type_de_quantite}{either effectif (number) or poids (weights)}
-#'   			\item{lot_dev_code}{destination of the fishes}
-#'   			\item{lot_methode_obtention}{method of data collection, measured, calculated...} 
-#'   			}
+#'   \describe{
+#'     \item{ope_identifiant}{operation id}
+#'     \item{lot_identifiant}{sample id}
+#'     \item{lot_identifiant}{sample id}
+#'     \item{ope_dic_identifiant}{dc id}
+#'     \item{lot_tax_code}{species id}
+#'     \item{lot_std_code}{stage id}
+#'     \item{value}{the value}
+#'     \item{type_de_quantite}{either effectif (number) or poids (weights)}
+#'     \item{lot_dev_code}{destination of the fishes}
+#'     \item{lot_methode_obtention}{method of data collection, measured, calculated...} 
+#'     }
 #'   }
 #'   \item{calcdata}{slot to be filled with the calcule method} 
 #'   \item{coef_conversion}{A data frame with 364 observations with daily coefficients to convert from weight to numbers}
@@ -54,18 +54,18 @@
 #'   \item{stage}{the \code{ref_stage} the stage selected}
 #'   \item{timestep}{the \code{ref_timestep_daily} calculated for all 2015}
 #'   \item{data}{ A dataframe with 10304 rows and 11 variables
-#' 			\describe{
-#'   			\item{ope_identifiant}{operation id}
-#'   			\item{lot_identifiant}{sample id}
-#'   			\item{lot_identifiant}{sample id}
-#'   			\item{ope_dic_identifiant}{dc id}
-#'   			\item{lot_tax_code}{species id}
-#'   			\item{lot_std_code}{stage id}
-#'   			\item{value}{the value}
-#'   			\item{type_de_quantite}{either effectif (number) or poids (weights)}
-#'   			\item{lot_dev_code}{destination of the fishes}
-#'   			\item{lot_methode_obtention}{method of data collection, measured, calculated...} 
-#'   			}
+#'   \describe{
+#'     \item{ope_identifiant}{operation id}
+#'     \item{lot_identifiant}{sample id}
+#'     \item{lot_identifiant}{sample id}
+#'     \item{ope_dic_identifiant}{dc id}
+#'     \item{lot_tax_code}{species id}
+#'     \item{lot_std_code}{stage id}
+#'     \item{value}{the value}
+#'     \item{type_de_quantite}{either effectif (number) or poids (weights)}
+#'     \item{lot_dev_code}{destination of the fishes}
+#'     \item{lot_methode_obtention}{method of data collection, measured, calculated...} 
+#'     }
 #'   }
 #'   \item{coef_conversion}{A data frame with 0 observations : no quantity are reported for video recording of mullets, only numbers}
 #'   \item{time.sequence}{A time sequence generated for the report, used internally}
@@ -92,28 +92,28 @@
 #' @format An object of class report_dc with 4 slots
 #' \describe{
 #'   \item{data}{ A dataframe with 25 rows and 7 variables
-#' 			\describe{
-#'   			\item{per_dis_identifiant}{the df or dc unique id}
-#'   			\item{per_date_debut}{the starting date of the counting device operation \code{POSIXct}}
-#'   			\item{per_date_fin}{the ending date of the counting device operation \code{POSIXct}}
-#'   			\item{per_commentaires}{comments on the counting device operation}
-#'   			\item{per_etat_fonctionnement}{Boolean, is the counting device working ?}
-#'   			\item{lot_std_code}{stage id}
-#'   			\item{per_tar_code}{The type of operation for the DC, 1 normal operation, 2 device stopped in normal
-#' 				operation (the stop is considered as normal, e.g. you don't monitor video if a cage has been placed to trap fishes), 
-#' 				3 stopped for maintenance or other problem, 4 the DC is working but not well (escapement in a tank, high turbidity preventing
+#'   \describe{
+#'     \item{per_dis_identifiant}{the df or dc unique id}
+#'     \item{per_date_debut}{the starting date of the counting device operation \code{POSIXct}}
+#'     \item{per_date_fin}{the ending date of the counting device operation \code{POSIXct}}
+#'     \item{per_commentaires}{comments on the counting device operation}
+#'     \item{per_etat_fonctionnement}{Boolean, is the counting device working ?}
+#'     \item{lot_std_code}{stage id}
+#'     \item{per_tar_code}{The type of operation for the DC, 1 normal operation, 2 device stopped in normal
+#'     operation (the stop is considered as normal, e.g. you don't monitor video if a cage has been placed to trap fishes), 
+#'     3 stopped for maintenance or other problem, 4 the DC is working but not well (escapement in a tank, high turbidity preventing
 #' video counting...), 5 unknown operation.}
-#'   			\item{libelle}{The label for the type or operation}
-#'   			}
-#' 	}
+#'     \item{libelle}{The label for the type or operation}
+#'     }
+#' }
 #'   \item{dc}{the \code{ref_dc} the DC with 4 slots
-#' 			\describe{
-#'  	 			\item{dc_selectionne}{the selected device}
-#'  				\item{ouvrage}{the dam}
-#'  	 			\item{station}{the monitoring station, a section of river}
-#'  	 			\item{data}{A dataset of all dc present in the database with 10 observations}
-#' 			}
-#' 	}
+#'   \describe{
+#'    \item{dc_selected}{the selected device}
+#'      \item{ouvrage}{the dam}
+#'    \item{station}{the monitoring station, a section of river}
+#'    \item{data}{A dataset of all dc present in the database with 10 observations}
+#'   }
+#' }
 #'   \item{horodatedebut}{the beginning date, a \link{ref_horodate-class}}
 #'   \item{horodatefin}{the ending date, a \link{ref_horodate-class}}
 #' }
@@ -129,11 +129,6 @@
 #' @keywords data
 "r_mig_mult_ope"
 
-#' A data frame containing the default connection arguments.
-#' The program will use a file installed in c:/program files/stacomi but
-#' if not found will switch to this default value
-"calcmig"
-
 #' Overview of the fishway operation at Arzal in (Vilaine France).
 #' 
 #' This dataset corresponds to the data collected at the vertical slot fishway
@@ -143,21 +138,21 @@
 #' @format An object of class report_df with 4 slots:
 #' \describe{
 #'   \item{data}{ A dataframe with 4261 obs. of  7 variables
-#' 			\describe{
-#'   			\item{per_dis_identifiant}{The number of the DF}
-#'   			\item{per_date_debut}{Starting time a POSIXct}
-#'   			\item{per_date_fin }{Ending time a POSIXct}
-#'   			\item{ope_dic_identifiant}{DF id}
-#'   			\item{per_commentaires }{A comment}
-#'   			\item{per_etat_fonctionnement}{Integer 1= working, 0 not working}
-#'   			\item{per_tar_code}{The type of operation ("1"=normal operation,
-#'              "2"=Device stopped in normal operation (ie lift ascending, high tide...),
-#'				"3"="Stopped for maintenance or other problem",
-#'              "4"="Works but not fully operational, ie flow problem, flood, clogged with debris...",
-#'              "5"="Not known")}
-#' 				\item{libelle}{label corresponding to per_tar_code}
+#'   \describe{
+#'     \item{per_dis_identifiant}{The number of the DF}
+#'     \item{per_date_debut}{Starting time a POSIXct}
+#'     \item{per_date_fin }{Ending time a POSIXct}
+#'     \item{ope_dic_identifiant}{DF id}
+#'     \item{per_commentaires }{A comment}
+#'     \item{per_etat_fonctionnement}{Integer 1= working, 0 not working}
+#'     \item{per_tar_code}{The type of operation ('1'=normal operation,
+#'              '2'=Device stopped in normal operation (ie lift ascending, high tide...),
+#'    '3'='Stopped for maintenance or other problem',
+#'              '4'='Works but not fully operational,i.e.flow problem, flood, clogged with debris...',
+#'              '5'='Not known')}
+#'     \item{libelle}{label corresponding to per_tar_code}
 #'            }
-#'        }	
+#'        }
 #'   \item{df}{the \code{ref_df} object with 3 slots filled with data corresponding to the iav postgres schema}
 #'   \item{horodatedebut}{the \code{ref_horodate} with horodate set for starting date}
 #'   \item{horodatefin}{the \code{ref_horodate} with horodate set for ending date}'   
@@ -174,22 +169,22 @@
 #' @format An object of class report_dc with 4 slots:
 #' \describe{
 #'   \item{data}{ A dataframe with 544 obs. of  7 variables
-#' 			\describe{
-#'   			\item{per_dis_identifiant}{The number of the DC}
-#'   			\item{per_date_debut}{Starting time a POSIXct}
-#'   			\item{per_date_fin }{Ending time a POSIXct}
-#'   			\item{ope_dic_identifiant}{DC id}
-#'   			\item{per_commentaires }{A comment}
-#'   			\item{per_etat_fonctionnement}{Integer 1= working, 0 not working}
-#'   			\item{per_tar_code}{The type of operation ("1"=normal operation,
-#'              "2"=Device stopped in normal operation (e.g. the trap is disactivated for the duration of the
-#' 				fish sorting and counting by operators),
-#'				"3"="Stopped for maintenance or other problem",
-#'              "4"="Works but not fully operational, i.e. the camera is not working properly because of high turbidity...",
-#'              "5"="Not known")}
-#' 				\item{libelle}{label corresponding to per_tar_code}
+#'   \describe{
+#'     \item{per_dis_identifiant}{The number of the DC}
+#'     \item{per_date_debut}{Starting time a POSIXct}
+#'     \item{per_date_fin }{Ending time a POSIXct}
+#'     \item{ope_dic_identifiant}{DC id}
+#'     \item{per_commentaires }{A comment}
+#'     \item{per_etat_fonctionnement}{Integer 1= working, 0 not working}
+#'     \item{per_tar_code}{The type of operation ('1'=normal operation,
+#'              '2'=Device stopped in normal operation (e.g. the trap is disactivated for the duration of the
+#'     fish sorting and counting by operators),
+#'    '3'='Stopped for maintenance or other problem',
+#'              '4'='Works but not fully operational, i.e. the camera is not working properly because of high turbidity...',
+#'              '5'='Not known')}
+#'     \item{libelle}{label corresponding to per_tar_code}
 #'            }
-#'        }	
+#'        }
 #'   \item{df}{the \code{ref_dc} object with 3 slots filled with data corresponding to the iav postgres schema}
 #'   \item{horodatedebut}{the \code{ref_horodate} with horodate set for starting date}
 #'   \item{horodatefin}{the \code{ref_horodate} with horodate set for ending date}   
@@ -241,7 +236,8 @@
 #' operational at the same location and provides one of the longest series of eel migration. 
 #' For this reason,
 #' the dataset has been loaded as an example for the report_mig_interannual-class. It has been
-#' kindly provided by the parc du Marais Poitevin.
+#' kindly provided by the parc du Marais Poitevin. The stage corresponds to small eels (elvers)
+#' less than 150 mmm stage name 'PANG'
 #' @format An object of class \link{report_mig_interannual-class} with data loaded.
 #' @keywords data
 "r_mig_interannual"
@@ -266,7 +262,7 @@
 
 #' Silver eel migration in the Somme
 #' 
-#' The dataset corresponds to the silver eel traps ("anguilleres) for 2015-2016.
+#' The dataset corresponds to the silver eel traps ('anguilleres) for 2015-2016.
 #' This dataset has been kindly provided by the Federation de Peche de la Somme,
 #' given the upstream location of the trap, most individuals are female
 #' 
@@ -292,7 +288,7 @@
 #' the query used in the \link{report_ge_weight-class} loads from 2008-08-01 to 2012-08-01
 #' Glass eel are too numerous to be counted. They are weighted and in the stacomi database,
 #' a table with daily coefficients (in  N glass eel/g) to transform weight into number.
-#' The weight is called a "wet weight" as we don't wan't to drain any of the mucus in glass eel
+#' The weight is called a 'wet weight' as we don't wan't to drain any of the mucus in glass eel
 #' when weighting them. Samples of 50 to 200 glass eel are weighted and then counted to provide an idea of
 #' the seasonal evolution of wet weight.
 "r_gew"
@@ -311,17 +307,17 @@
 #'   \item{start_year}{the \code{ref_timestep_daily} calculated for all 2015}
 #'   \item{end_year}{the \code{ref_timestep_daily} calculated for all 2015}
 #'   \item{data}{ A dataframe with 7138 rows and 10 variables
-#' 			\describe{
-#'   			\item{bjo_identifiant}{sample id}
-#'   			\item{bjo_dis_identifiant}{dc id}
-#'   			\item{bjo_tax_code}{species id}
-#'   			\item{bjo_std_code}{stage id}
-#'   			\item{bjo_annee}{year}
-#'   			\item{bjo_jour}{date}
-#'   			\item{bjo_labelquantite}{method of data collection, measured, calculated...}
-#'   			\item{bjo_horodateexport}{date with special format for export}
-#'   			\item{bjo_org_code}{organisme provided the data}
-#'   			}
+#'   \describe{
+#'     \item{bjo_identifiant}{sample id}
+#'     \item{bjo_dis_identifiant}{dc id}
+#'     \item{bjo_tax_code}{species id}
+#'     \item{bjo_std_code}{stage id}
+#'     \item{bjo_annee}{year}
+#'     \item{bjo_jour}{date}
+#'     \item{bjo_labelquantite}{method of data collection, measured, calculated...}
+#'     \item{bjo_horodateexport}{date with special format for export}
+#'     \item{bjo_org_code}{organisme provided the data}
+#'     }
 #'   }
 #' }
 #' @keywords data
@@ -340,29 +336,29 @@
 #'   \item{taxa}{the \code{ref_taxa} : Salmo salar selected}
 #'   \item{stage}{the \code{ref_stage} : the stages selected}
 #'   \item{par}{Object of class \link{ref_par-class}: the parameters used}
-#' 	 \item{horodatedebut}{object of class \code{ref_horodate-class} : the start date selected}
-#' 	 \item{horodatefin}{object of class \code{ref_horodate-class} : the end date selected} 
+#' \item{horodatedebut}{object of class \code{ref_horodate-class} : the start date selected}
+#' \item{horodatefin}{object of class \code{ref_horodate-class} : the end date selected} 
 #'   \item{limit1hm}{The size limit, in mm between 1 sea winter fishes and 2 sea winter fishes}
 #'   \item{limit2hm}{The size limit, in mm between 2 sea winter fishes and 3 sea winter fishes}
 #'   \item{data}{ A dataframe with 898  rows and 20 variables
-#' 			\describe{
-#'   			\item{ope_identifiant}{operation id}
-#'   			\item{lot_identifiant}{sample id}
-#'   			\item{ope_dic_identifiant}{dc id}
-#'   			\item{ope_date_debut}{start date}
-#'   			\item{ope_date_fin}{end date}
-#'   			\item{lot_effectif}{number of fishes}
-#'   			\item{lot_tax_code}{species id}
-#'   			\item{lot_std_code}{stages id}
-#'   			\item{tax_nom_latin}{species latin names}
-#'   			\item{std_libelle}{stages names} 
-#' 				\item{dev_code}{destination of the fishes id}
-#' 				\item{dev_libelle}{destination of the fishes names}
-#' 				\item{par_nom}{parameter name}
-#' 				\item{car_par_code}{parameter id}
-#' 				\item{car_methode_obtention}{method of data collection, measured, calculated...}
-#' 				\item{car_valeur_quantitatif}{the value of the parameter}
-#'   			}
+#'   \describe{
+#'     \item{ope_identifiant}{operation id}
+#'     \item{lot_identifiant}{sample id}
+#'     \item{ope_dic_identifiant}{dc id}
+#'     \item{ope_date_debut}{start date}
+#'     \item{ope_date_fin}{end date}
+#'     \item{lot_effectif}{number of fishes}
+#'     \item{lot_tax_code}{species id}
+#'     \item{lot_std_code}{stages id}
+#'     \item{tax_nom_latin}{species latin names}
+#'     \item{std_libelle}{stages names} 
+#'     \item{dev_code}{destination of the fishes id}
+#'     \item{dev_libelle}{destination of the fishes names}
+#'     \item{par_nom}{parameter name}
+#'     \item{car_par_code}{parameter id}
+#'     \item{car_methode_obtention}{method of data collection, measured, calculated...}
+#'     \item{car_valeur_quantitatif}{the value of the parameter}
+#'     }
 #'   }
 #'  
 #' }
@@ -373,7 +369,7 @@
 #' An object of class report_env with data loaded
 #' 
 #' The dataset corresponds to the daily temperatures and moon phases in Arzal (Vilaine estuary, France). This environmental station is used to
-#'	analyze conditions in which fish migrated at Arzal dam
+#' analyze conditions in which fish migrated at Arzal dam
 #'
 #' @format An object of class \link{report_env-class} with data slot loaded:
 #' \describe{
@@ -381,14 +377,14 @@
 #'   \item{horodatedebut}{object of class \code{ref_horodate-class} : the start date selected}
 #'   \item{horodatefin}{object of class \code{ref_horodate-class} : the end date selected}
 #'   \item{data}{ A dataframe with 723 rows and 6 variables
-#' 			\describe{
-#'   			\item{env_date_debut}{start date}
-#'   			\item{env_date_fin}{end date}
-#'   			\item{env_methode_obtention}{method of data collection, measured, calculated...}
-#'   			\item{env_val_identifiant}{the value of the parameter if qualitative}
-#'   			\item{env_valeur_quantitatif}{the value of the parameter if quantitative}
-#'   			\item{env_stm_identifiant}{station id}
-#'   			}
+#'   \describe{
+#'     \item{env_date_debut}{start date}
+#'     \item{env_date_fin}{end date}
+#'     \item{env_methode_obtention}{method of data collection, measured, calculated...}
+#'     \item{env_val_identifiant}{the value of the parameter if qualitative}
+#'     \item{env_valeur_quantitatif}{the value of the parameter if quantitative}
+#'     \item{env_stm_identifiant}{station id}
+#'     }
 #'   }
 #' }
 #' @keywords data
@@ -404,10 +400,10 @@
 #' \describe{
 #'   \item{calcdata}{slot to be filled with the calcule method}
 #'   \item{data}{ A list of 2 elements
-#' 			\describe{
-#'   			\item{parqual}{values of all the qualitative parameters}
-#'   			\item{parquan}{values of all the quantitative parameters}
-#'   			}
+#'   \describe{
+#'     \item{parqual}{values of all the qualitative parameters}
+#'     \item{parquan}{values of all the quantitative parameters}
+#'     }
 #'   }
 #'  \item{dc}{the \code{ref_dc} : the control devices selected}
 #'  \item{taxa}{the \code{ref_taxa} : Salmo salar selected}
@@ -428,7 +424,7 @@
 #' @format An object of class \link{report_env-class} with data slot loaded:
 #' \describe{
 #'   \item{report_mig_mult}{An object of class \link{report_mig_mult-class}}
-#'   \item{report_env}{ An object of class \link{report_env-class}}#' 	
+#'   \item{report_env}{ An object of class \link{report_env-class}}#' 
 #'   }
 #' @keywords data
 "r_mig_env"

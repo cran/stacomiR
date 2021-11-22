@@ -33,10 +33,14 @@ year/week/month.
 }}
 
 \examples{
-require(stacomiR)
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
-	database_expected=FALSE)
+# launching stacomi without selecting the scheme or interface
+stacomi(	database_expected=FALSE)
+# the following script will load data 
+# from the two Anguillere monitored in the Somme
+# If you have a working database
+# the following line of code will create the bilesp dataset from the "iav." 
+# schema in the database
+
 \dontrun{
   bilesp<-new("report_species")
   # split is one of "none", "year", "week", "month
@@ -46,48 +50,56 @@ stacomi(gr_interface=FALSE,
 	  anneedebut="2008",
 	  anneefin="2012",
 	  silent=FALSE)	
-  #bilesp<-charge(bilesp) this is used by the graphical interface
-  bilesp<-connect(bilesp)
-  bilesp<-calcule(bilesp)
-  plot(bilesp,plot.type="pie",silent=FALSE)
-  plot(bilesp,plot.type="barplot",silent=FALSE)
-  bilesp<-choice_c(bilesp,
+  bilesp <- connect(bilesp)
+  bilesp <- calcule(bilesp)
+  plot(bilesp, plot.type="pie", silent=FALSE)
+  plot(bilesp, plot.type="barplot", silent=FALSE)
+  bilesp <- choice_c(bilesp,
 	  dc=c(5,6,12),
 	  split="month",
 	  anneedebut="2015",
 	  anneefin="2016",
 	  silent=FALSE)
-  bilesp<-charge(bilesp)
-  bilesp<-connect(bilesp)
-  plot(bilesp,plot.type="pie",silent=FALSE)
-  plot(bilesp,plot.type="barplot",silent=FALSE)
+  bilesp <- charge(bilesp)
+  bilesp <- connect(bilesp)
+  plot(bilesp, plot.type="pie", silent=FALSE)
+  plot(bilesp, plot.type="barplot", silent=FALSE)
   #length(unique(bilesp@calcdata$taxa_stage)) # 15
   # here creating a vector of length 15 with nice blending colours
+	if (requireNamespace("grDevices", quietly = TRUE)) {
+	mycolorrampblue <-
+			grDevices::colorRampPalette(c("#395B74", "#010F19"))
+	mycolorrampyellow <-
+			grDevices::colorRampPalette(c("#B59C53", "#271D00"))
+	mycolorrampred <-
+			grDevices::colorRampPalette(c("#B56F53", "#270B00"))
   color<-c(mycolorrampblue(5),
 	  mycolorrampyellow(5),
 	  mycolorrampred(5))
   plot(bilesp,plot.type="barplot",color=color,silent=TRUE)
+	}
   summary(bilesp)
 }	
 
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

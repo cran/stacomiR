@@ -13,15 +13,15 @@ glass eel in the Bay of Biscay. Weights can be modelled using sine wave curves, 
 This class has a model method to try those models, which can also be used to extact coefficients manually
 to manually test more complex models.
 Some plots are provided to display the coefficients stored in the database, and the model results. A parameter provided in 
-the graphical interface or in the command line (slot liste) takes values "1", ">1", "tous" which mean respectively use
-only individual sample of glass eels, or use "group weights" which can be more close to the real weight of glass eel
+the graphical interface or in the command line (slot liste) takes values '1', '>1', 'tous' which mean respectively use
+only individual sample of glass eels, or use 'group weights' which can be more close to the real weight of glass eel
 during counts as glass eel are not completely drained from their water during handling to preserve their mucus. The list choice
-"tous" means that both individual and group weights are selected.
+'tous' means that both individual and group weights are selected.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{A \code{"data.frame"} data for report lot}
+\item{\code{data}}{A \code{'data.frame'} data for report lot}
 
 \item{\code{calcdata}}{A list containing two processed data frames, data and coe}
 
@@ -49,19 +49,30 @@ request are from august to august (a glass eel season)
 \examples{
 require(stacomiR)
 # launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
-	database_expected=FALSE)
+stacomi(
+	database_expected=FALSE, sch='iav')
+# this requires a working database with the schema iav
+# prompt for user and password but you can set appropriate options for host, port and dbname
 \dontrun{
+	stacomi(
+			database_expected=TRUE, sch='iav')	
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   #create an instance of the class
   r_gew<-new("report_ge_weight")
-  baseODBC<-get("baseODBC",envir=envir_stacomi)
-  baseODBC[c(2,3)]<-rep("iav",2)
-  assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-rlang::env_get(envir_stacomi, "sch")
-  assign("sch","iav.",envir_stacomi)
   r_gew@liste<-charge(object=r_gew@liste,listechoice=c("=1",">1","tous"),label="")
-  # here I'm using weights when number are larger than 1 ie wet weight
+  # here I'm using weights when number are larger than 1i.e.wet weight
   # always choose a date from one year to the next eg 2010 to 2011
   # as the dates are from august to august
   r_gew<-choice_c(r_gew,
@@ -91,22 +102,23 @@ plot(r_gew, plot.type=3)
 }
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

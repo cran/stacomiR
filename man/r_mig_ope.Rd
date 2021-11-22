@@ -4,7 +4,9 @@
 \name{r_mig_ope}
 \alias{r_mig_ope}
 \title{An object of class \link{report_ope-class} with data loaded}
-\format{An object of class report_ope}
+\format{
+An object of class report_ope
+}
 \usage{
 r_mig_ope
 }

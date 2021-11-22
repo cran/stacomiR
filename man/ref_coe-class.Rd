@@ -3,7 +3,7 @@
 \docType{class}
 \name{ref_coe-class}
 \alias{ref_coe-class}
-\title{Class "ref_coe"}
+\title{Class 'ref_coe'}
 \description{
 Enables to load conversion coefficients quantity-number. This class only exists to load
 the data with its method charge. It is not used directly as component of the graphical interface,
@@ -14,9 +14,9 @@ as the year is already loaded in the different report objects
 \describe{
 \item{\code{data}}{A \code{data.frame}}
 
-\item{\code{datedebut}}{A "POSIXlt"}
+\item{\code{datedebut}}{A 'POSIXlt'}
 
-\item{\code{datefin}}{A "POSIXlt"}
+\item{\code{datefin}}{A 'POSIXlt'}
 }}
 
 \note{
@@ -25,26 +25,27 @@ volumes of glass eel) and numbers between a starting and finishing date
 }
 \section{Objects from the Class}{
  Objects can be created by calls of the form
-\code{new("ref_coe")}.
+\code{new('ref_coe')}.
 }
 
 \seealso{
-Other referential objects: \code{\link{charge,ref_choice-method}},
-  \code{\link{ref_checkbox-class}},
-  \code{\link{ref_choice-class}},
-  \code{\link{ref_dc-class}}, \code{\link{ref_df-class}},
-  \code{\link{ref_horodate-class}},
-  \code{\link{ref_list-class}},
-  \code{\link{ref_par-class}},
-  \code{\link{ref_parqual-class}},
-  \code{\link{ref_parquan-class}},
-  \code{\link{ref_period-class}},
-  \code{\link{ref_stage-class}},
-  \code{\link{ref_taxa-class}},
-  \code{\link{ref_year-class}}
+Other referential objects: 
+\code{\link{charge,ref_choice-method}},
+\code{\link{ref_choice-class}},
+\code{\link{ref_dc-class}},
+\code{\link{ref_df-class}},
+\code{\link{ref_horodate-class}},
+\code{\link{ref_list-class}},
+\code{\link{ref_par-class}},
+\code{\link{ref_parqual-class}},
+\code{\link{ref_parquan-class}},
+\code{\link{ref_period-class}},
+\code{\link{ref_stage-class}},
+\code{\link{ref_taxa-class}},
+\code{\link{ref_year-class}}
 }
 \author{
-cedric.briand"at"eptb-vilaine.fr
+cedric.briand'at'eptb-vilaine.fr
 }
 \concept{referential objects}
 \keyword{classes}

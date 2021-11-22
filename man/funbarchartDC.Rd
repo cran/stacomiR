@@ -4,15 +4,13 @@
 \alias{funbarchartDC}
 \title{Function to create a barchart (lattice) corresponding to the periods}
 \usage{
-funbarchartDC(h, ...)
+funbarchartDC(...)
 }
 \arguments{
-\item{h}{a handler}
-
 \item{...}{Additional parameters}
 }
 \value{
-assigns the data frame \code{periodeDC} allowing to build the lattice graph in the environment envir_stacomi
+Nothing, assigns the data frame \code{periodeDC} allowing to build the lattice graph in the environment envir_stacomi
 }
 \description{
 Function to create a barchart (lattice) corresponding to the periods

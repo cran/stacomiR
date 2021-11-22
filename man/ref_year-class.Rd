@@ -12,28 +12,29 @@ Class used to select one or several years
 \describe{
 \item{\code{data}}{A \code{data.frame} with the list of possible years selected as numerics}
 
-\item{\code{annee_selectionnee}}{A numeric vector}
+\item{\code{selected_year}}{A numeric vector}
 }}
 
 \section{Objects from the Class}{
  Objects can be created by calls of the form
-\code{new("ref_year", data=data.frame(), annee_selectionnee=numeric())}.
+\code{new("ref_year", data=data.frame(), selected_year=numeric())}.
 }
 
 \seealso{
-Other referential objects: \code{\link{charge,ref_choice-method}},
-  \code{\link{ref_checkbox-class}},
-  \code{\link{ref_choice-class}},
-  \code{\link{ref_coe-class}}, \code{\link{ref_dc-class}},
-  \code{\link{ref_df-class}},
-  \code{\link{ref_horodate-class}},
-  \code{\link{ref_list-class}},
-  \code{\link{ref_par-class}},
-  \code{\link{ref_parqual-class}},
-  \code{\link{ref_parquan-class}},
-  \code{\link{ref_period-class}},
-  \code{\link{ref_stage-class}},
-  \code{\link{ref_taxa-class}}
+Other referential objects: 
+\code{\link{charge,ref_choice-method}},
+\code{\link{ref_choice-class}},
+\code{\link{ref_coe-class}},
+\code{\link{ref_dc-class}},
+\code{\link{ref_df-class}},
+\code{\link{ref_horodate-class}},
+\code{\link{ref_list-class}},
+\code{\link{ref_par-class}},
+\code{\link{ref_parqual-class}},
+\code{\link{ref_parquan-class}},
+\code{\link{ref_period-class}},
+\code{\link{ref_stage-class}},
+\code{\link{ref_taxa-class}}
 }
 \author{
 cedric.briand"at"eptb-vilaine.fr

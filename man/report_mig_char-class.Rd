@@ -17,7 +17,7 @@ the operation is used to perform calculations.
 \section{Slots}{
 
 \describe{
-\item{\code{calcdata}}{A "list" of calculated data, filled in by the calcule method}
+\item{\code{calcdata}}{A 'list' of calculated data, filled in by the calcule method}
 
 \item{\code{data}}{A \code{data.frame} inherited from \link{report_sample_char-class}}
 
@@ -46,24 +46,34 @@ select (or not) the samples, and that it handles quantitative and qualitative pa
 }
 \section{Objects from the Class}{
  Objects can be created by calls of the form
-\code{new("report_mig_char", ...)}.  they are loaded by the interface
+\code{new('report_mig_char', ...)}.  they are loaded by the interface
 using interface_report_mig_char function.
 }
 
 \examples{
 require(stacomiR)
 
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
-	database_expected=FALSE)
-
+stacomi(
+	database_expected=FALSE, sch='logrami')
+# this requires a database with the schema logrami
+# prompt for user and password but you can set appropriate options for host, port and dbname
 \dontrun{
+	stacomi(
+			database_expected=TRUE, sch='logrami')	
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   r_mig_char<-new("report_mig_char")
-  baseODBC<-get("baseODBC",envir=envir_stacomi)
-  baseODBC[c(2,3)]<-rep("logrami",2)
-  assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-rlang::env_get(envir_stacomi, "sch")
-  assign("sch","logrami.",envir_stacomi)
   # here parqual is not in the list
   # so this is equivalent to parqual=NULL
   # default for echantillon is "with"
@@ -96,13 +106,9 @@ plot(r_mig_char,plot.type="crossed",
 xt<-xtable(r_mig_char)
 # use method print.xtable to get the output
 \dontrun{
+	stacomi(database_expected=FALSE, sch='logrami')
 # An example with several years
   r_mig_char<-new("report_mig_char")
-  baseODBC<-get("baseODBC",envir=envir_stacomi)
-  baseODBC[c(2,3)]<-rep("logrami",2)
-  assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-rlang::env_get(envir_stacomi, "sch")
-  assign("sch","logrami.",envir_stacomi)
 # here parqual is not in the list
 # so this is equivalent to parqual=NULL
   r_mig_char<-choice_c(r_mig_char,
@@ -126,22 +132,23 @@ xt<-xtable(r_mig_char)
 
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \concept{report Object}
 \concept{report Objects}

@@ -4,7 +4,9 @@
 \name{r_mig_dc}
 \alias{r_mig_dc}
 \title{Counting device operation for the video recording (Arzal dam, Vilaine, France).}
-\format{An object of class \link{report_dc-class}}
+\format{
+An object of class \link{report_dc-class}
+}
 \usage{
 r_mig_dc
 }

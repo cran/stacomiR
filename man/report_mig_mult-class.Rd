@@ -23,7 +23,7 @@ This migration count can be built either by the graphical interface or from the 
 
 \item{\code{data}}{A data.frame containing raw data filled by the connect method}
 
-\item{\code{calcdata}}{A "list" of calculated daily data, one per dc, filled in by the calcule method}
+\item{\code{calcdata}}{A 'list' of calculated daily data, one per dc, filled in by the calcule method}
 
 \item{\code{coef_conversion}}{A data frame of daily weight to number conversion coefficients, filled in by the connect
 method if any weight are found in the data slot.}
@@ -47,29 +47,40 @@ it uses quantities other than numbers if necessary (only used for glass eel in t
 \examples{
 library(stacomiR)
 
-stacomi(gr_interface=FALSE,login_window=FALSE,database_expected=FALSE) 
+stacomi(database_expected=FALSE) 
 ## launches the application in the command line
 ## here an example of loading
 ## the following lines will only run if you have the program installed
 ## and the iav scheme available in the database
 ## this example generates the r_mig_mult dataset
+# prompt for user and password but you can set appropriate options for host, port and dbname
 \dontrun{
-  stacomi(gr_interface=FALSE,
-	  login_window=FALSE,
+  stacomi(
 	  database_expected=TRUE)	
-  r_mig_mult=new("report_mig_mult")
-  r_mig_mult=choice_c(r_mig_mult,
+if (interactive()){
+	if (!exists("user")){
+		user <- readline(prompt="Enter user: ")
+		password <- readline(prompt="Enter password: ")	
+	}	
+}
+options(					
+		stacomiR.dbname = "bd_contmig_nat",
+		stacomiR.host ="localhost",
+		stacomiR.port = "5432",
+		stacomiR.user = user,
+		stacomiR.user = password						
+)	
+  r_mig_mult <- new("report_mig_mult")
+  r_mig_mult <- choice_c(r_mig_mult,
 	  dc=c(5,6,12),
 	  taxa=c("Anguilla anguilla"),
 	  stage=c("AGG","AGJ","CIV"),datedebut="2011-01-01",datefin="2011-12-31")
-  r_mig_mult<-charge(r_mig_mult)
+  r_mig_mult <- charge(r_mig_mult)
   # launching charge will also load classes associated with the report
   # e.g. report_ope, report_df, report_dc
-  r_mig_mult<-connect(r_mig_mult)
+  r_mig_mult <- connect(r_mig_mult)
   # calculations 
-  r_mig_mult<-calcule(r_mig_mult,silent=TRUE)
- 
-
+  r_mig_mult <- calcule(r_mig_mult,silent=TRUE)
 }
 
 # Use this as example if you don't have a connexion to the database
@@ -87,11 +98,11 @@ assign("report_dc",r_mig_mult_dc,envir=envir_stacomi)
 # not shown there as the database and program might not be installed
 
 #Individual plot for all DC, taxa and stage where data present
-#Silent=TRUE to turn off messages
-# not run because of multiple graphical devices
 
+
+
+\dontrun{	
 plot(r_mig_mult,plot.type="standard",silent=TRUE)
-\dontrun{
 # colors in the following order (glass eel)
 # working, stopped, 1...5 types of operation,numbers, weight, 2 unused colors
 # for yellow eel and other taxa
@@ -110,27 +121,28 @@ plot(r_mig_mult,plot.type="standard",silent=TRUE)
 # Combined plot for ggplot2
   plot(r_mig_mult,plot.type="multiple",silent=TRUE)
 # Data will be written in the data directory specified in 
-# the stacomi/calcmig.csv file
+# the datawd argument to stacomi, default "~"
   summary(r_mig_mult,silent=FALSE)
 }
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

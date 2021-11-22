@@ -1,9 +1,24 @@
-require(stacomiR)
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
+stacomi(
 	database_expected=FALSE)
-## An example that will work with the database installed only
+# An example that will work with the database installed only and schema iav in the database
+# prompt for user and password but you can set appropriate options for host, port and dbname
+
 \dontrun{
+	stacomi(
+			database_expected=TRUE, sch='iav')	
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   r_df=new("report_df")
   r_df<-choice_c(r_df,
 	  1,

@@ -21,6 +21,9 @@ EXPERT,PONCTUEL,Effectif_total,taux_d_echappement,coe_valeur_coefficient}
 
 \item{silent}{Message displayed or not}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Function to calculate statistics per month
 }
@@ -28,5 +31,5 @@ Function to calculate statistics per month
 this function is intended to be called from within the summary method
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }

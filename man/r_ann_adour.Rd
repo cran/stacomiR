@@ -4,7 +4,9 @@
 \name{r_ann_adour}
 \alias{r_ann_adour}
 \title{Annual migration of salmon in the Adour and tributaries}
-\format{An object of class \link{report_annual-class} with data slot loaded.}
+\format{
+An object of class \link{report_annual-class} with data slot loaded.
+}
 \usage{
 r_ann_adour
 }

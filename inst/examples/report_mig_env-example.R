@@ -1,10 +1,25 @@
 require(stacomiR)
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
+stacomi(
 	database_expected=FALSE)
 # the following will load the data provided the user has access to the database
 # with data in the iav example scheme.
+# prompt for user and password but you can set appropriate options for host, port and dbname
 \dontrun{
+	stacomi(
+			database_expected=TRUE)	
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   r_mig_env<-new("report_mig_env")
   r_mig_env<-choice_c(r_mig_env,
 	  dc=c(5,6,12),

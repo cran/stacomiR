@@ -4,17 +4,18 @@
 \alias{fundensityreport_sample_char}
 \title{fundensityreport_sample_char uses ggplot2 to draw density plots}
 \usage{
-fundensityreport_sample_char(h, ...)
+fundensityreport_sample_char(...)
 }
 \arguments{
-\item{h}{A handler}
-
 \item{...}{Additional parameters}
+}
+\value{
+Nothing, calls the plot method \code{plot.type = "1"} on data assigned in envir_stacomi
 }
 \description{
 assigns an object g in envir_stacomi for eventual modification of the plot
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \keyword{internal}

@@ -4,14 +4,15 @@
 \name{r_mig_char}
 \alias{r_mig_char}
 \title{Qualitative and quantitative parameters describing Salmon migration at Decize (Loire)}
-\format{An object of class \link{report_mig_char-class} with data slot loaded:
+\format{
+An object of class \link{report_mig_char-class} with data slot loaded:
 \describe{
   \item{calcdata}{slot to be filled with the calcule method}
   \item{data}{ A list of 2 elements
-			\describe{
-  			\item{parqual}{values of all the qualitative parameters}
-  			\item{parquan}{values of all the quantitative parameters}
-  			}
+  \describe{
+    \item{parqual}{values of all the qualitative parameters}
+    \item{parquan}{values of all the quantitative parameters}
+    }
   }
  \item{dc}{the \code{ref_dc} : the control devices selected}
  \item{taxa}{the \code{ref_taxa} : Salmo salar selected}
@@ -19,7 +20,8 @@
  \item{par}{an object of class \link{ref_par-class}: the parameters used}
  \item{horodatedebut}{an object of class \code{ref_horodate-class} : the start date selected}
  \item{horodatefin}{an object of class \code{ref_horodate-class} : the end date selected}
-}}
+}
+}
 \usage{
 r_mig_char
 }

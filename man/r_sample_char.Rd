@@ -4,7 +4,9 @@
 \name{r_sample_char}
 \alias{r_sample_char}
 \title{Size of yellow and glass eel at the Arzal dam (Vilaine, France) in the fishway and main eel trapping ladder.}
-\format{An object of class \link{report_sample_char-class}}
+\format{
+An object of class \link{report_sample_char-class}
+}
 \usage{
 r_sample_char
 }

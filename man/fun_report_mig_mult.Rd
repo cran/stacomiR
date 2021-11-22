@@ -11,19 +11,19 @@ fun_report_mig_mult(time.sequence, datasub, negative = FALSE)
 
 \item{datasub}{the initial dataset}
 
-\item{negative}{"boolean", default FALSE, TRUE indicates a separate sum for negative and positive migrations}
+\item{negative}{'boolean', default FALSE, TRUE indicates a separate sum for negative and positive migrations}
 }
 \value{
 A data.frame with number summed over over the time.sequence. 
 The function returns the same output than \link{fun_report_mig_mult_overlaps}
 but is intended to work faster. In the data.frame, the total number is 
-"Effectif_total" and corresponds to the addition of numbers and numbers converted from weight,
-the total weight is "Poids_total"+"poids_depuis_effectifs" and corresponds to weighed glass eel plus glass eel number converted in weights.
+'Effectif_total' and corresponds to the addition of numbers and numbers converted from weight,
+the total weight is 'Poids_total'+'poids_depuis_effectifs' and corresponds to weighed glass eel plus glass eel number converted in weights.
 }
 \description{
 Function to calculate daily migration from migration monitoring whose length is less than one day,
  typically video recording whose period are instant events.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }

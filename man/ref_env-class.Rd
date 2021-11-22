@@ -3,7 +3,7 @@
 \docType{class}
 \name{ref_env-class}
 \alias{ref_env-class}
-\title{Class "ref_env"}
+\title{Class 'ref_env'}
 \description{
 Enables to load measure stations and to select one of them
 }
@@ -16,10 +16,10 @@ measure station}
 
 \section{Objects from the Class}{
  Objects can be created by calls of the form
-\code{new("ref_env", ...)}.
+\code{new('ref_env', ...)}.
 }
 
 \author{
-cedric.briand"at"eptb-vilaine.fr
+cedric.briand'at'eptb-vilaine.fr
 }
 \keyword{classes}

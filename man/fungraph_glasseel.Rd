@@ -5,8 +5,18 @@
 \title{Graph function for glass eel migration. Differs from fungraph as it does not
 draw the ggplot graph for month}
 \usage{
-fungraph_glasseel(report_mig, table, time.sequence, taxa, stage,
-  dc = null, silent, color = NULL, color_ope = NULL, ...)
+fungraph_glasseel(
+  report_mig,
+  table,
+  time.sequence,
+  taxa,
+  stage,
+  dc = null,
+  silent,
+  color = NULL,
+  color_ope = NULL,
+  ...
+)
 }
 \arguments{
 \item{report_mig}{an object of class \link{report_mig-class} or an
@@ -32,6 +42,9 @@ for the fishway, if null will be set to brewer.pal(12,"Paired")[c(4,6,1,2,3,5,7,
 
 \item{...}{additional parameters passed to plot, main, ylab, cex.main, font.main, type, xlim, ylim, lty, bty, pch
 it is not possible to change xlim}
+}
+\value{
+No return value, called for side effects
 }
 \description{
 This graph will also plot numbers and bars according to whether the glass

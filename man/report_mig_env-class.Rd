@@ -8,12 +8,12 @@
 \description{
 Enables to compute an annual overview of fish migration and environmental
 conditions in the same chart. Environmental conditions may trigger migration events, variation in flow
-or temperatures can  be plotted along migration to check graphically for a possible relation. To enable this, 
+or temperatures can  be plotted along migration to check graphically for a possible relation. To enable this,
 environmental conditions are loaded from an "environmental monitoring station", which records environmental
 parameters and is attached to a migratory station in the database.
-This class enables both continuous output (temperature -flow) as well as discrete parameters (qualitative = moon 
-phase, type of operation of a gate, opening of a gate...) which will be displayed on the graph. Values are scaled so that 
-single plot can display migration numbers and environmental parameters. Environmental parameters when stored at a 
+This class enables both continuous output (temperature -flow) as well as discrete parameters (qualitative = moon
+phase, type of operation of a gate, opening of a gate...) which will be displayed on the graph. Values are scaled so that
+single plot can display migration numbers and environmental parameters. Environmental parameters when stored at a
 time scale lower that a day are averaged per day, unless they are qualitative parameters, in which case only the first
 event of the day is displayed on the annual plot.
 }
@@ -27,12 +27,27 @@ event of the day is displayed on the annual plot.
 
 \examples{
 require(stacomiR)
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
+stacomi(
 	database_expected=FALSE)
 # the following will load the data provided the user has access to the database
 # with data in the iav example scheme.
+# prompt for user and password but you can set appropriate options for host, port and dbname
 \dontrun{
+	stacomi(
+			database_expected=TRUE)	
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   r_mig_env<-new("report_mig_env")
   r_mig_env<-choice_c(r_mig_env,
 	  dc=c(5,6,12),
@@ -55,33 +70,35 @@ plot(r_mig_env,
 )
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 }
 \author{
 cedric.briand"at"eptb-vilaine.fr marion.legrand"at"logrami.fr

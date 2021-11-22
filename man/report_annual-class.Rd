@@ -26,19 +26,26 @@ ref_year allows to choose last year of the report}
 }}
 
 \examples{
-require(stacomiR)
-# launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
-	database_expected=FALSE)
-# the following script will load the Arzal dataset if connected to iav schema
-
-\donttest{
-  baseODBC<-get("baseODBC",envir=envir_stacomi)
-  baseODBC[c(2,3)]<-rep("iav",2)
-  assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-rlang::env_get(envir_stacomi, "sch")
-  assign("sch","iav.",envir_stacomi)
+# launching stacomi without database for demo
+stacomi(database_expected=FALSE)
+# the following piece of script will load the Arzal dataset and connected to iav postgres schema
+# it requires a working database
+# prompt for user and password but you can set appropriate options for host, port and dbname
+\dontrun{
+	stacomi(database_expected=TRUE, sch='iav')
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   r_ann<-new("report_annual")
   r_ann<-choice_c(r_ann,
 	  dc=c(5,6,12),
@@ -58,11 +65,11 @@ xtr_ann<-stacomiR::xtable(r_ann,
 # below not run but one can create a file as following
 \dontrun{
   path=file.path(path.expand(get("datawd",envir=envir_stacomi)),
-	  paste(paste(r_ann@dc@dc_selectionne,collapse="+"),"_",
+	  paste(paste(r_ann@dc@dc_selected,collapse="+"),"_",
 		  paste(r_ann@taxa@data$tax_code,collapse="+"),"_",
 		  paste(r_ann@stage@data$std_code,collapse="+"),"_",
-		  r_ann@anneedebut@annee_selectionnee,":",
-		  r_ann@anneefin@annee_selectionnee,".html",sep=""),fsep ="/")
+		  r_ann@anneedebut@selected_year,":",
+		  r_ann@anneefin@selected_year,".html",sep=""),fsep ="/")
 # here you can add an argument file=path
   print(xtr_ann,type="html")
   
@@ -84,7 +91,7 @@ xtr_ann<-stacomiR::xtable(r_ann,
 # An example with custom arguments for legend.text (overriding plot defauts)
   data(r_ann_adour)
   if (requireNamespace("RColorBrewer", quietly = TRUE)){
-	lesdc<-r_ann_adour@dc@data$dc_code[r_ann_adour@dc@data$dc\%in\%r_ann_adour@dc@dc_selectionne]
+	lesdc<-r_ann_adour@dc@data$dc_code[r_ann_adour@dc@data$dc\%in\%r_ann_adour@dc@dc_selected]
     barplot(r_ann_adour,
 		legend.text=lesdc,
 		args.legend=list(x="topleft",bty = "n"),
@@ -95,19 +102,20 @@ xtr_ann<-stacomiR::xtable(r_ann,
 }
 }
 \seealso{
-Other report Objects: \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 }
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}

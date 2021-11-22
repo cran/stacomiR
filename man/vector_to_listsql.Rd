@@ -11,7 +11,7 @@ vector_to_listsql(vect)
 \item{vect}{a character vector}
 }
 \value{
-listsql a list of value
+A list of value
 }
 \description{
 Transforms a vector into a string called within an sql command e.g. c(A,B,C)

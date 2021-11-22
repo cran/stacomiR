@@ -4,7 +4,9 @@
 \name{r_mig_df}
 \alias{r_mig_df}
 \title{Fishway operation for the vertical slot fishway (Arzal dam, Vilaine, France).}
-\format{An object of class \link{report_df-class}}
+\format{
+An object of class \link{report_df-class}
+}
 \usage{
 r_mig_df
 }

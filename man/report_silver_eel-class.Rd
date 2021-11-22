@@ -7,7 +7,7 @@
 \title{Class "report_silver_eel"}
 \description{
 the report_silver_eel class is used to calculate various statistics about the silver eel run. It comprises calculation
-of various maturation index such as Durif's stages and Pankhurst eye index. The objective is to provide standardized 
+of various maturation index such as Durif's stages and Pankhurst eye index. The objective is to provide standardized
 output to the stations monitoring the silver eel run.
 }
 \section{Slots}{
@@ -15,7 +15,7 @@ output to the stations monitoring the silver eel run.
 \describe{
 \item{\code{data}}{A data frame with data generated from the database}
 
-\item{\code{calcdata}}{A list of dc with processed data. Each dc contains a data frame with 
+\item{\code{calcdata}}{A list of dc with processed data. Each dc contains a data frame with
 \itemize{
 \item (1) qualitative data on body contrast (CONT), presence of punctuation on the lateral line (LINP)
 \item (2) quantitative data "BL" Body length,"W" weight,"Dv" vertical eye diameter,"Dh" horizontal eye diameter,"FL" pectoral fin length
@@ -47,21 +47,33 @@ This class is displayed by interface_report_silver_eel
 }
 
 \examples{
-require(stacomiR)
 # launching stacomi without selecting the scheme or interface
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
-	database_expected=FALSE)
+stacomi(	database_expected=FALSE)
 # the following script will load data from the two Anguillere monitored in the Somme
 
+# If you have a working database
+# the following line of code will create the r_silver dataset 
+# from the "fd80." schema in the database
 \dontrun{
+	stacomi(database_expected=TRUE, sch="fd80.")	# overrides the default option sch = 'iav'
+	# prompt for user and password, you can set these in the options, 
+	# including dbname and host
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
+	
   #create an instance of the class
   r_silver<-new("report_silver_eel")
-  baseODBC<-get("baseODBC",envir=envir_stacomi)
-  baseODBC[c(2,3)]<-rep("fd80",2)
-  assign("baseODBC",baseODBC,envir_stacomi)
-  sch<-rlang::env_get(envir_stacomi, "sch")
-  assign("sch","fd80.",envir_stacomi)
   r_silver<-choice_c(r_silver,
 	  dc=c(2,6),			
 	  horodatedebut="2010-09-01",
@@ -81,34 +93,35 @@ r_silver<-calcule(r_silver)
 plot(r_silver, plot.type=1)
 
 # number per month or year and Durif's stage (year if number of dc >1)
-plot(r_silver, plot.type=2)
+plot(r_silver, plot.type="2")
 
 # plot showing fulton's coefficient, and size weight graphs
 # inspired from Acou et al., 2009 
 # Differential Production and Condition Indices of Premigrant
 # Eels in Two Small Atlantic Coastal Catchments
 # of France
-plot(r_silver, plot.type=3)
+plot(r_silver, plot.type="3")
 # get a list of summary data and print output to screen
 
-plot(r_silver, plot.type=4)
+plot(r_silver, plot.type="4")
 # print a summary statistic, and save the output in a list for later use
 stats<-summary(r_silver)
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_df-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_df-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_species-class}}
 }
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}

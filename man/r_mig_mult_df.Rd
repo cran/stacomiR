@@ -4,7 +4,9 @@
 \name{r_mig_mult_df}
 \alias{r_mig_mult_df}
 \title{Fishway operation at the Arzal Dam (Vilaine France) (3 Fishways in 2011)}
-\format{An object of class report_df  \link{report_df-class}}
+\format{
+An object of class report_df  \link{report_df-class}
+}
 \usage{
 r_mig_mult_df
 }

@@ -1,12 +1,25 @@
-require(stacomiR)
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
-	database_expected=FALSE)
-###########################################################
-## An example that will work only if the database is present 
-## and the program installed and comprises the schema iav
-###########################################################"
+
+# this option allows to launch the program without the interface to display 
+# some of the program features.
+stacomi(database_expected=FALSE)
+# An example that will work only if the database is present 
+# and the program installed and comprises the schema iav
+# prompt for user and password but you can set appropriate options for host, port and dbname
 \dontrun{
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
+	
   r_dc=new("report_dc")
   r_dc<-choice_c(r_dc,
 	  5,

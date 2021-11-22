@@ -2,7 +2,7 @@
 % Please edit documentation in R/report_mig_mult.R
 \name{fun_aggreg_for_plot}
 \alias{fun_aggreg_for_plot}
-\title{returns a table where all components within the list calcdata are aggregated
+\title{Calculates a data.frame where all components within the list calcdata are aggregated
 and formatted for plot}
 \usage{
 fun_aggreg_for_plot(object)
@@ -10,10 +10,13 @@ fun_aggreg_for_plot(object)
 \arguments{
 \item{object}{An object of class \link{report_mig_mult-class}}
 }
+\value{
+A data.frame
+}
 \description{
-returns a table where all components within the list calcdata are aggregated
+Calculates a data.frame where all components within the list calcdata are aggregated
 and formatted for plot
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }

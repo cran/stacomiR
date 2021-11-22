@@ -2,17 +2,18 @@
 % Please edit documentation in R/report_df.R
 \name{funbarchart1DF}
 \alias{funbarchart1DF}
-\title{Handler for barchart for report_df class from the graphical interface}
+\title{Internal use barchart for report_df class from the graphical interface}
 \usage{
-funbarchart1DF(h, ...)
+funbarchart1DF(...)
 }
 \arguments{
-\item{h}{handler}
-
 \item{...}{additional parameters}
 }
+\value{
+Nothing, called for its side effect of plotting data
+}
 \description{
-Handler for barchart for report_df class from the graphical interface
+Internal use barchart for report_df class from the graphical interface
 }
 \note{
 The program cuts periods which overlap between two month

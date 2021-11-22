@@ -5,7 +5,13 @@
 \alias{envir_stacomi}
 \title{Environment where most objects from the package are stored and then loaded
 by the charge method}
-\format{An object of class \code{environment} of length 0.}
+\format{
+An object of class \code{environment} of length 0.
+
+An object of class \code{environment} of length 0.
+
+An object of class \code{environment} of length 0.
+}
 \usage{
 envir_stacomi
 
@@ -24,7 +30,7 @@ This is where the graphical interface stores its objects
 try \code{ls(envir=envir_stacomi)}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \keyword{datasets}
 \keyword{environment}

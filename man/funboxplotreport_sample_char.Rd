@@ -4,17 +4,18 @@
 \alias{funboxplotreport_sample_char}
 \title{Boxplots for ggplot2}
 \usage{
-funboxplotreport_sample_char(h, ...)
+funboxplotreport_sample_char(...)
 }
 \arguments{
-\item{h}{A handler passed by the graphical interface}
-
 \item{...}{Additional parameters}
+}
+\value{
+Nothing, calls plot method \code{plot.type = "2"} on data assigned in envir_stacomi
 }
 \description{
 assigns an object g in envir_stacomi for eventual modification of the plot
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \keyword{internal}

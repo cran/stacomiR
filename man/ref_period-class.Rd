@@ -3,14 +3,14 @@
 \docType{class}
 \name{ref_period-class}
 \alias{ref_period-class}
-\title{Class "ref_period" referential class}
+\title{Class 'ref_period' referential class}
 \description{
 ref_period referential class to choose a period
 }
 \section{Slots}{
 
 \describe{
-\item{\code{data="data.frame"}}{providing correspondance between period and their English names}
+\item{\code{data='data.frame'}}{providing correspondance between period and their English names}
 }}
 
 \note{
@@ -18,23 +18,24 @@ pgval are used by seq.POSIXt
 }
 \section{Objects from the Class}{
  Objects can be created by calls of the form
-\code{new("ref_period", ...)}.
+\code{new('ref_period', ...)}.
 }
 
 \seealso{
-Other referential objects: \code{\link{charge,ref_choice-method}},
-  \code{\link{ref_checkbox-class}},
-  \code{\link{ref_choice-class}},
-  \code{\link{ref_coe-class}}, \code{\link{ref_dc-class}},
-  \code{\link{ref_df-class}},
-  \code{\link{ref_horodate-class}},
-  \code{\link{ref_list-class}},
-  \code{\link{ref_par-class}},
-  \code{\link{ref_parqual-class}},
-  \code{\link{ref_parquan-class}},
-  \code{\link{ref_stage-class}},
-  \code{\link{ref_taxa-class}},
-  \code{\link{ref_year-class}}
+Other referential objects: 
+\code{\link{charge,ref_choice-method}},
+\code{\link{ref_choice-class}},
+\code{\link{ref_coe-class}},
+\code{\link{ref_dc-class}},
+\code{\link{ref_df-class}},
+\code{\link{ref_horodate-class}},
+\code{\link{ref_list-class}},
+\code{\link{ref_par-class}},
+\code{\link{ref_parqual-class}},
+\code{\link{ref_parquan-class}},
+\code{\link{ref_stage-class}},
+\code{\link{ref_taxa-class}},
+\code{\link{ref_year-class}}
 }
 \concept{referential objects}
 \keyword{classes}

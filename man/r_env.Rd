@@ -4,22 +4,24 @@
 \name{r_env}
 \alias{r_env}
 \title{An object of class report_env with data loaded}
-\format{An object of class \link{report_env-class} with data slot loaded:
+\format{
+An object of class \link{report_env-class} with data slot loaded:
 \describe{
   \item{stationMesure}{the \code{ref_env} object with 5 slots filled with data corresponding to the iav postgres schema}
   \item{horodatedebut}{object of class \code{ref_horodate-class} : the start date selected}
   \item{horodatefin}{object of class \code{ref_horodate-class} : the end date selected}
   \item{data}{ A dataframe with 723 rows and 6 variables
-			\describe{
-  			\item{env_date_debut}{start date}
-  			\item{env_date_fin}{end date}
-  			\item{env_methode_obtention}{method of data collection, measured, calculated...}
-  			\item{env_val_identifiant}{the value of the parameter if qualitative}
-  			\item{env_valeur_quantitatif}{the value of the parameter if quantitative}
-  			\item{env_stm_identifiant}{station id}
-  			}
+  \describe{
+    \item{env_date_debut}{start date}
+    \item{env_date_fin}{end date}
+    \item{env_methode_obtention}{method of data collection, measured, calculated...}
+    \item{env_val_identifiant}{the value of the parameter if qualitative}
+    \item{env_valeur_quantitatif}{the value of the parameter if quantitative}
+    \item{env_stm_identifiant}{station id}
+    }
   }
-}}
+}
+}
 \usage{
 r_env
 }

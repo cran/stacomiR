@@ -4,11 +4,13 @@
 \name{r_mig_env}
 \alias{r_mig_env}
 \title{An object of class report_mig_env with data loaded}
-\format{An object of class \link{report_env-class} with data slot loaded:
+\format{
+An object of class \link{report_env-class} with data slot loaded:
 \describe{
   \item{report_mig_mult}{An object of class \link{report_mig_mult-class}}
-  \item{report_env}{ An object of class \link{report_env-class}}#' 	
-  }}
+  \item{report_env}{ An object of class \link{report_env-class}}#' 
+  }
+}
 \usage{
 r_mig_env
 }

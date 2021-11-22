@@ -32,7 +32,7 @@ per_date_fin = structure(c(1420071000, 1420081200, 1421000000
 "Arr maint")), .Names = c("per_dis_identifiant", "per_date_debut", 
 "per_date_fin", "per_commentaires", "per_etat_fonctionnement", 
 "per_tar_code", "libelle"), row.names = c(NA, 3L), class = "data.frame")
-newdf<-split_per_day(data=datatemp,horodatedebut="per_date_debut",
+ newdf<-split_per_day(data=datatemp,horodatedebut="per_date_debut",
 horodatefin="per_date_fin")
 }
 \author{

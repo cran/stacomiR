@@ -4,9 +4,18 @@
 \alias{fun_date_extraction}
 \title{This function extracts temporal characteristics from a dataframe}
 \usage{
-fun_date_extraction(data, nom_coldt, annee = TRUE, mois = TRUE,
-  quinzaine = FALSE, semaine = TRUE, semaine_std = FALSE,
-  jour_an = FALSE, jour_mois = TRUE, heure = FALSE)
+fun_date_extraction(
+  data,
+  nom_coldt,
+  annee = TRUE,
+  mois = TRUE,
+  quinzaine = FALSE,
+  semaine = TRUE,
+  semaine_std = FALSE,
+  jour_an = FALSE,
+  jour_mois = TRUE,
+  heure = FALSE
+)
 }
 \arguments{
 \item{data}{a data frame containing a Date or POSIXt column}
@@ -32,7 +41,7 @@ dataframe}
 \item{heure}{logical, add column with hour}
 }
 \value{
-data The dataframe with date column filled
+The dataframe with date column filled
 }
 \description{
 This function extracts temporal characteristics from a dataframe

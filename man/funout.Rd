@@ -2,17 +2,15 @@
 % Please edit documentation in R/utilities.R
 \name{funout}
 \alias{funout}
-\title{this function uses gfile, edits a text with info and changing colors}
+\title{this function displays text and will be used to convey stacomiR message in shiny}
 \usage{
-funout(text, arret = FALSE, wash = FALSE, ...)
+funout(text, arret = FALSE, ...)
 }
 \arguments{
-\item{text}{The text to display both in the gtk interface and in the R
-console}
+\item{text}{The text to displaying the R 
+console and later in shiny}
 
 \item{arret}{Should this cause the program to stop ?}
-
-\item{wash}{Should the console be cleared after displaying the message}
 
 \item{...}{Additional parameters passed to print}
 }
@@ -20,7 +18,7 @@ console}
 nblignes Assigned in envir_stacomi
 }
 \description{
-this function uses gfile, edits a text with info and changing colors
+this function displays text and will be used to convey stacomiR message in shiny
 }
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}

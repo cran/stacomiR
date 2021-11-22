@@ -10,6 +10,9 @@ fun_stage_durif(data)
 \item{data}{A dataset with columns BL, W, Dv, Dh, FL corresponding to body length (mm),
 Weight (g), vertical eye diameter (mm), vertical eye diameter (mm), and pectoral fin length (mm)}
 }
+\value{
+A data.frame with durif stages per individual
+}
 \description{
 Function to calculate the stages from Durif
 }

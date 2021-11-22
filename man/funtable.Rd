@@ -23,6 +23,9 @@ EXPERT,PONCTUEL,Effectif_total,taux_d_echappement,coe_valeur_coefficient}
 
 \item{silent}{If TRUE, all messages turned off (except warnings and errors)}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 function to print and save statistics in .csv and .html formats for report_mig and report_mig_mult class
 }
@@ -30,5 +33,5 @@ function to print and save statistics in .csv and .html formats for report_mig a
 this function is intended to be called from within the summary method
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }

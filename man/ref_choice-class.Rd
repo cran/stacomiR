@@ -3,10 +3,10 @@
 \docType{class}
 \name{ref_choice-class}
 \alias{ref_choice-class}
-\title{Class "ref_choice"}
+\title{Class 'ref_choice'}
 \description{
 ref_choice referential class allows to choose within several values with
-radiobuttons
+radiobuttons interface
 }
 \section{Slots}{
 
@@ -20,26 +20,27 @@ radiobuttons
 
 \section{Objects from the Class}{
  Objects can be created by calls of the form
-\code{new("ref_choice", listechoice=character() ,label=character()
+\code{new('ref_choice', listechoice=character() ,label=character()
 ,selected=integer())}.
 }
 
 \seealso{
-Other referential objects: \code{\link{charge,ref_choice-method}},
-  \code{\link{ref_checkbox-class}},
-  \code{\link{ref_coe-class}}, \code{\link{ref_dc-class}},
-  \code{\link{ref_df-class}},
-  \code{\link{ref_horodate-class}},
-  \code{\link{ref_list-class}},
-  \code{\link{ref_par-class}},
-  \code{\link{ref_parqual-class}},
-  \code{\link{ref_parquan-class}},
-  \code{\link{ref_period-class}},
-  \code{\link{ref_stage-class}},
-  \code{\link{ref_taxa-class}},
-  \code{\link{ref_year-class}}
+Other referential objects: 
+\code{\link{charge,ref_choice-method}},
+\code{\link{ref_coe-class}},
+\code{\link{ref_dc-class}},
+\code{\link{ref_df-class}},
+\code{\link{ref_horodate-class}},
+\code{\link{ref_list-class}},
+\code{\link{ref_par-class}},
+\code{\link{ref_parqual-class}},
+\code{\link{ref_parquan-class}},
+\code{\link{ref_period-class}},
+\code{\link{ref_stage-class}},
+\code{\link{ref_taxa-class}},
+\code{\link{ref_year-class}}
 }
 \author{
-cedric.briand"at"eptb-vilaine.fr
+cedric.briand'at'eptb-vilaine.fr
 }
 \concept{referential objects}

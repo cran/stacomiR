@@ -7,16 +7,16 @@
 \title{Report on fishway operation}
 \description{
 Fishways (DF) are of various nature, from very simple eel ladders fed by water discharged from the river,
-to more complex fishways with levels adjusted by the opening of various gates and regulators. 
+to more complex fishways with levels adjusted by the opening of various gates and regulators.
 The objective of this class is to provide an assessment of the working status of a fishway throughout the year.
-A number of fishes ascending a fishway has meaning only if we know that the fishway is operational, and that the counting 
+A number of fishes ascending a fishway has meaning only if we know that the fishway is operational, and that the counting
 operated on the fishway has remained operational.
 In the database the operation of the fishway (DF) and counting device (DC) is agregated in one table (t_periodefonctdispositif_per).
 The column  per_etat_fonctionnement indicates whether the fishway is operational (with a boolean) and the column per_tar_code indicates
 the status of either the fishway or DC. In the database four types of operation are set,  "1"=normal operation,
 "2"=Device stopped in normal operation (ie lift ascending, high tide...),
 "3"="Stopped for maintenance or other problem",
-"4"="Works but not fully operational, ie flow problem, flood, clogged with debris...",
+"4"="Works but not fully operational,i.e.flow problem, flood, clogged with debris...",
 "5"="Not known")
 }
 \section{Slots}{
@@ -37,12 +37,27 @@ the status of either the fishway or DC. In the database four types of operation 
 }
 
 \examples{
-require(stacomiR)
-stacomi(gr_interface=FALSE,
-	login_window=FALSE,
+stacomi(
 	database_expected=FALSE)
-## An example that will work with the database installed only
+# An example that will work with the database installed only and schema iav in the database
+# prompt for user and password but you can set appropriate options for host, port and dbname
+
 \dontrun{
+	stacomi(
+			database_expected=TRUE, sch='iav')	
+	if (interactive()){
+		if (!exists("user")){
+			user <- readline(prompt="Enter user: ")
+			password <- readline(prompt="Enter password: ")	
+		}	
+	}
+	options(					
+			stacomiR.dbname = "bd_contmig_nat",
+			stacomiR.host ="localhost",
+			stacomiR.port = "5432",
+			stacomiR.user = user,
+			stacomiR.user = password						
+	)	
   r_df=new("report_df")
   r_df<-choice_c(r_df,
 	  1,
@@ -71,19 +86,20 @@ plot(r_df,plot.type="4")
 
 }
 \seealso{
-Other report Objects: \code{\link{report_annual-class}},
-  \code{\link{report_dc-class}},
-  \code{\link{report_env-class}},
-  \code{\link{report_ge_weight-class}},
-  \code{\link{report_mig-class}},
-  \code{\link{report_mig_char-class}},
-  \code{\link{report_mig_env-class}},
-  \code{\link{report_mig_interannual-class}},
-  \code{\link{report_mig_mult-class}},
-  \code{\link{report_sample_char-class}},
-  \code{\link{report_sea_age-class}},
-  \code{\link{report_silver_eel-class}},
-  \code{\link{report_species-class}}
+Other report Objects: 
+\code{\link{report_annual-class}},
+\code{\link{report_dc-class}},
+\code{\link{report_env-class}},
+\code{\link{report_ge_weight-class}},
+\code{\link{report_mig-class}},
+\code{\link{report_mig_char-class}},
+\code{\link{report_mig_env-class}},
+\code{\link{report_mig_interannual-class}},
+\code{\link{report_mig_mult-class}},
+\code{\link{report_sample_char-class}},
+\code{\link{report_sea_age-class}},
+\code{\link{report_silver_eel-class}},
+\code{\link{report_species-class}}
 }
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}

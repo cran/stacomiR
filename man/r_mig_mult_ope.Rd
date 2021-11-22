@@ -4,7 +4,9 @@
 \name{r_mig_mult_ope}
 \alias{r_mig_mult_ope}
 \title{Counting operations for three different counting device in Arzal (Vilaine, France)}
-\format{An object of class report_ope}
+\format{
+An object of class report_ope
+}
 \usage{
 r_mig_mult_ope
 }

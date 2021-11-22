@@ -4,17 +4,18 @@
 \alias{funpointreport_sample_char}
 \title{Point graph from ggplot}
 \usage{
-funpointreport_sample_char(h, ...)
+funpointreport_sample_char(...)
 }
 \arguments{
-\item{h}{handler passed by the graphical interface}
-
 \item{...}{Additional parameters}
+}
+\value{
+Nothing, calls plot method \code{plot.type = "3"} on data assigned in envir_stacomi
 }
 \description{
 assigns an object g in envir_stacomi for eventual modification of the plot
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
 }
 \keyword{internal}

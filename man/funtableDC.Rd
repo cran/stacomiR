@@ -2,17 +2,18 @@
 % Please edit documentation in R/report_dc.R
 \name{funtableDC}
 \alias{funtableDC}
-\title{FuntableDC create a table output for report_dc class}
+\title{funtableDC create a table output for report_dc class}
 \usage{
-funtableDC(h, ...)
+funtableDC(...)
 }
 \arguments{
-\item{h}{Handler}
-
 \item{...}{Additional parameters}
 }
+\value{
+Nothing, calls the summary method on data assigned in envir_stacomi
+}
 \description{
-FuntableDC create a table output for report_dc class
+funtableDC create a table output for report_dc class
 }
 \author{
 Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}

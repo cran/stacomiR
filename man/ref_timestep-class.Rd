@@ -11,7 +11,7 @@ Describes a time step
  Objects can be created by calls of the form
 \code{new("ref_timestep",
 dateDebut="POSIXt",step_duration=numeric(),nb_step=numeric(),nocurrent_step=integer())}.
-\describe{ 
+\describe{
 \item{list("dateDebut")}{Object of class \code{"POSIXt"} Starting
 date }
 \item{:}{Object of class \code{"POSIXt"} Starting date }
