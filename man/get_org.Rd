@@ -13,6 +13,6 @@ The name of the structure (org_code)
 this function gets the name of the stucture as it is set in the database
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

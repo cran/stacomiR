@@ -17,5 +17,5 @@ nothing, called for its side effect, removing lines from the database
 supprime method for report_mig_interannual class, deletes values in table t_bilanmigrationjournalier_bjo
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/report_mig_char.R
 \name{setasqualitative,report_mig_char-method}
 \alias{setasqualitative,report_mig_char-method}
-\title{handler for report_mig_char}
+\title{Turns a continuous parameter into discrete values}
 \usage{
 \S4method{setasqualitative}{report_mig_char}(object, par, silent = FALSE, ...)
 }
@@ -14,23 +14,15 @@
 \item{silent}{Default FALSE, if TRUE the program should not display messages}
 
 \item{...}{Additional parms to the cut method \link[base]{cut}}
-
-\item{h}{handler}
 }
 \value{
 An object of class \link{ref_parquan-class} with lines removed from \code{r@data[["parquan"]]}
 and added (after transformation to qualitative values) in \code{r@data[["parqal"]]}
 }
 \description{
-internal use
+The parm name becomes "parm_discrete". New values are created in the `data[["parqual"]]` slot 
+of the report and the parqual slot is updated
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
-\keyword{Turns}
-\keyword{a}
-\keyword{internal}
-\keyword{into}
-\keyword{parameter}
-\keyword{qualitative}
-\keyword{quantitative}

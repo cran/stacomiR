@@ -1,45 +1,9 @@
-#' function used to clean the objects within the group and the graphs and
-#' also elements remaining in the envir_stacomi environment
-#' 
-#' 
-#' @param \dots additional arguments passed to the function
-#' @return Nothing
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
-quitte=function(...){
-	# all gWidgets object are assigned in .GlobalEnv, the other are in envir_stacomi
-	# note R3.4.0 calling below introduces a bug (cannot destroy external pointer)
-	# so we call dispose on any object which will destroy the top-level window
-	# and we call it again
-#	if (exists("ggroupboutonsbas",envir=.GlobalEnv)) 
-#		# delete for something added with the add method
-#		delete(ggroupboutons,ggroupboutonsbas)
-#		
-#
-#	if (exists("notebook",envir=envir_stacomi))
-#		dispose(notebook)
-#	
-#
-#	if (exists("group",envir=.GlobalEnv)) {
-#		delete(ggroupboutons,group) 
-#		rm(group,envir= .GlobalEnv)
-#	}
-	if (exists("envir_stacomi")){
-		miettes <- ls(envir=envir_stacomi)
-		if (length(miettes)> 0 ) {
-			miettes=miettes[!miettes%in%c("datawd","sch","database_expected")]
-			rm(list=miettes,envir=envir_stacomi)
-		}      
-	}
-#	if (length(ls(pattern="frame",envir=envir_stacomi))!=0) {
-#		rm(list=ls(pattern="frame",envir=envir_stacomi),envir=envir_stacomi)
-#	}
-	if (exists("g")) rm(g)
-}
+
 
 #' function used for some lattice graphs with dates 
 #' @param vectordate date or POSIXt 
 #' @return vectordate (without class)
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 graphdate<-function(vectordate){
 	vectordate <- as.POSIXct(vectordate)
 	attributes(vectordate) <- NULL
@@ -59,7 +23,7 @@ graphdate<-function(vectordate){
 #' 
 #' @param text a text string which might contain no utf8 characters
 #' @return text
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 fun_char_spe<-function(text){
 	text <- gsub("\u00e9","e",text) 
 	text <- gsub("\u00e8","e",text) 
@@ -83,7 +47,7 @@ fun_char_spe<-function(text){
 #' 
 #' @param vect a character vector
 #' @return A list of value
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 vector_to_listsql<-function(vect)
 {
@@ -186,7 +150,7 @@ split_per_day<-function(data,horodatedebut,horodatefin){
 #' @param jour_mois logical, add column with day of month
 #' @param heure logical, add column with hour
 #' @return The dataframe with date column filled
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 fun_date_extraction=function(data, # tableau de donnees e importer
 		nom_coldt, # nom de la colonne
@@ -234,17 +198,28 @@ fun_date_extraction=function(data, # tableau de donnees e importer
 #' @param palette, the name of the RColorBrewer palette, defaults to "Set2", ignored for other
 #' color gradient functions and if a named vector of colors is provided
 #' @param color_function, the name of the function used to brew the colors, one for 
-#' "brewer.pal", "gray.colors", default to "brewer.pal, this argument is ignored if a
+#' "brewer.pal", "gray.colors", "random", default to "brewer.pal, this argument is ignored if a
 #' named vector of color is passed.
 #' @return A dataframe with two columns, the vector (name) and the color (color) as a reordered factor
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
-colortable<-function(color=NULL, vec, palette="Set2", color_function="brewer.pal"){
+colortable <- function(color=NULL, vec, palette="Set2", color_function=c("brewer.pal","gray.colors","random")){
+	color_function <- match.arg(color_function, choices = c("brewer.pal","gray.colors","random"))
 	if (is.null(color)) {
 		if (color_function == "brewer.pal") {
-			color <- RColorBrewer::brewer.pal(length(vec),name=palette)[1:length(vec)]
+			number_available <- RColorBrewer::brewer.pal.info[rownames(RColorBrewer::brewer.pal.info)==palette,"maxcolors"]
+			if (number_available>=length(vec)){
+			color <- RColorBrewer::brewer.pal(length(vec),name=palette)[1:length(vec)] # 1:length(vec) as palette return minimum 3 values
+			}	 else {
+				message(gettextf("Palette %s has only got %s values and you need %s", palette, number_available, length(vec)))
+				qual_col_pals <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == 'qual',]
+				color <- sample(unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals))),length(vec))
+			}
 		} else if (color_function == "gray.colors"){
 			color=grDevices::gray.colors(length(vec))
+		} else if (color_function == "random"){
+			color <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+			color <- sample(color, size=length(vec))
 		}
 		names(color)<-vec
 	} else if (length(color) != length(vec)){
@@ -274,7 +249,7 @@ colortable<-function(color=NULL, vec, palette="Set2", color_function="brewer.pal
 #' @param arret Should this cause the program to stop ?
 #' @param ... Additional parameters passed to print
 #' @return nblignes Assigned in envir_stacomi
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 funout <- function(text,arret=FALSE,...){
 	if(arret) stop(text) else print(text,quote=FALSE,...)
@@ -284,7 +259,7 @@ funout <- function(text,arret=FALSE,...){
 #' 
 #' @param default passed to rlang::get_env
 #' @return The schema in envir_stacomi
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 get_schema <- function(default=NULL){
 	if (!exists("envir_stacomi")) stop("envir_stacomi not created did you run stacomi() ?")
@@ -296,7 +271,7 @@ get_schema <- function(default=NULL){
 #' this function gets the name of the stucture as it is set in the database
 #' 
 #' @return The name of the structure (org_code)
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 get_org <- function(){
 return(toupper(gsub("\\.", "", get_schema())))

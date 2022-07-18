@@ -11,7 +11,7 @@
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new('ref_dc', dc_selected=integer(), ouvrage=integer(),
 #' data=data.frame())}.
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @keywords classes
 #' @family referential objects
 setClass(
@@ -59,7 +59,7 @@ setValidity(
 #' Method to load the counting devices of the control station
 #' @param object An object of class \link{ref_dc-class}
 #' @return an object of class ref_dc with data loaded
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod(
     "charge",
     signature = signature("ref_dc"),
@@ -123,7 +123,7 @@ setMethod(
 #' Finally, if an objectreport is passed as a parameter, the method will do a charge_with_filter to select only the taxa present in the counting devices
 #' @param object an object of class ref_dc
 #' @param dc a character vector of dc chosen
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class ref_dc with dc selected
 #' @examples
 #' \dontrun{
@@ -139,9 +139,9 @@ setMethod(
     signature = signature("ref_dc"),
     definition = function(object,
                           dc) {
-        if (class(dc) == "numeric") {
+        if (inherits(dc, "numeric")) {
             dc <- as.integer(dc)
-        } else if (class(dc) == "character") {
+        } else if (inherits(dc, "character")) {
             dc = as.integer(as.numeric(dc))
         }
         if (any(is.na(dc)))

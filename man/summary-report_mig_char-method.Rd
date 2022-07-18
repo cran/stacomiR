@@ -21,5 +21,5 @@ A table with the summary
 summary for report_mig_char
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

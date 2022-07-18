@@ -5,18 +5,29 @@
 \alias{choice_c.report_species}
 \title{command line interface for \link{report_species-class}}
 \usage{
-\S4method{choice_c}{report_species}(object, dc, split = "none", anneedebut, anneefin, silent = FALSE)
+\S4method{choice_c}{report_species}(
+  object,
+  dc,
+  taxa = "all",
+  split = "none",
+  start_year,
+  end_year,
+  silent = FALSE
+)
 }
 \arguments{
 \item{object}{An object of class \link{report_species-class}}
 
 \item{dc}{A numeric or integer, the code of the dc, coerced to integer,see \link{choice_c,ref_dc-method}}
 
+\item{taxa}{Either 'all' (default) or a species name in latin or the SANDRE code for species (ie 2038=Anguilla anguilla),
+it should match the ref.tr_taxon_tax referential table in the stacomi database, see \link{choice_c,ref_taxa-method}}
+
 \item{split}{one of c('none','week','month','year')}
 
-\item{anneedebut}{The starting the first year, passed as character or integer}
+\item{start_year}{The starting the first year, passed as character or integer}
 
-\item{anneefin}{the finishing year}
+\item{end_year}{the finishing year}
 
 \item{silent}{Boolean, if TRUE, information messages are not displayed}
 }
@@ -27,5 +38,5 @@ An object of class \link{report_species-class} with data selected
 command line interface for \link{report_species-class}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

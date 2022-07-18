@@ -21,5 +21,5 @@ DF operation, DC operation). So unlike in most report classes where the charge m
 used by the graphical interface, it is necessary to run charge for report_mig.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

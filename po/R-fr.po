@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stacomiR 0.5.0\n"
-"POT-Creation-Date: 2021-11-15 10:21\n"
-"PO-Revision-Date: 2021-11-15 10:22+0100\n"
+"Project-Id-Version: stacomiR 0.6.1\n"
+"POT-Creation-Date: 2022-03-11 10:45\n"
+"PO-Revision-Date: 2022-03-11 11:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -12,8 +12,8 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Writing monthly summary in the database"
-msgstr "Ecriture du bilan mensuel dans la base"
+msgid "Writing monthly summary (n=%s) in the database"
+msgstr "Ecriture du résumé mensuel (n=%s) dans la base de données"
 
 msgid "The length of color must be 11"
 msgstr "La longueur de color doit être 1"
@@ -108,6 +108,9 @@ msgstr "durée min= %s jours"
 msgid "Calculation of the monthly balance sheet"
 msgstr "Calcul des bilans mensuels"
 
+msgid "Writing of %s"
+msgstr "Ecriture de %s"
+
 msgid "writing of %s"
 msgstr "ecriture de %s"
 
@@ -158,9 +161,6 @@ msgid ""
 msgstr ""
 "Problème de formatage, le vecteur de caractères que vous essayez de passer "
 "en horodate n'a pas été converti. Vérifier un exemple ou la documentation"
-
-msgid "Loading parameters query completed"
-msgstr "La requête est effectuée pour charger les paramètres"
 
 msgid "No data for selected device, taxa and stage"
 msgstr "Pas de données les dispositifs, taxons et stades sélectionnés"
@@ -284,7 +284,7 @@ msgstr ""
 "Pas de dc selectionne dans repor_dc@dc@dc_selected, avez vous oublié de "
 "lancer la méthode charge ?"
 
-msgid "Time steps loaded fot this counting device"
+msgid "Time steps loaded for this counting device"
 msgstr "Les pas de temps ont été chargés pour ce DC"
 
 msgid "You need to choose the starting date"
@@ -324,6 +324,20 @@ msgid "operation"
 msgstr "opération"
 
 msgid ""
+"Writing the ggplot into envir_stacomi environment : "
+"g_report_dc_1=get('g_report_dc_1',envir_stacomi)"
+msgstr ""
+"Ecriture du graphique dans l'environnement envir_stacomi: écrire "
+"g_report_dc_1=get('g_report_dc_1',envir_stacomi)"
+
+msgid ""
+"Writing the ggplot into envir_stacomi environment : "
+"g_report_dc_2=get('g_report_dc_2',envir_stacomi)"
+msgstr ""
+"Ecriture du graphique dans l'environnement envir_stacomi: "
+"g_report_dc_2=get('g_report_dc_2',envir_stacomi)"
+
+msgid ""
 "Writing the table into envir_stacomi environment : write "
 "periodeDC=get('periodeDC',envir_stacomi)"
 msgstr ""
@@ -342,6 +356,18 @@ msgstr "Arrêt"
 msgid "Normal func"
 msgstr "Fonct normal"
 
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Operation of the counting device"
+msgstr "Opération du dispositif de comptage"
+
+msgid "Shutdowns types for this counting device"
+msgstr "Types d'arrêts du DC"
+
+msgid "Working of the counting device"
+msgstr "Fonctionnement du dispositif de comptage"
+
 msgid "Normal oper"
 msgstr "Fonct normal"
 
@@ -354,17 +380,12 @@ msgstr "Dysfonct"
 msgid "Unknown"
 msgstr "Inconnu"
 
-msgid "Operation of the counting device"
-msgstr "Opération du dispositif de comptage"
-
-msgid "Shutdowns types for this counting device"
-msgstr "Types d'arrêts du DC"
-
-msgid "Working of the counting device"
-msgstr "Fonctionnement du dispositif de comptage"
-
-msgid "Writing of %s"
-msgstr "Ecriture de %s"
+msgid ""
+"Writing the ggplot into envir_stacomi environment : g_report_dc_4 <- "
+"get('g_report_dc_4',envir_stacomi)"
+msgstr ""
+"Ecriture du graphique dans l'environnement envir_stacomi : g_report_dc_4 <- "
+"get('g_report_dc_4',envir_stacomi)"
 
 msgid "Writing of %s this might take a while, please be patient ..."
 msgstr "Ecriture de %s ceci peut être long, de grace soyez patient..."
@@ -417,6 +438,9 @@ msgstr "statistiques du bilan pour DF=%s"
 
 msgid "df_code=%s"
 msgstr "df_code=%s"
+
+msgid "No measure station selected"
+msgstr "Pas de station de mesure sélectionnée"
 
 msgid "Environmental conditions loading query completed"
 msgstr "La requête est effectuée pour charger les conditions environnementales"
@@ -581,7 +605,7 @@ msgid "Statistics about migration :"
 msgstr "Statistiques concernant la migration :"
 
 msgid "duplicated values in No.pas"
-msgstr "No.pas contient des doublons"
+msgstr "no.pas contient des doublons"
 
 msgid "Cumulative migration"
 msgstr "Migration cumulée"
@@ -608,17 +632,14 @@ msgstr "Ecriture du bilan journalier dans la base %s"
 msgid "Summary exists :%s Overwrite ?"
 msgstr "Un résumé existe :%s Ecraser ?"
 
-msgid "with"
-msgstr "avec"
-
-msgid "without"
-msgstr "sans"
-
 msgid "This report should be for just one taxa"
 msgstr "Ce bilan ne devrait être que pour un taxon"
 
 msgid "length(object@parqual)==1|length(object@parquan)==1 not TRUE"
 msgstr "length(object@parqual)==1|length(object@parquan)==1 not TRUE"
+
+msgid "with"
+msgstr "avec"
 
 msgid "You need to choose at least one parameter qualitative or quantitative"
 msgstr ""
@@ -641,8 +662,14 @@ msgstr ""
 msgid "The parameter %s is not in the selected parameters"
 msgstr "Le paramètre %s n'est pas dans les paramètres sélectionnés"
 
-msgid "No data for this parameter, nothing to do"
-msgstr "Pas de données pour ce paramètre, rien à faire"
+msgid "No data for this parameter : %s, nothing to do"
+msgstr "Pas de données pour ce paramètre: %s, rien à faire"
+
+msgid "Only NA produced, please check the bounds"
+msgstr "Ne génère que des NA, je vous prie de vérifier les limites"
+
+msgid "You are producing %s NA values, maybe change your limits"
+msgstr "Vous produisez %s NA values, il faut peut-être changer les limites"
 
 msgid ""
 "%s lines have been converted from quantitative to qualitative parameters"
@@ -662,6 +689,9 @@ msgstr "Les données calculées sont dans le slot calcdata"
 
 msgid "no data in calcdata, have you forgotten to run calculations ?"
 msgstr "pas de données dans calcdata, auriez vous oublié de lancer le calcul ?"
+
+msgid "No data loaded in qualitative parameters"
+msgstr "Aucune donnée chargée dans les paramètres qualitatifs"
 
 msgid "Classes"
 msgstr "Classes"
@@ -691,7 +721,7 @@ msgid "Summary for dc %s, taxa %s, stage %s."
 msgstr "Summary pour dc %s, taxon %s, stade %s."
 
 msgid "r_mig_env object is stocked into envir_stacomi environment"
-msgstr "L'objet Bilan r_mig_env est stocké dans l'environnement envir_stacomi"
+msgstr "l'objet Bilan r_mig_env est stocké dans l'environnement envir_stacomi"
 
 msgid "You don't have any environmental conditions within the time period"
 msgstr ""
@@ -780,17 +810,34 @@ msgstr ""
 msgid "Running report_mig to correct data for year %s"
 msgstr "Calcul du Bilan Migration pour corriger les données de l'année %s"
 
+msgid "There is a difference between report_annual Na= %s and report_mig"
+msgstr "Il y a une différence entre report_annual Na= %s et report_mig"
+
+msgid ""
+"Nj= %s but the sums are the same between report_mig and the database "
+"(t_bilanmigrationjournalier_bjo)."
+msgstr ""
+"Nj= %s mais les sommes sont les mêmes entre report_mig et la base "
+"(t_bilanmigrationjournalier_bjo)."
+
+msgid ""
+"This difference is due to migration report overlapping between two years and "
+"the program. No writing in the db."
+msgstr ""
+"Cette difference est due à des périodes de migration qui chevauchent entre "
+"deux années. Pas d'écriture en base."
+
 msgid "Data changed, rerun ?"
 msgstr "Données changées, refaire tourner ?"
 
-msgid "Attention, there is no migration summary for this year"
-msgstr "Attention il n'existe pas de bilan migration pour cette année"
+msgid "Attention, there is no migration summary for these year"
+msgstr "Attention, il n'existe pas de bilan migration pour ces années"
 
 msgid ", this taxa and this stage (report_mig_interannual.r)"
 msgstr ", ce taxon et ce stade report_mig_interannual.r)"
 
-msgid "Annual migrations query completed"
-msgstr "La requête est effectuée pour charger les migrations sur les années"
+msgid "Interannual migrations query completed"
+msgstr "La requête pour les migrations interannuelles est terminée"
 
 msgid ""
 "Writing report_mig_interannual in the environment envir_stacomi : write "
@@ -844,8 +891,8 @@ msgstr ""
 "ATTENTION : Veuillez effectuer un Bilan Migration pour au moins une des "
 "annees selectionnees avant de lancer un bilan interannuel"
 
-msgid "Migration for years"
-msgstr "Migration pour années"
+msgid "Migration"
+msgstr "Migration"
 
 msgid "Historical amplitude"
 msgstr "Amplitue historique"
@@ -863,8 +910,8 @@ msgstr ""
 msgid "Choose year"
 msgstr "Choisir l'année"
 
-msgid "%s %s, Cumulated numbers %s"
-msgstr "%s %s, Effectifs cumulés %s"
+msgid "%s, %s, %s cum %s"
+msgstr "%s, %s, %s cum %s"
 
 msgid "Annual migration percentage"
 msgstr "Pourcentage de la migration annuelle"
@@ -894,6 +941,12 @@ msgstr "ne marche pas pour graphique saisonnier"
 
 msgid "plot.type argument invalid"
 msgstr "argument plot.type non valide"
+
+msgid "The chosen year"
+msgstr "L'année choisie"
+
+msgid "should be in available years :"
+msgstr "devrait être dans les années disponibles :"
 
 msgid "Choice made, and object report_mig_mult assigned in envir_stacomi"
 msgstr "Choix effectué et objet report_mig_multécrit dans envir_stacomi"
@@ -1146,6 +1199,9 @@ msgstr ""
 msgid "horodatefin not column names for data"
 msgstr "horodatefin n'apparaît pas dans les noms de colonnes dans les données"
 
+msgid "Palette %s has only got %s values and you need %s"
+msgstr "Palette %s n'a que %s valeurs il vous en faut %s"
+
 msgid "The color argument should have length %s"
 msgstr "L’argument color doit avoir une longueur %s"
 
@@ -1164,6 +1220,18 @@ msgstr[0] "%d  opération\n"
 msgstr[1] ""
 "%d  opérations\n"
 "\n"
+
+#~ msgid "Loading parameters query completed"
+#~ msgstr "La requête est effectuée pour charger les paramètres"
+
+#~ msgid "Migration for years"
+#~ msgstr "Migration pour années"
+
+#~ msgid "%s %s, Cumulated numbers %s"
+#~ msgstr "%s %s, Effectifs cumulés %s"
+
+#~ msgid "without"
+#~ msgstr "sans"
 
 #, fuzzy
 #~ msgid ""
@@ -1370,9 +1438,6 @@ msgstr[1] ""
 
 #~ msgid "calculation"
 #~ msgstr "calcul"
-
-#~ msgid "Plot for qualitative parm"
-#~ msgstr "graphique pour paramètre qualitatif"
 
 #~ msgid "plot for quantitative parm"
 #~ msgstr "graphique pour paramètre quantitatif"
@@ -1591,9 +1656,6 @@ msgstr[1] ""
 
 #~ msgid "Qualitative"
 #~ msgstr "Caractéristique qualitative"
-
-#~ msgid "No Parameter selected"
-#~ msgstr "Pas de paramètre choisi"
 
 #~ msgid ""
 #~ "Error : no qualitative parameters in the database (the query returns 0 "
@@ -1845,9 +1907,6 @@ msgstr[1] ""
 
 #~ msgid "Fishway without counting device (TODO)"
 #~ msgstr "DF sans DC (TODO)"
-
-#~ msgid "Migration"
-#~ msgstr "Migration"
 
 #~ msgid "Multiple migrations"
 #~ msgstr "Migrations multiples"

@@ -15,7 +15,7 @@
 #' @slot horodatefin An object of class \link{ref_horodate-class}
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new('report_sample_char', ...)}
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_sample_char-example.R
@@ -32,7 +32,7 @@ setClass(Class = "report_sample_char", representation = representation(data = "A
 #' @param object An object of class \link{report_sample_char-class}
 #' @param silent Boolean if TRUE messages are not displayed
 #' @return An object of class \link{report_sample_char-class} with slot data \code{@data} filled
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases connect.report_sample_char
 setMethod("connect", signature = signature("report_sample_char"), definition = function(object,
     silent = FALSE) {
@@ -45,8 +45,8 @@ setMethod("connect", signature = signature("report_sample_char"), definition = f
     requete@datefin <- object@horodatefin@horodate
     requete@order_by = "ORDER BY ope_date_debut"
     requete@and = paste(" AND ope_dic_identifiant in ", vector_to_listsql(object@dc@dc_selected),
-        " AND lot_tax_code in ", vector_to_listsql(object@taxa@data$tax_code), " AND lot_std_code in ",
-        vector_to_listsql(object@stage@data$std_code), " AND car_par_code in ", vector_to_listsql(object@par@par_selected),
+        " AND lot_tax_code in ", vector_to_listsql(object@taxa@taxa_selected), " AND lot_std_code in ",
+        vector_to_listsql(object@stage@stage_selected), " AND car_par_code in ", vector_to_listsql(object@par@par_selected),
         sep = "")
     requete <- stacomirtools::query(requete)
     object@data <- requete@query
@@ -63,7 +63,7 @@ setMethod("connect", signature = signature("report_sample_char"), definition = f
 #' envir_stacomi
 #' @param object An object of class \link{report_sample_char-class} 
 #' @return An object of class \link{report_sample_char-class} with slots filled with user choice
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of the class \link{report_sample_char-class} with slots filled from values assigned in \code{envir_stacomi} environment
 #' @aliases charge.report_sample_char
 #' @keywords internal
@@ -125,13 +125,13 @@ setMethod("charge", signature = signature("report_sample_char"), definition = fu
 #' @param horodatefin The finishing date of the report, for this class this will be used to calculate the number of daily steps.
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_mig-class} with data selected
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_sample_char
 setMethod("choice_c", signature = signature("report_sample_char"), definition = function(object,
     dc, taxa, stage, par, horodatedebut, horodatefin, silent = FALSE) {
     # code for debug using example
-    # report_sample_char<-r_sample_char;dc=c(5,6);taxa='Anguilla
-    # anguilla';stage=c('CIV','AGJ');par=c(1785,1786,1787,'C001');horodatedebut='2010-01-01';horodatefin='2015-12-31'
+    # report_sample_char<-r_sample_char;dc=c(5,6);taxa='Anguilla anguilla'
+    # stage=c('CIV','AGJ');par=c(1785,1786,1787,'C001');horodatedebut='2010-01-01';horodatefin='2015-12-31'
     report_sample_char <- object
     report_sample_char@dc = charge(report_sample_char@dc)
     # loads and verifies the dc this will set dc_selected slot
@@ -141,11 +141,11 @@ setMethod("choice_c", signature = signature("report_sample_char"), definition = 
         report_sample_char@dc@dc_selected)
     report_sample_char@taxa <- choice_c(report_sample_char@taxa, taxa)
     report_sample_char@stage <- charge_with_filter(object = report_sample_char@stage,
-        report_sample_char@dc@dc_selected, report_sample_char@taxa@data$tax_code)
+        report_sample_char@dc@dc_selected, report_sample_char@taxa@taxa_selected)
     report_sample_char@stage <- choice_c(report_sample_char@stage, stage)
     report_sample_char@par <- charge_with_filter(object = report_sample_char@par,
-        report_sample_char@dc@dc_selected, report_sample_char@taxa@data$tax_code,
-        report_sample_char@stage@data$std_code)
+        report_sample_char@dc@dc_selected, report_sample_char@taxa@taxa_selected,
+        report_sample_char@stage@stage_selected)
     report_sample_char@par <- choice_c(report_sample_char@par, par, silent = silent)
     report_sample_char@horodatedebut <- choice_c(object = report_sample_char@horodatedebut,
         nomassign = "report_sample_char_date_debut", funoutlabel = gettext("Beginning date has been chosen\n",
@@ -163,7 +163,7 @@ setMethod("choice_c", signature = signature("report_sample_char"), definition = 
 #' @param silent Boolean, if TRUE, information messages are not displayed, only warnings and errors
 #' @return An object of class \code{\link{report_sample_char-class}} with slot \code{@data} filled
 #' @aliases calcule.report_sample_char
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod("calcule", signature = signature("report_sample_char"), definition = function(object,
     silent = FALSE) {
     # report_sample_char<-r_sample_char
@@ -212,7 +212,7 @@ setMethod("calcule", signature = signature("report_sample_char"), definition = f
 #' \code{3} points. 
 #' @param silent Stops displaying the messages
 #' @return Nothing, called for its side effect, plotting
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_sample_char
 #' @export
 setMethod("plot", signature(x = "report_sample_char", y = "missing"), definition = function(x,
@@ -269,7 +269,7 @@ setMethod("plot", signature(x = "report_sample_char", y = "missing"), definition
 #' @param silent Should the program stay silent or display messages, default FALSE
 #' @param ... Additional parameters
 #' @return Nothing, called for its side effect of printing a summary
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_sample_char
 #' @export
 setMethod("summary", signature = signature(object = "report_sample_char"), definition = function(object,
@@ -288,10 +288,10 @@ setMethod("summary", signature = signature(object = "report_sample_char"), defin
 setMethod("print", signature = signature("report_sample_char"), definition = function(x,
     ...) {
     sortie1 <- "report_sample_char=new('report_sample_char')"
-    sortie2 <- stringr::str_c("report_sample_char=choice_c(report_sample_char,",
+    sortie2 <- stringr::str_c("report_sample_char <- choice_c(report_sample_char,",
         "dc=c(", stringr::str_c(x@dc@dc_selected, collapse = ","), "),", "taxa=c(",
         stringr::str_c(shQuote(x@taxa@data$tax_nom_latin), collapse = ","), "),",
-        "stage=c(", stringr::str_c(shQuote(x@stage@data$std_code), collapse = ","),
+        "stage=c(", stringr::str_c(shQuote(x@stage@stage_selected), collapse = ","),
         "),", "par=c(", stringr::str_c(shQuote(x@par@par_selected), collapse = ","),
         "),", "horodatedebut=", shQuote(strftime(x@horodatedebut@horodate, format = "%d/%m/%Y %H-%M-%S")),
         ",horodatefin=", shQuote(strftime(x@horodatefin@horodate, format = "%d/%m/%Y %H-%M-%S")),
@@ -301,53 +301,4 @@ setMethod("print", signature = signature("report_sample_char"), definition = fun
     funout(stringr::str_c(sortie2, ...))
     return(invisible(NULL))
 })
-
-
-#' fundensityreport_sample_char uses ggplot2 to draw density plots
-#' 
-#' assigns an object g in envir_stacomi for eventual modification of the plot
-#' @param ... Additional parameters
-#' @return Nothing, calls the plot method \code{plot.type = "1"} on data assigned in envir_stacomi
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
-#' @keywords internal
-fundensityreport_sample_char = function(...) {
-    report_sample_char <- get("report_sample_char", envir = envir_stacomi)
-    report_sample_char <- charge(report_sample_char)
-    report_sample_char <- connect(report_sample_char)
-    report_sample_char <- calcule(report_sample_char)
-    plot(report_sample_char, plot.type = "1")
-		return(invisible(NULL))
-
-}
-
-#' Boxplots for ggplot2
-#' 
-#' assigns an object g in envir_stacomi for eventual modification of the plot
-#' @param ... Additional parameters
-#' @return Nothing, calls plot method \code{plot.type = "2"} on data assigned in envir_stacomi
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
-#' @keywords internal
-funboxplotreport_sample_char = function(...) {
-    report_sample_char <- get("report_sample_char", envir = envir_stacomi)
-    report_sample_char <- charge(report_sample_char)
-    report_sample_char <- connect(report_sample_char)
-    report_sample_char <- calcule(report_sample_char)
-    plot(report_sample_char, plot.type = "2")
-}
-
-
-#' Point graph from ggplot
-#' 
-#' assigns an object g in envir_stacomi for eventual modification of the plot
-#' @param ... Additional parameters
-#' @return Nothing, calls plot method \code{plot.type = "3"} on data assigned in envir_stacomi
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
-#' @keywords internal
-funpointreport_sample_char = function(...) {
-    report_sample_char <- get("report_sample_char", envir = envir_stacomi)
-    report_sample_char <- charge(report_sample_char)
-    report_sample_char <- connect(report_sample_char)
-    report_sample_char <- calcule(report_sample_char)
-    plot(report_sample_char, plot.type = "3")
-}
 

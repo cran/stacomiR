@@ -28,7 +28,7 @@
 #' @aliases report_mig_mult
 #' @keywords classes
 #' @example inst/examples/report_mig_mult-example.R
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 setClass(Class = "report_mig_mult", representation = representation(dc = "ref_dc",
 				taxa = "ref_taxa", stage = "ref_stage", timestep = "ref_timestep_daily", data = "data.frame",
@@ -58,7 +58,7 @@ setValidity("report_mig_mult", function(object) {
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return An object of class \link{report_mig_mult-class} with slots filled from values assigned in \code{envir_stacomi} environment
 #' @aliases charge.report_mig_mult
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod("charge", signature = signature("report_mig_mult"), definition = function(object,
 				silent = FALSE) {
 			report_mig_mult <- object
@@ -141,7 +141,7 @@ setMethod("charge", signature = signature("report_mig_mult"), definition = funct
 #' @param datefin The finishing date of the report, for this class this will be used to calculate the number of daily steps.
 #' @param silent Should messages be hided default FALSE
 #' @return An object of class \link{report_mig_mult-class} with data selected
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_mig_mult
 setMethod("choice_c", signature = signature("report_mig_mult"), definition = function(object,
 				dc, taxa, stage, datedebut, datefin, silent = FALSE) {
@@ -156,10 +156,12 @@ setMethod("choice_c", signature = signature("report_mig_mult"), definition = fun
 			# loads and verifies the dc
 			report_mig_mult@dc <- choice_c(object = report_mig_mult@dc, dc)
 			# only taxa present in the report_mig are used
-			report_mig_mult@taxa <- charge_with_filter(object = report_mig_mult@taxa, report_mig_mult@dc@dc_selected)
+			report_mig_mult@taxa <- charge_with_filter(object = report_mig_mult@taxa, 
+					report_mig_mult@dc@dc_selected)
 			report_mig_mult@taxa <- choice_c(report_mig_mult@taxa, taxa)
-			report_mig_mult@stage <- charge_with_filter(object = report_mig_mult@stage, dc_selected = report_mig_mult@dc@dc_selected,
-					taxa_selected = report_mig_mult@taxa@data$tax_code)
+			report_mig_mult@stage <- charge_with_filter(object = report_mig_mult@stage, 
+					dc_selected = report_mig_mult@dc@dc_selected,
+					taxa_selected = report_mig_mult@taxa@taxa_selected)
 			report_mig_mult@stage <- choice_c(report_mig_mult@stage, stage)
 			report_mig_mult@timestep <- choice_c(report_mig_mult@timestep, datedebut, datefin)
 			assign("report_mig_mult", report_mig_mult, envir = envir_stacomi)
@@ -307,12 +309,12 @@ setMethod("connect", signature = signature("report_mig_mult"), definition = func
 			if (length(report_mig_mult@dc@dc_selected) == 0)
 				stop("DC has length zero, are you connected to the right schema, do you use the right dc number ?")
 			dc = vector_to_listsql(report_mig_mult@dc@dc_selected)
-			if (length(report_mig_mult@taxa@data$tax_code) == 0)
+			if (length(report_mig_mult@taxa@taxa_selected) == 0)
 				stop("Taxa has length zero, are you connected to the right schema, do you use the right taxa ?")
-			tax = vector_to_listsql(report_mig_mult@taxa@data$tax_code)
-			if (length(report_mig_mult@stage@data$std_code) == 0)
+			tax = vector_to_listsql(report_mig_mult@taxa@taxa_selected)
+			if (length(report_mig_mult@stage@stage_selected) == 0)
 				stop("Stage has length zero, are you connected to the right schema, do you use the right stage ?")
-			std = vector_to_listsql(report_mig_mult@stage@data$std_code)
+			std = vector_to_listsql(report_mig_mult@stage@stage_selected)
 			sch = get_schema()
 			req@select = stringr::str_c("SELECT 
 							ope_identifiant,
@@ -343,7 +345,7 @@ setMethod("connect", signature = signature("report_mig_mult"), definition = func
 				cat(stringr::str_c("data collected from the database nrow=", nrow(report_mig_mult@data),
 								"\n"))
 			# recuperation des coefficients si il y a des civelles dans le report
-			if (2038 %in% report_mig_mult@taxa@data$tax_code) {
+			if (2038 %in% report_mig_mult@taxa@taxa_selected) {
 				req = new("RequeteDBwheredate")
 				req@select = paste("select * from", sch, "tj_coefficientconversion_coe")
 				req@datedebut = as.POSIXlt(report_mig_mult@timestep@dateDebut)
@@ -390,15 +392,15 @@ setMethod("connect", signature = signature("report_mig_mult"), definition = func
 #' @param color_ope Default NULL, argument passed for the plot.type='standard' method. A vector of color for the operations. Default to brewer.pal(4,'Paired')
 #' @param ... Additional arguments passed to matplot or plot if plot.type='standard', see ... in \link{fungraph_glasseel} and \link{fungraph}
 #' @return Nothing, called for its side effect of plotting
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_mig_mult
 #' @export
 setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = function(x,
 				plot.type = "standard", color = NULL, color_ope = NULL, silent = FALSE, ...) {
 			# print('entering plot function') report_mig_mult<-r_mig_mult;silent=FALSE
 			report_mig_mult <- x
-			lestaxa = report_mig_mult@taxa@data
-			lesstage = report_mig_mult@stage@data
+			the_taxa = report_mig_mult@taxa@data[report_mig_mult@taxa@data$tax_code %in% report_mig_mult@taxa@taxa_selected, ]
+			the_stages = report_mig_mult@stage@data[report_mig_mult@stage@data$std_code %in% report_mig_mult@stage@stage_selected, ]
 			lesdc = as.numeric(report_mig_mult@dc@dc_selected)
 			# ==========================type=1=============================
 			if (plot.type == "standard") {
@@ -410,15 +412,15 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 				# boucle&&&&&&&&&&&&&&&&&&&&&&&&&&&
 				compte <- 0
 				for (dcnum in 1:length(lesdc)) {
-					for (taxanum in 1:nrow(lestaxa)) {
-						for (stagenum in 1:nrow(lesstage)) {
+					for (taxanum in 1:nrow(the_taxa)) {
+						for (stagenum in 1:nrow(the_stages)) {
 							# dcnum=1;taxnum=1;stagenum=1
-							taxa <- lestaxa[taxanum, "tax_nom_latin"]
-							stage <- lesstage[stagenum, "std_libelle"]
+							taxa <- the_taxa[taxanum, "tax_nom_latin"]
+							stage <- the_stages[stagenum, "std_libelle"]
 							dc <- lesdc[dcnum]
 							data <- report_mig_mult@calcdata[[stringr::str_c("dc_", dc)]][["data"]]
-							data <- data[data$lot_tax_code == lestaxa[taxanum, "tax_code"] &
-											data$lot_std_code == lesstage[stagenum, "std_code"], ]
+							data <- data[data$lot_tax_code == the_taxa[taxanum, "tax_code"] &
+											data$lot_std_code == the_stages[stagenum, "std_code"], ]
 							
 							if (!is.null(data)) {
 								if (nrow(data) > 0)
@@ -476,8 +478,7 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 			}
 			# ==========================type=2=============================
 			if (plot.type == "step") {
-				lestaxa = paste(report_mig_mult@taxa@data$tax_nom_latin, collapse = ",")
-				lesstage = paste(report_mig_mult@stage@data$std_code, collapse = ",")
+
 				grdata <- data.frame()
 				for (i in 1:length(report_mig_mult@calcdata)) {
 					data <- report_mig_mult@calcdata[[i]]$data
@@ -498,8 +499,7 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 				grdata_without_hole <- fun_date_extraction(grdata_without_hole, nom_coldt = "debut_pas",
 						annee = FALSE, mois = TRUE, quinzaine = TRUE, semaine = TRUE, jour_an = TRUE,
 						jour_mois = FALSE, heure = FALSE)
-				grdata_without_hole <- grdata_without_hole[order(grdata_without_hole$no.pas),
-				]
+				grdata_without_hole <- grdata_without_hole[order(grdata_without_hole$no.pas),		]
 				grdata_without_hole$effectif_total[is.na(grdata_without_hole$effectif_total)] <- 0
 				
 				grdata_without_hole$cumsum = cumsum(grdata_without_hole$effectif_total)
@@ -515,7 +515,7 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 										`03` = "#0099A9", `04` = "#009780", `05` = "#67B784", `06` = "#CBDF7C",
 										`07` = "#FFE200", `08` = "#DB9815", `09` = "#E57B25", `10` = "#F0522D",
 										`11` = "#912E0F", `12` = "#33004B")) + ggtitle(gettextf("Cumulative count %s, %s, %s, %s",
-										dis_commentaire, lestaxa, lesstage, annee))
+										dis_commentaire, paste(the_taxa$tax_nom_latin, collapse=", "), paste(the_stages$std_libelle, collapse=","), annee))
 				print(p)
 				assign("p", p, envir = envir_stacomi)
 				assign("grdata", grdata_without_hole, envir_stacomi)
@@ -567,33 +567,33 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 #' @param silent Should the program stay silent or display messages, default FALSE
 #' @param ... Additional parameters (not used there)
 #' @return Nothing, runs funstat and funtable method for each DC
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_mig_mult
 #' @export
 setMethod("summary", signature = signature(object = "report_mig_mult"), definition = function(object,
 				silent = FALSE, ...) {
 			# report_mig_mult<-r_mig_mult; silent<-FALSE
 			report_mig_mult <- object
-			lestaxa = report_mig_mult@taxa@data
-			lesstage = report_mig_mult@stage@data
+			the_taxa = report_mig_mult@taxa@data[report_mig_mult@taxa@data$tax_code %in% report_mig_mult@taxa@taxa_selected, ]
+			the_stages = report_mig_mult@stage@data[report_mig_mult@stage@data$std_code %in% report_mig_mult@stage@stage_selected, ]
 			lesdc = as.numeric(report_mig_mult@dc@dc_selected)
 			if (!silent)
 				funout(gettext("Statistics about migration :\n", domain = "R-stacomiR"))
 			# &&&&&&&&&&&&&&&&&&&&&&&&&debut de boucle&&&&&&&&&&&&&&&&&&&&&&&&&&&
 			# dcnum=2;taxanum=1;stagenum=1
 			for (dcnum in 1:length(lesdc)) {
-				for (taxanum in 1:nrow(lestaxa)) {
-					for (stagenum in 1:nrow(lesstage)) {
+				for (taxanum in 1:nrow(the_taxa)) {
+					for (stagenum in 1:nrow(the_stages)) {
 						
-						taxa = lestaxa[taxanum, "tax_nom_latin"]
-						stage = lesstage[stagenum, "std_libelle"]
+						taxa = the_taxa[taxanum, "tax_nom_latin"]
+						stage = the_stages[stagenum, "std_libelle"]
 						DC = lesdc[dcnum]
 						
 						# preparation du jeu de donnees pour la fonction fungraph_civ
 						# developpee pour la classe report_mig
 						data <- report_mig_mult@calcdata[[stringr::str_c("dc_", DC)]][["data"]]
-						data <- data[data$lot_tax_code == lestaxa[taxanum, "tax_code"] &
-										data$lot_std_code == lesstage[stagenum, "std_code"], ]
+						data <- data[data$lot_tax_code == the_taxa[taxanum, "tax_code"] &
+										data$lot_std_code == the_stages[stagenum, "std_code"], ]
 						
 						if (!is.null(data)) {
 							if (nrow(data) > 0) {
@@ -640,7 +640,7 @@ setMethod("print", signature = signature("report_mig_mult"), definition = functi
 			sortie1 <- "report_mig_mult=new('report_mig_mult')\n"
 			sortie2 <- stringr::str_c("report_mig_mult=choice_c(report_mig_mult,", "dc=c(",
 					stringr::str_c(x@dc@dc_selected, collapse = ","), "),", "taxa=c(", stringr::str_c(shQuote(x@taxa@data$tax_nom_latin),
-							collapse = ","), "),", "stage=c(", stringr::str_c(shQuote(x@stage@data$std_code),
+							collapse = ","), "),", "stage=c(", stringr::str_c(shQuote(x@stage@stage_selected),
 							collapse = ","), "),", "datedebut=", shQuote(strftime(x@timestep@dateDebut,
 									format = "%d/%m/%Y")), ",datefin=", shQuote(strftime(end_date(x@timestep),
 									format = "%d/%m/%Y")), ")")
@@ -662,7 +662,7 @@ setMethod("print", signature = signature("report_mig_mult"), definition = functi
 #' separate rows for quantities and numbers. Several columns are according to the type of measure (MESURE, CALCULE, PONCTUEL or EXPERT).
 #' @return A data.frame with daily migrations
 #' @seealso calcule,report_mig_mult-method
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 fun_report_mig_mult_overlaps <- function(time.sequence, datasub, negative = FALSE) {
 	# browser()
@@ -847,7 +847,7 @@ fun_report_mig_mult_overlaps <- function(time.sequence, datasub, negative = FALS
 #' but is intended to work faster. In the data.frame, the total number is 
 #' 'Effectif_total' and corresponds to the addition of numbers and numbers converted from weight,
 #' the total weight is 'Poids_total'+'poids_depuis_effectifs' and corresponds to weighed glass eel plus glass eel number converted in weights.
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 fun_report_mig_mult <- function(time.sequence, datasub, negative = FALSE) {    
 	df.ts = data.frame(debut_pas = time.sequence, fin_pas = time.sequence + as.difftime(1,
@@ -910,7 +910,7 @@ fun_report_mig_mult <- function(time.sequence, datasub, negative = FALSE) {
 		datasub3$CALCULE = 0
 	if (!"EXPERT" %in% colnames(datasub3))
 		datasub3$EXPERT = 0
-	if (!"PONCUTEL" %in% colnames(datasub3))
+	if (!"PONCTUEL" %in% colnames(datasub3))
 		datasub3$PONCTUEL = 0
 	datasub3$MESURE[is.na(datasub3$MESURE)] <- 0
 	datasub3$CALCULE[is.na(datasub3$CALCULE)] <- 0
@@ -929,7 +929,7 @@ fun_report_mig_mult <- function(time.sequence, datasub, negative = FALSE) {
 #' @param time.sequence Time sequence from report_mig
 #' @param silent If silent=TRUE do not display messages
 #' @return tableau, the data frame with weight converted to numbers
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 fun_weight_conversion = function(tableau, time.sequence, silent) {
 	if (!silent)
 		funout(gettextf("dc=%s Conversion weight / number\n", unique(tableau$ope_dic_identifiant)))
@@ -976,14 +976,14 @@ fun_weight_conversion = function(tableau, time.sequence, silent) {
 #' Calculates a data.frame where all components within the list calcdata are aggregated
 #' and formatted for plot
 #' @param object An object of class \link{report_mig_mult-class}
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return A data.frame
 #' @export
 fun_aggreg_for_plot <- function(object) {
-	if (class(object) != "report_mig_mult")
+	if (!inherits(object , "report_mig_mult"))
 		stop("This function must have for argument an object of class report_mig_mult")
-	lestaxa = paste(object@taxa@data$tax_nom_latin, collapse = ",")
-	lesstage = paste(object@stage@data$std_code, collapse = ",")
+	the_taxa = paste(object@taxa@data[object@data$tax_code %in% object@taxa@taxa_selected,"tax_nom_latin"], collapse = ",")
+	the_stages = paste(object@stage@data[object@data$std_code %in% object@stage@stage_selected,"std_libelle"], collapse = ",")
 	grdata <- data.frame()
 	for (i in 1:length(object@calcdata)) {
 		data <- object@calcdata[[i]]$data

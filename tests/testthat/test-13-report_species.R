@@ -12,12 +12,36 @@ test_that("test creating an instance of report_species", {
 					bilesp,
 					dc = c(5, 6, 12),
 					split = "year",
-					anneedebut = "2008",
-					anneefin = "2012",
+					start_year = "2008",
+					end_year = "2012",
 					silent = TRUE
 			)
+		
 			
 			bilesp <- charge(bilesp, silent = TRUE)
+			expect_error(bilesp <- connect(bilesp, silent = TRUE),NA)
+			expect_s4_class(bilesp,
+					"report_species")
+			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
+			
+		})
+
+
+test_that("test that having ref_taxa in envir_stacomi does not mess with things", {
+			skip_on_cran()
+			stacomi(database_expected = TRUE)
+			env_set_test_stacomi()		
+			bilesp <- new("report_species")
+			# split is one of "none", "year", "week", "month
+			assign("ref_taxa",new("ref_taxa"),envir=envir_stacomi)
+			bilesp <- choice_c(
+					bilesp,
+					dc = c(5, 6, 12),
+					split = "year",
+					start_year = "2008",
+					end_year = "2012",
+					silent = TRUE
+			)	
 			expect_error(bilesp <- connect(bilesp, silent = TRUE),NA)
 			expect_s4_class(bilesp,
 					"report_species")
@@ -36,8 +60,50 @@ test_that("test calcule method report_species", {
 					bilesp,
 					dc = c(5, 6, 12),
 					split = "year",
-					anneedebut = "2008",
-					anneefin = "2012",
+					start_year = "2008",
+					end_year = "2012",
+					silent = TRUE
+			)
+			bilesp <- charge(bilesp, silent = TRUE)
+			bilesp <- connect(bilesp, silent = TRUE)
+			bilesp <- calcule(bilesp, silent = TRUE)
+			expect_gt(nrow(bilesp@calcdata),
+					0,
+					"No data in calcdata after running calculations")
+			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
+			
+		})
+
+
+test_that("test method report_species with different options for taxa", {
+			skip_on_cran()
+			stacomi(database_expected = TRUE)
+			env_set_test_stacomi()		
+			bilesp <- new("report_species")
+			# split is one of "none", "year", "week", "month
+			
+			bilesp <- choice_c(
+					bilesp,
+					dc = c(5, 6, 12),
+					taxa="all",
+					split = "year",
+					start_year = "2008",
+					end_year = "2012",
+					silent = TRUE
+			)
+			bilesp <- charge(bilesp, silent = TRUE)
+			bilesp <- connect(bilesp, silent = TRUE)
+			bilesp <- calcule(bilesp, silent = TRUE)
+			expect_gt(nrow(bilesp@calcdata),
+					0,
+					"No data in calcdata after running calculations")
+			bilesp <- choice_c(
+					bilesp,
+					dc = c(5, 6, 12),
+					taxa=c("2038","2086", "2055" ,"2177", "2107", "2108" ,"2109", "2234", "2151", "2183"),
+					split = "year",
+					start_year = "2008",
+					end_year = "2012",
 					silent = TRUE
 			)
 			bilesp <- charge(bilesp, silent = TRUE)
@@ -59,8 +125,8 @@ test_that("test that plot method works", {
 					bilesp,
 					dc = c(5, 6, 12),
 					split = "year",
-					anneedebut = "2008",
-					anneefin = "2012",
+					start_year = "2008",
+					end_year = "2012",
 					silent = TRUE
 			)
 			bilesp <- charge(bilesp, silent = TRUE)
@@ -97,8 +163,8 @@ test_that("test that summary method works", {
 					bilesp,
 					dc = c(5, 6, 12),
 					split = "year",
-					anneedebut = "2008",
-					anneefin = "2012",
+					start_year = "2008",
+					end_year = "2012",
 					silent = TRUE
 			)
 			bilesp <- charge(bilesp, silent = TRUE)

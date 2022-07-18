@@ -19,5 +19,5 @@ An object of class \link{report_env-class} with slot data filled from the databa
 connect method for report_env class
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -52,5 +52,5 @@ This graph is for species other than glass eel
 this function is intended to be called from the plot method in report_mig_mult and report_mig
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -23,12 +23,10 @@ for stage is the code.  Any numeric value will be discarded
 }
 \examples{
 \dontrun{
-object=new('ref_taxa')
+object=new('ref_stage')
 object<-charge(object)
-objectreport=new('report_mig_mult')
-choice_c(object=object,objectreport=objectreport,'Anguilla anguilla')
 }
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

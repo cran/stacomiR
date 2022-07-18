@@ -16,5 +16,5 @@ vectordate (without class)
 function used for some lattice graphs with dates
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

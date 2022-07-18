@@ -28,5 +28,5 @@ this calculation relies on the (false) assumption that migration is evenly sprea
 calcule,report_mig_mult-method
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -19,6 +19,6 @@ Internal function, tests the connection and if it works loads the stacomi interf
 \code{base} is copied by stacomi into envir_stacomi. Same for \code{database_expected}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

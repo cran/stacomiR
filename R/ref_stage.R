@@ -7,15 +7,17 @@
 #' \item{list('data')}{Object of class \code{'data.frame'} ~ The phases
 #' available in the database}\item{:}{Object of class \code{'data.frame'} ~ The
 #' phases available in the database} }
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @slot data A data frame containing data loaded from the database by either charge or charge_with_filter methods
+#' @slot stage_selected Contains the code \code{'tax_code'} of the stage selected by choice_c() method
+#' @author cedric.briand@eptb-vilaine.fr
 #' @keywords classes
 #' @family referential objects
-setClass(Class = "ref_stage", representation = representation(data = "data.frame"))
+setClass(Class = "ref_stage", representation = representation(data = "data.frame", stage_selected="character"))
 
 #' Loading method for ref_stage referential objects
 #' @param object An object of class \link{ref_stage-class}
 #' @return An S4 object of class \link{ref_stage-class} with all stages available in the database
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  object=new('ref_stage')
@@ -35,7 +37,7 @@ setMethod("charge", signature = signature("ref_stage"), definition = function(ob
 #' @param dc_selected The selected counting device
 #' @param taxa_selected The selected species
 #' @return An S4 object of class \link{ref_stage-class} listing all stages available for one DC and one taxon
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  dc_selected=6
@@ -75,24 +77,22 @@ setMethod("charge_with_filter", signature = signature("ref_stage"), definition =
 #' @param stage the vector of stages chosen
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An S4 object of class \link{ref_stage-class} with the stage selected in the data slot
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples
 #' \dontrun{
-#'object=new('ref_taxa')
+#'object=new('ref_stage')
 #'object<-charge(object)
-#'objectreport=new('report_mig_mult')
-#' choice_c(object=object,objectreport=objectreport,'Anguilla anguilla')
 #' }
 setMethod("choice_c", signature = signature("ref_stage"), definition = function(object,
     stage, silent = FALSE) {
     if (is.null(stage)) {
         funout(gettext("No value for argument stage\n", domain = "R-stacomiR"), arret = TRUE)
     }
-    libellemanquants <- stage[!stage %in% object@data$std_code]
-    if (length(libellemanquants) > 0 & !silent)
-        funout(gettextf("No data for this counting device and this taxa\n %s", stringr::str_c(libellemanquants,
+    missing_std_libelle <- stage[!stage %in% object@data$std_code]
+    if (length(missing_std_libelle) > 0 & !silent)
+        funout(gettextf("No data for this counting device and this taxa\n %s", stringr::str_c( missing_std_libelle,
             collapse = ", "), domain = "R-stacomiR"))
-    object@data <- object@data[object@data$std_code %in% stage, ]
+    object@stage_selected <- object@data[object@data$std_code %in% stage,"std_code"]
     if (nrow(object@data) == 0) {
         funout(gettext("Stop there is no line in the taxa table (problem with the DB link ?)\n",
             domain = "R-stacomiR"), arret = TRUE)

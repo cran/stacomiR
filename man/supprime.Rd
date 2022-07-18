@@ -14,6 +14,12 @@ supprime(object, ...)
 \description{
 Generic method to delete entires from the database
 }
+\seealso{
+\link{calcule.report_ge_weight}, \link{calcule.report_mig_char}, \link{calcule.report_mig_env},
+\link{calcule.report_mig_interannual},\link{calcule.report_mig_mult},\link{calcule.report_mig_mult},
+\link{calcule.report_sample_char},  \link{calcule.report_sea_age},  \link{calcule.report_silver_eel},
+ \link{calcule.report_species}
+}
 \author{
 cedric.briand
 }

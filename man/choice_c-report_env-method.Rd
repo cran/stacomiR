@@ -26,5 +26,5 @@ The choice_c method fills in the data slot for \link{ref_env-class} by runnning 
 It then runs the choice method on this object. It also applies the choice method for objects of class \link{ref_horodate-class}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

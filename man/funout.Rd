@@ -21,6 +21,6 @@ nblignes Assigned in envir_stacomi
 this function displays text and will be used to convey stacomiR message in shiny
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

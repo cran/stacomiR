@@ -19,6 +19,6 @@ Internal use, function used in the graphical interface to create a barchart for 
 The program cuts periods which overlap between two month
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

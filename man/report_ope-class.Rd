@@ -15,7 +15,7 @@ or similar, they can be instantaneous
 }
 
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{report Object}
 \keyword{classes}

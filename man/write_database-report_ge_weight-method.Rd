@@ -20,5 +20,5 @@ Data will be written in tj_coefficientconversion_coe table, if the class retriev
 from the database, those will be deleted first.
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

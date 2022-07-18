@@ -22,5 +22,5 @@ been made in the graphical interface, this methods runs the \link{charge,report_
 and needs to be called from the command line (see examples)
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

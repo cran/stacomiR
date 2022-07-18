@@ -7,7 +7,12 @@ use in ggplot. An initial check will be done
 on the name of the color vector. A data frame is built. It contains a column color which is a factor.
 The factor order match the order of the vector (not the alphabetical order of the colors).}
 \usage{
-colortable(color = NULL, vec, palette = "Set2", color_function = "brewer.pal")
+colortable(
+  color = NULL,
+  vec,
+  palette = "Set2",
+  color_function = c("brewer.pal", "gray.colors", "random")
+)
 }
 \arguments{
 \item{color}{Either null (default) or a named vector of colors, the
@@ -20,7 +25,7 @@ or color is supplied the names should match}
 color gradient functions and if a named vector of colors is provided}
 
 \item{color_function, }{the name of the function used to brew the colors, one for 
-"brewer.pal", "gray.colors", default to "brewer.pal, this argument is ignored if a
+"brewer.pal", "gray.colors", "random", default to "brewer.pal, this argument is ignored if a
 named vector of color is passed.}
 }
 \value{
@@ -33,5 +38,5 @@ on the name of the color vector. A data frame is built. It contains a column col
 The factor order match the order of the vector (not the alphabetical order of the colors).
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

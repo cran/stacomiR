@@ -7,7 +7,7 @@
 #' @import stacomirtools
 #' @import stringr
 #' @import xtable
-#' @importFrom dplyr select group_by summarize rename do filter mutate min_rank first ungroup desc
+#' @importFrom dplyr select group_by summarize rename do filter mutate min_rank first ungroup desc across all_of
 #' @importFrom graphics layout matplot mtext points polygon segments par axis text legend rect axis.Date abline arrows hist
 #' @importFrom grDevices gray rainbow adjustcolor gray.colors dev.new
 #' @importFrom grid gpar grid.newpage grid.layout pushViewport viewport

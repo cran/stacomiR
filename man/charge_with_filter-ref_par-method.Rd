@@ -29,5 +29,5 @@ charge_with_filter(object,dc_selected=6,taxa_selected=2038,stage_selected=c('AGJ
 }
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

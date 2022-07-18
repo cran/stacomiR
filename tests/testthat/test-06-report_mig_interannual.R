@@ -16,8 +16,8 @@ test_that("Test an instance of report_mig_interannual loaded with choice_c",
 					dc = 6,
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ"),
-					anneedebut = 1996,
-					anneefin = 2015,
+					start_year = 1996,
+					end_year = 2015,
 					silent = TRUE
 			)
 			r_mig_interannual <- connect(r_mig_interannual, silent = TRUE)
@@ -44,15 +44,17 @@ test_that("Test method summary in report_mig_interannual", {
 					dc = 6,
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ"),
-					anneedebut = "1996",
-					anneefin = 2015,
+					start_year = "1996",
+					end_year = 2015,
 					silent = TRUE
 			)
 			r_mig_interannual <- connect(r_mig_interannual, silent = TRUE)
-			expect_error(summary(object = r_mig_interannual, silent = TRUE), NA)
+			invisible(capture.output(expect_error(summary(object = r_mig_interannual, silent = TRUE), NA)))
+			ss <- summary(object = r_mig_interannual, year_choice=2012, silent = TRUE)
+			expect_equal(ss$`6`$annee[1],"2012")
 			# two warning produced
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
-			  
+			
 		})
 #
 #test_that("Test example report_mig_interannual-example",
@@ -83,20 +85,19 @@ test_that("Test that loading two taxa will fail",
 			# parameters 1786 (total size) C001 (size at video control)
 			# dc 5 and 6 are fishways located on the Arzal dam
 			# two stages are selected
-			expect_error(
-					
-					choice_c(
-							r_mig_interannual,
-							dc = 5,
-							taxa = c("Anguilla anguilla", "Petromyzon marinus"),
-							stage = c("AGJ"),
-							anneedebut = "1996",
-							anneefin = 2015,
-							silent = TRUE
-					)
-		)
-
-
+			invisible(capture.output(expect_error(									
+									choice_c(
+											r_mig_interannual,
+											dc = 5,
+											taxa = c("Anguilla anguilla", "Petromyzon marinus"),
+											stage = c("AGJ"),
+											start_year = "1996",
+											end_year = 2015,
+											silent = TRUE
+									)
+							)))
+			
+			
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 			
 		})
@@ -114,10 +115,10 @@ test_that("Test that report_mig_interannual displays message when silent = FALSE
 							dc = 6,
 							taxa = c("Anguilla anguilla"),
 							stage = c("AGJ"),
-							anneedebut = 1997,
-							anneefin = 1998,
+							start_year = 1997,
+							end_year = 1998,
 							silent = FALSE
-					), "\\[1\\] Year selected\\\\n\\n\\[1\\] Year selected\\\\n")
+					))
 			
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 			
@@ -136,8 +137,8 @@ test_that("Test supprime method",
 							dc = c(21),
 							taxa = c("Salmo salar"),
 							stage = c("5"),
-							anneedebut = "2004",
-							anneefin = "2006",
+							start_year = "2004",
+							end_year = "2006",
 							silent = TRUE
 					)
 			
@@ -163,12 +164,12 @@ test_that("Test that different sums are the same, for  report_mig_interannual, r
 					dc = 6,
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ"),
-					anneedebut = 1996,
-					anneefin = 1996,
+					start_year = 1996,
+					end_year = 1996,
 					silent = TRUE
 			)
 			r_mig_interannual <- connect(r_mig_interannual, silent=TRUE)
-
+			
 			nb_r_mig_interannual <- sum(r_mig_interannual@data[r_mig_interannual@data$"bjo_labelquantite"=="Effectif_total","bjo_valeur" ])
 			r_mig_mult <- new("report_mig_mult")
 			r_mig_mult <- choice_c(
@@ -203,22 +204,84 @@ test_that("Test bmi plots", {
 					dc = 6,
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ"),
-					anneedebut = 1996,
-					anneefin = 2015,
+					start_year = 1996,
+					end_year = 2015,
 					silent = TRUE
 			)
-			expect_output(plot(r_mig_interannual, plot.type = "step", silent = FALSE),
-					"\\[1\\] Attention : you have to complete a migration summary for at least one of the selected year before launching a inter-annual summary")
+			expect_output(plot(r_mig_interannual, plot.type = "step", silent = FALSE))
 			r_mig_interannual <- connect(r_mig_interannual, silent = TRUE)
 			r_mig_interannual <- calcule(r_mig_interannual, silent = TRUE)
-			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "step", silent = TRUE),NA))
-			expect_error(plot(r_mig_interannual, plot.type = "line", silent = TRUE),NA)
-			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "standard", silent = TRUE),NA))
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "step", silent = TRUE)),NA)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "line", silent = TRUE)),NA)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "standard", silent = TRUE)),NA)
 			expect_error(plot(r_mig_interannual, plot.type = "barchart", silent = TRUE),NA)
-			expect_error(plot(r_mig_interannual, plot.type = "pointrange", silent = TRUE),NA)
+			expect_error(suppressMessages(plot(r_mig_interannual, plot.type = "pointrange", silent = TRUE)),NA)
 			expect_error(plot(r_mig_interannual, plot.type = "density", silent = TRUE),NA)		
-			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "seasonal", silent = TRUE),NA))
-			expect_error(plot(r_mig_interannual, plot.type = "", silent = FALSE))
+			expect_error(plot(r_mig_interannual, plot.type = "seasonal", silent = TRUE),NA)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "seasonal", timesplit="semaine", silent = TRUE)),NA)
+			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
+			
+		})
+
+
+test_that("Test bmi for several dc", {
+			skip_on_cran()
+			stacomi(database_expected = TRUE)
+			env_set_test_stacomi()
+			r_mig_interannual <- new("report_mig_interannual")
+			# the following will load data for size,
+			# parameters 1786 (total size) C001 (size at video control)
+			# dc 5 and 6 are fishways located on the Arzal dam
+			# two stages are selected
+			r_mig_interannual <- choice_c(
+					r_mig_interannual,
+					dc = c(5,6),
+					taxa = c("Anguilla anguilla"),
+					stage = c("AGJ"),
+					start_year = 1996,
+					end_year = 2015,
+					silent = TRUE
+			)
+			r_mig_interannual <- connect(r_mig_interannual, silent = TRUE)
+			# calcule is only needed for seasonal
+			r_mig_interannual <- calcule(r_mig_interannual, silent = TRUE)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "step", silent = TRUE)),NA)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "line", silent = TRUE)),NA)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "standard", silent = TRUE)),NA)
+			expect_error(plot(r_mig_interannual, plot.type = "barchart", timesplit="day",silent = TRUE),NA)
+			expect_error(suppressMessages(plot(r_mig_interannual, plot.type = "pointrange", silent = TRUE)),NA)
+			expect_error(plot(r_mig_interannual, plot.type = "density", silent = TRUE),NA)		
+			expect_error(plot(r_mig_interannual, plot.type = "seasonal", silent = TRUE),NA)
+			expect_error(suppressWarnings(plot(r_mig_interannual, plot.type = "seasonal", timesplit="semaine", silent = TRUE)),NA)
+			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
+			
+		})
+
+
+
+test_that("Test that database is not written over and over", {
+			skip_on_cran()
+			stacomi(database_expected = TRUE)
+			env_set_test_stacomi()
+			r_mig_interannual <- new("report_mig_interannual")
+			# the following will load data for size,
+			# parameters 1786 (total size) C001 (size at video control)
+			# dc 5 and 6 are fishways located on the Arzal dam
+			# two stages are selected
+			r_mig_interannual <- choice_c(
+					r_mig_interannual,
+					dc = c(6),
+					taxa = c("Anguilla anguilla"),
+					stage = c("AGJ"),
+					start_year = 2019,
+					end_year = 2019,
+					silent = TRUE
+			)
+			# writes Running report_mig to correct data for year 2019 => there was an error, fixed by commit 
+			# 097e415df0af1d5e8534410d74f367ace27013ef
+			expect_output(r_mig_interannual <- connect(r_mig_interannual, silent = TRUE),
+					"No writing in the db."
+			)
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 			
 		})

@@ -12,6 +12,8 @@ Enables to load measure stations and to select one of them
 \describe{
 \item{\code{dataframe}}{Data concerning the
 measure station}
+
+\item{\code{env_selected}}{The selected measure station}
 }}
 
 \section{Objects from the Class}{
@@ -20,6 +22,6 @@ measure station}
 }
 
 \author{
-cedric.briand'at'eptb-vilaine.fr
+cedric.briand@eptb-vilaine.fr
 }
 \keyword{classes}

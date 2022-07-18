@@ -26,5 +26,5 @@ The choice_c method fills in the data slot for ref_df, and then
 uses the choice_c methods of these object to "select" the data.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

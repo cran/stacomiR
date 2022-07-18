@@ -15,7 +15,7 @@ setClass(Class = "ref_period", representation = representation(data = "data.fram
 #' @param object An object of class \link{ref_period-class}
 #' @param id one of 'jour', 'semaine', 'quinzaine', 'mois'
 #' @return A character to be used in seq.POSIXt
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  getvalue(new('ref_period'),'quinzaine')

@@ -8,10 +8,12 @@ provides summary statistics for the latest year (if silent=TRUE), or the year se
 if silent=FALSE. Mean, min and max are historical statistics with the selected year excluded from the
 historical dataset.}
 \usage{
-\S4method{summary}{report_mig_interannual}(object, silent = FALSE, ...)
+\S4method{summary}{report_mig_interannual}(object, year_choice = NULL, silent = FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{\link{report_mig_interannual-class}}}
+
+\item{year_choice}{The year chosen to calculate statistics which will be displayed beside the historical series,}
 
 \item{silent}{Should the program stay silent or display messages, default FALSE}
 
@@ -27,5 +29,5 @@ if silent=FALSE. Mean, min and max are historical statistics with the selected y
 historical dataset.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

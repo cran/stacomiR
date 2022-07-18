@@ -27,9 +27,9 @@ during counts as glass eel are not completely drained from their water during ha
 
 \item{\code{dc}}{Object of class \code{\link{ref_dc-class}}, the counting device}
 
-\item{\code{anneedebut}}{Object of class \code{\link{ref_year-class}}. ref_year allows to choose the year of beginning}
+\item{\code{start_year}}{Object of class \code{\link{ref_year-class}}. ref_year allows to choose the year of beginning}
 
-\item{\code{anneefin}}{Object of class \code{\link{ref_year-class}}
+\item{\code{end_year}}{Object of class \code{\link{ref_year-class}}
 ref_year allows to choose last year of the report}
 
 \item{\code{coe}}{Object of class \code{\link{ref_coe-class}} class loading coefficient
@@ -77,8 +77,8 @@ stacomi(
   # as the dates are from august to august
   r_gew<-choice_c(r_gew,
 	  dc=c(6),			
-	  anneedebut="2009",
-	  anneefin="2015",
+	  start_year="2009",
+	  end_year="2015",
 	  selectedvalue=">1",
 	  silent=FALSE)
   r_gew<-connect(r_gew)	
@@ -118,7 +118,7 @@ Other report Objects:
 \code{\link{report_species-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

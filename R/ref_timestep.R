@@ -100,7 +100,7 @@ rm(
 validity_ref_timestep = function(object)
 {
   retValue = NULL
-  rep1 = class(object@dateDebut)[1] == "POSIXlt"
+  rep1 = inherits(object@dateDebut[1], "POSIXlt")
   if (!rep1)
     retValue = "object@dateDebut is not of class POSIXlt"
   rep2 = length(object@step_duration) == 1
@@ -134,7 +134,7 @@ validity_ref_timestep = function(object)
 #' \item{list("nocurrent_step")}{Object of class \code{"integer"} Number of the
 #' current step }\item{:}{Object of class \code{"integer"} Number of the
 #' current step } }
-#' @author cedric.briand"at"eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @seealso \code{\linkS4class{ref_timestep_daily}}
 #' @concept report Object
 setClass(
@@ -159,7 +159,7 @@ setClass(
 
 validity_ref_timestepChar = function(object)
 {
-  rep1 = class(object@dateDebut)[1] == "POSIXlt"
+  rep1 = inherits(object@dateDebut[1],"POSIXlt")
   rep2 = length(object@step_duration) == 1
   rep3 = length(object@nb_step) == 1
   rep4 = length(object@nocurrent_step) == 1
@@ -175,7 +175,7 @@ validity_ref_timestepChar = function(object)
 #'
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new("ref_timestepChar", \dots{})}
-#' @author cedric.briand"at"eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @seealso \code{\linkS4class{ref_timestep}}
 #' @keywords classes
 #' @examples

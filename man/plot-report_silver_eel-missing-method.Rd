@@ -31,5 +31,5 @@ a single plot if \code{plot.type=3}, a lattice cloud object if \code{plot.type=4
 Plots of various type for report_silver_eel
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

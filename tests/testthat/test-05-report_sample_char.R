@@ -96,6 +96,41 @@ test_that("Test charge method for report_sample_char", {
 			
 		})
 
+test_that("Test plot print method for report_sample_char", {
+			skip_on_cran()
+			env_set_test_stacomi()		
+			stacomi(database_expected = TRUE)
+			r_sample_char <- new("report_sample_char")
+			#options(warn = 2)
+			r_sample_char <- suppressWarnings(
+					choice_c(
+							r_sample_char,
+							dc = c(5, 6),
+							taxa = c("Anguilla anguilla"),
+							stage = c("AGJ", "CIV"),
+							par = c(1785, 1786, 1787, "C001"),
+							horodatedebut = "2013-01-01",
+							horodatefin = "2013-12-31",
+							silent = TRUE
+					)
+			)
+			# two warning produced: No data for par 1785 No data for par 1787
+			#options(warn = 0)
+			expect_error({
+						r_sample_char <- connect(r_sample_char, silent = TRUE)
+						r_sample_char <- charge(r_sample_char)
+						r_sample_char <- calcule(r_sample_char, silent = TRUE)
+						plot(r_sample_char, plot.type="1", silent=TRUE)
+						plot(r_sample_char, plot.type="2", silent=TRUE)
+						plot(r_sample_char, plot.type="3", silent=TRUE)
+						invisible(capture.output(
+						print(r_sample_char, plot.type="3", silent=TRUE)))
+					}, NA)
+			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
+			
+		})
+
+
 #test_that("Test example reportcarlot-example",
 #		{
 #			# check if built with examples (Rtools install --example)

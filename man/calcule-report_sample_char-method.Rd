@@ -19,5 +19,5 @@ An object of class \code{\link{report_sample_char-class}} with slot \code{@data}
 In that class, most treatments are done in the query, this method checks that data are available and fills information for year, month, two weeks, week, doy
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

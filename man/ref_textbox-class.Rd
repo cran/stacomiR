@@ -18,5 +18,5 @@ allows to a put a value within a glabel
 }}
 
 \author{
-cedric.briand'at'eptb-vilaine.fr
+cedric.briand@eptb-vilaine.fr
 }

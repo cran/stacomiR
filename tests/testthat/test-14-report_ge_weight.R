@@ -16,8 +16,8 @@ test_that("test choice_c method for report_ge_weight", {
 			r_gew <- new("report_ge_weight")
 			expect_error(r_gew<-choice_c(r_gew,
 					dc=c(6),			
-					anneedebut="2009",
-					anneefin="2015",
+					start_year="2009",
+					end_year="2015",
 					selectedvalue=">1",
 					silent=TRUE), NA)
 		})
@@ -29,8 +29,8 @@ test_that("test connect method for report_ge_weight", {
 			r_gew <- new("report_ge_weight")
 			r_gew<-choice_c(r_gew,
 							dc=c(6),			
-							anneedebut="2009",
-							anneefin="2015",
+							start_year="2009",
+							end_year="2015",
 							selectedvalue=">1",
 							silent=TRUE)
 		expect_message({r_gew <- connect(r_gew)}, NA)	
@@ -46,8 +46,8 @@ test_that("test calcule method report_ge_weight", {
 			r_gew <- new("report_ge_weight")
 			r_gew <- choice_c(r_gew,
 					dc=c(6),			
-					anneedebut="2009",
-					anneefin="2015",
+					start_year="2009",
+					end_year="2015",
 					selectedvalue=">1",
 					silent=TRUE)
 			expect_silent(r_gew <- connect(r_gew, silent=TRUE))	
@@ -92,8 +92,8 @@ test_that("test supprime method ref_coe et write method report_ge_weight", {
 			r_gew <- new("report_ge_weight")
 			r_gew <- choice_c(r_gew,
 					dc=c(6),			
-					anneedebut="2009",
-					anneefin="2015",
+					start_year="2009",
+					end_year="2015",
 					selectedvalue="tous",
 					silent=TRUE)
 			r_gew <- connect(r_gew, silent=TRUE)

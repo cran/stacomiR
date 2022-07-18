@@ -19,7 +19,7 @@
 #' @param ... additional parameters passed to matplot, main, ylab, ylim, lty, pch, bty, cex.main,
 #' it is currenly not a good idea to change xlim (numbers are wrong, the month plot covers all month, and legend placement is wrong
 #' @return No return value, called for side effects
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 fungraph = function(report_mig,
                     tableau,
                     time.sequence,
@@ -44,11 +44,11 @@ fungraph = function(report_mig,
     mypalette = c(
       "working" = tp[4],
       "stopped" = tp[6],
-      "listeperiode1" = tp[1],
-      "listeperiode2" = tp[2],
-      "listeperiode3" = tp[3],
-      "listeperiode4" = tp[5],
-      "listeperiode5" = tp[7],
+			"Fonc normal" =  tp[1],
+			"Arr ponctuel" = tp[2], 
+			"Arr maintenance" = tp[3],
+			"Dysfonc" = tp[5], 						
+			"Non connu" =  tp[7],
       "ponctuel" = "indianred",
       "expert" = "chartreuse2",
       "calcule" = "deepskyblue",
@@ -60,11 +60,11 @@ fungraph = function(report_mig,
     mypalette = c(
       "working" =		color[1],
       "stopped" =		color[2],
-      "listeperiode1" = color[3],
-      "listeperiode2" = color[4],
-      "listeperiode3" = color[5],
-      "listeperiode4" = color[6],
-      "listeperiode5" = color[7],
+			"Fonc normal" = color[3],
+			"Arr ponctuel" = color[4],
+			"Arr maintenance" = color[5],
+			"Dysfonc" = color[6],
+			"Non connu" = color[7],
       "mesure" =		color[8],
       "calcule" =		color[9],
       "expert" =		color[10],
@@ -352,6 +352,7 @@ fungraph = function(report_mig,
         tempsdebut = report_df@data$per_date_debut,
         tempsfin = report_df@data$per_date_fin,
         libelle = report_df@data$libelle,
+				color= mypalette[report_df@data$libelle],
         date = FALSE
       )
     nomperiode <- vector()
@@ -361,13 +362,13 @@ fungraph = function(report_mig,
       #recuperation du vecteur de noms (dans l'ordre) e partir de la liste
       nomperiode[j] <- substr(listeperiode[[j]]$nom, 1, 17)
       #ecriture pour chaque type de periode
-      color_periode = stringr::str_c("listeperiode", j)
+      color_periode = listeperiode[[j]]$color
       rect(
         xleft = graphdate(listeperiode[[j]]$debut),
         ybottom = 1.1,
         xright = graphdate(listeperiode[[j]]$fin),
         ytop = 2,
-        col = mypalette[color_periode],
+        col = color_periode,
         border = NA,
         lwd = 1
       )
@@ -379,7 +380,7 @@ fungraph = function(report_mig,
       y = 1.2,
       legend = c(gettext("stop", domain = "R-stacomiR"), nomperiode),
       pch = c(15, 15),
-      col = c(mypalette["working"], mypalette["stopped"], mypalette[color_periodes]),
+      col = c(mypalette["working"], mypalette["stopped"], color_periodes),
       bty = "n",
       ncol = 7,
       text.width = (fin - debut) / 10
@@ -474,19 +475,20 @@ fungraph = function(report_mig,
         tempsdebut = report_dc@data$per_date_debut,
         tempsfin = report_dc@data$per_date_fin,
         libelle = report_dc@data$libelle,
+				color= mypalette[report_df@data$libelle],
         date = FALSE
       )
     nomperiode <- vector()
     color_periodes <- vector()
     for (j in 1:length(listeperiode)) {
       nomperiode[j] <- substr(listeperiode[[j]]$nom, 1, 17)
-      color_periode = stringr::str_c("listeperiode", j)
+      color_periode <- listeperiode[[j]]$color
       rect(
         xleft = graphdate(listeperiode[[j]]$debut),
         ybottom = 1.1,
         xright = graphdate(listeperiode[[j]]$fin),
         ytop = 2,
-        col = mypalette[color_periode],
+        col = color_periode,
         border = NA,
         lwd = 1
       )
@@ -497,7 +499,7 @@ fungraph = function(report_mig,
       y = 1.2,
       legend = gettext("working", "stopped", nomperiode, domain = "R-stacomiR"),
       pch = c(15, 15),
-      col = c(mypalette["working"], mypalette["stopped"], mypalette[color_periodes]),
+      col = c(mypalette["working"], mypalette["stopped"], color_periodes),
       bty = "n",
       ncol = length(listeperiode) + 2,
       text.width = (fin - debut) / 10

@@ -11,8 +11,8 @@ test_that("Test an instance of report_annual loaded with choice_c", {
 					dc = c(5, 6, 12),
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ", "AGG"),
-					anneedebut = "1996",
-					anneefin = "2015",
+					start_year = "1996",
+					end_year = "2015",
 					silent = TRUE
 			)
 			r_ann <- connect(r_ann, silent = TRUE)
@@ -33,8 +33,8 @@ test_that("Test methods in report_annual", {
 								dc = c(5, 6, 12),
 								taxa = c("Anguilla anguilla"),
 								stage = c("AGJ", "AGG"),
-								anneedebut = "1996",
-								anneefin = "2015",
+								start_year = "1996",
+								end_year = "2015",
 								silent = TRUE
 						)
 						r_ann <- connect(r_ann, silent = TRUE)
@@ -73,13 +73,13 @@ test_that("Complement to example",
 					paste(
 							paste(r_ann@dc@dc_selected, collapse = "+"),
 							"_",
-							paste(r_ann@taxa@data$tax_code, collapse = "+"),
+							paste(r_ann@taxa@taxa_selected, collapse = "+"),
 							"_",
-							paste(r_ann@stage@data$std_code, collapse = "+"),
+							paste(r_ann@stage@stage_selected, collapse = "+"),
 							"_",
-							r_ann@anneedebut@selected_year,
+							r_ann@start_year@year_selected,
 							":",
-							r_ann@anneefin@selected_year,
+							r_ann@end_year@year_selected,
 							".html",
 							sep = ""
 					),
@@ -141,8 +141,8 @@ test_that("test xtable method for report_annual", {
 					dc = c(5, 6, 12),
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ", "AGG"),
-					anneedebut = "1996",
-					anneefin = "2015",
+					start_year = "1996",
+					end_year = "2015",
 					silent = TRUE
 			)
 			r_ann <- connect(r_ann)
@@ -151,6 +151,13 @@ test_that("test xtable method for report_annual", {
 					dc_name = c("Passe bassins", "Piege anguille RG", "Piege anguille RD"),
 					tax_name = "Anguille",
 					std_name = c("Arg.", "Jaun.")
+			)
+			# now without name
+			xtr_mig_annual <- stacomiR::xtable(
+					r_ann,
+					dc_name =NULL,
+					tax_name = NULL,
+					std_name = NULL
 			)
 			expect_equal(class(xtr_mig_annual)[1],
 					"xtable",
@@ -169,13 +176,13 @@ test_that("test xtable method for report_annual", {
 					paste(
 							paste(r_ann@dc@dc_selected, collapse = "+"),
 							"_",
-							paste(r_ann@taxa@data$tax_code, collapse = "+"),
+							paste(r_ann@taxa@taxa_selected, collapse = "+"),
 							"_",
-							paste(r_ann@stage@data$std_code, collapse = "+"),
+							paste(r_ann@stage@stage_selected, collapse = "+"),
 							"_",
-							r_ann@anneedebut@selected_year,
+							r_ann@start_year@year_selected,
 							":",
-							r_ann@anneefin@selected_year,
+							r_ann@end_year@year_selected,
 							".html",
 							sep = ""
 					),
@@ -216,6 +223,30 @@ test_that("test plot methods for report_annual", {
 			expect_error({
 						dev.new()
 						plot(r_ann_adour, silent = TRUE)
+						graphics.off()
+					}, NA)
+			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
+		})
+
+test_that("test that plot method does not return wrong axis", {
+			skip_on_cran()
+			env_set_test_stacomi()	
+			stacomi(database_expected = TRUE, sch="logrami")
+			r_ann <- new("report_annual")
+			r_ann <- choice_c(
+					r_ann,
+					dc = c(105),
+					taxa = c("Salmo salar"),
+					stage = c(5),
+					start_year = "2009",
+					end_year = "2011",
+					silent = TRUE
+			)
+			r_ann <- connect(r_ann, silent = TRUE)
+
+			expect_error({
+						dev.new()
+						plot(r_ann, silent = TRUE)
 						graphics.off()
 					}, NA)
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)

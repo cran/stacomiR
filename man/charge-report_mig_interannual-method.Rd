@@ -19,6 +19,6 @@ An object of class  \link{report_mig_interannual-class} with slots set from valu
 loading method for report_mig_interannual class
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

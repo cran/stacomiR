@@ -20,6 +20,6 @@ No return value, called for side effects
 This writes monthly data in t_reportmensuel_mens table
 }
 \note{
-This function is launched by fun_Ecritreport_daily, the resum 
+This function is launched by fun_write_daily, the resum 
 dataset is created by the \link{funstat} function
 }

@@ -23,6 +23,6 @@ envir_stacomi. It is not necessary to run this method when loading from the comm
 choice_c method
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

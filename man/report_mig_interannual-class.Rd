@@ -68,8 +68,8 @@ stacomi(
 	  dc=c(16),
 	  taxa=c("Anguilla anguilla"),
 	  stage=c("PANG"),
-	  anneedebut="1990",
-	  anneefin="2015",
+	  start_year="1990",
+	  end_year="2015",
 	  silent=TRUE)
   r_mig_interannual <- charge(r_mig_interannual)
   r_mig_interannual <- connect(r_mig_interannual, check=TRUE)	
@@ -198,8 +198,8 @@ stacomi(database_expected = TRUE, sch = 'logrami')
 	  dc=c(23),
 	  taxa=c("Petromyzon marinus"),
 	  stage=c("5"),
-	  anneedebut="2007",
-	  anneefin="2014",
+	  start_year="2007",
+	  end_year="2014",
 	  silent=TRUE)
   bmi_des<-connect(bmi_des)	
   bmi_des<-calcule(bmi_des,timesplit="semaine")
@@ -228,7 +228,7 @@ Other report Objects:
 \code{\link{report_species-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

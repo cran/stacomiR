@@ -18,5 +18,5 @@ function used to remove special non utf8 character which cause the gtk
 interface to crash
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

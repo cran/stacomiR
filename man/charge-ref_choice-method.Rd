@@ -44,6 +44,6 @@ Other referential objects:
 \code{\link{ref_year-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{referential objects}

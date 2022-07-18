@@ -57,11 +57,11 @@ test_that("report_df plot method works", {
 			r_df <- r_df
 			# expect_error(expr,NA) tests for an absence of error
 			expect_error({
-						plot(r_df, plot.type = "1", silent = TRUE)
-						plot(r_df,
+						invisible(capture.output(plot(r_df, plot.type = "1", silent = TRUE)))
+						invisible(capture.output(plot(r_df,
 								plot.type = "2",
 								silent = TRUE,
-								main = "An example title")
+								main = "An example title")))
 						plot(r_df,
 								plot.type = "3",
 								silent = TRUE,
@@ -76,11 +76,11 @@ test_that("report_df plot method works", {
 
 test_that("report_df summary method works", {
 			skip_on_cran()
-			# THIS ONE DOES NOT SEEM TO WORK ON LINUX? REMOVED FROM THE MOMENT...
 			stacomi(database_expected = FALSE)
 			data(r_df)
 			r_df <- r_df
-			expect_output(summary(r_df, silent = TRUE), "summary")
+			#expected <- ifelse(Sys.getlocale(category = "LC_TIME")=="French_France.utf8", "statistiques", "summary")
+			expect_output(summary(r_df, silent = TRUE))
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 		})
 

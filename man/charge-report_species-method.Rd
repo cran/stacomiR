@@ -22,6 +22,6 @@ Verifies the content of objects when the graphical interface is used, it is not 
 to call the charge method if the choice_c method has been used
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

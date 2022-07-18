@@ -101,9 +101,9 @@ Other report Objects:
 \code{\link{report_species-class}}
 }
 \author{
-cedric.briand"at"eptb-vilaine.fr marion.legrand"at"logrami.fr
+cedric.briand@eptb-vilaine.fr marion.legrand@logrami.fr
 
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

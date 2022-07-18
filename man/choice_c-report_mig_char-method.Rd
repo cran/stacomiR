@@ -50,5 +50,5 @@ uses the choice_c methods of these object to select the data.
 command line interface for report_mig_char class
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

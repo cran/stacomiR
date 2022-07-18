@@ -27,5 +27,5 @@ Plot method for report_annual
 \link{report_mig_interannual-class} for examples
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

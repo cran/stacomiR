@@ -7,7 +7,7 @@
 setGeneric("choice_c", def = function(object, ...) standardGeneric("choice_c"))
 #' Generic method to load referentials
 #' @param object Object
-#' @param ... Additional parms
+#' @param ... Additional parm
 #' @author cedric.briand
 #' @export
 setGeneric("charge", def = function(object, ...) standardGeneric("charge"))
@@ -43,6 +43,10 @@ setGeneric("calcule", def = function(object, ...) standardGeneric("calcule"))
 #' @param object Object
 #' @param ... Additional parms
 #' @author cedric.briand
+#' @seealso \link{calcule.report_ge_weight}, \link{calcule.report_mig_char}, \link{calcule.report_mig_env},
+#' \link{calcule.report_mig_interannual},\link{calcule.report_mig_mult},\link{calcule.report_mig_mult},
+#' \link{calcule.report_sample_char},  \link{calcule.report_sea_age},  \link{calcule.report_silver_eel},
+#'  \link{calcule.report_species}
 #' @export
 setGeneric("supprime", def = function(object, ...) standardGeneric("supprime"))
 #' Generic method write_database
@@ -89,5 +93,5 @@ setGeneric(
 #' 
 #' envir_stacomi \code{envir_stacomi <- new.env(parent = baseenv())} is the
 #' environment where most object created by the interface are stored
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 "envir_stacomi"

@@ -13,6 +13,6 @@ validity_ref_horodate(object)
 Validity check for ref_horodate
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

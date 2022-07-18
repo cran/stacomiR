@@ -14,7 +14,7 @@
 #' @slot data A \code{data.frame}
 #' @slot datedebut A 'POSIXlt'
 #' @slot datefin A 'POSIXlt'
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @family referential objects
 #' @keywords classes
 setClass(Class = "ref_coe", representation = representation(data = "data.frame",
@@ -26,7 +26,7 @@ setClass(Class = "ref_coe", representation = representation(data = "data.frame",
 #' The slots datedebut and datefin have to be filled before using charge
 #' @param object An object of class \link{ref_coe-class}
 #' @return An object of class \link{ref_coe-class} 
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #' object<- new('ref_coe')
@@ -55,7 +55,7 @@ setMethod("charge", signature = signature("ref_coe"), definition = function(obje
 #' @param std 'CIV=civelle'
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return Nothing, called for side effect
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 setMethod("supprime", signature = signature("ref_coe"), definition = function(object,
 				tax, std, silent = FALSE) {

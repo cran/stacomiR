@@ -9,11 +9,11 @@
 #' @slot data Object of class \code{"data.frame"} data for report lot
 #' @slot taxa An object of class \code{\link{ref_taxa-class}}, multiple values allowed
 #' @slot stage An object of class \code{\link{ref_stage-class}}, multiple values allowed
-#' @slot anneedebut Object of class \code{\link{ref_year-class}}. ref_year allows to choose year of beginning
-#' @slot anneefin Object of class \code{\link{ref_year-class}}
+#' @slot start_year Object of class \code{\link{ref_year-class}}. ref_year allows to choose year of beginning
+#' @slot end_year Object of class \code{\link{ref_year-class}}
 #' ref_year allows to choose last year of the report
 #' @aliases report_annual
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_annual-example.R
@@ -26,16 +26,16 @@ setClass(
 						taxa = "ref_taxa",
 						stage = "ref_stage",
 						data = "data.frame",
-						anneedebut = "ref_year",
-						anneefin = "ref_year"
+						start_year = "ref_year",
+						end_year = "ref_year"
 				),
 		prototype = prototype(
 				dc = new("ref_dc"),
 				taxa = new("ref_taxa"),
 				stage = new("ref_stage"),
 				data = data.frame(),
-				anneedebut = new("ref_year"),
-				anneefin = new("ref_year")
+				start_year = new("ref_year"),
+				end_year = new("ref_year")
 		)
 )
 
@@ -82,14 +82,14 @@ setMethod(
 						arret = TRUE
 				)
 			}
-			if (exists("anneedebut", envir_stacomi)) {
-				r_ann@anneedebut <- get("anneedebut", envir_stacomi)
+			if (exists("start_year", envir_stacomi)) {
+				r_ann@start_year <- get("start_year", envir_stacomi)
 			} else {
 				funout(gettext("You need to choose the starting year\n", domain = "R-stacomiR"),
 						arret = TRUE)
 			}
-			if (exists("anneefin", envir_stacomi)) {
-				r_ann@anneefin <- get("anneefin", envir_stacomi)
+			if (exists("end_year", envir_stacomi)) {
+				r_ann@end_year <- get("end_year", envir_stacomi)
 			} else {
 				funout(gettext("You need to choose the ending year\n", domain = "R-stacomiR"),
 						arret = TRUE)
@@ -114,7 +114,7 @@ setMethod(
 #' @param object An object of class \link{report_annual-class}
 #' @param silent Stops messages from being displayed if silent=TRUE, default FALSE
 #' @return An instantiated object with values filled with user choice
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class \link{report_annual-class} including a dataframe with column effectif, comprising the sum of report_mig counts
 #' @aliases connect.report_annual
 setMethod(
@@ -126,11 +126,11 @@ setMethod(
 			req = new("RequeteDB")
 			##############################
 			##############################"
-			anneedebut =	r_ann@anneedebut@selected_year
-			anneefin = r_ann@anneefin@selected_year
+			start_year =	r_ann@start_year@year_selected
+			end_year = r_ann@end_year@year_selected
 			dc = vector_to_listsql(r_ann@dc@dc_selected)
-			tax = vector_to_listsql(r_ann@taxa@data$tax_code)
-			std = vector_to_listsql(r_ann@stage@data$std_code)
+			tax = vector_to_listsql(r_ann@taxa@taxa_selected)
+			std = vector_to_listsql(r_ann@stage@stage_selected)
 			
 			reqdiff = new("RequeteDB")
 			
@@ -143,9 +143,9 @@ setMethod(
 							where ope_dic_identifiant in ",
 					dc,
 					" and extract(year from ope_date_debut)>=",
-					anneedebut,
+					start_year,
 					" and	 extract(year from ope_date_debut)<=",
-					anneefin,
+					end_year,
 					" and ope_dic_identifiant in ",
 					dc,
 					" and lot_tax_code in ",
@@ -225,9 +225,9 @@ setMethod(
 						"t_lot_lot on lot_ope_identifiant=ope_identifiant where ope_dic_identifiant in",
 						dc,
 						" and extract(year from ope_date_debut)>=",
-						anneedebut,
+						start_year,
 						" and extract(year from ope_date_fin)<=",
-						anneefin,
+						end_year,
 						" and ope_dic_identifiant in ",
 						dc,
 						" and lot_tax_code in ",
@@ -257,11 +257,11 @@ setMethod(
 #' @param taxa Either a species name in latin or the SANDRE code for species (ie 2038=Anguilla anguilla),
 #' it should match the ref.tr_taxon_tax referential table in the stacomi database, see \link{choice_c,ref_taxa-method}
 #' @param stage A stage code matching the ref.tr_stadedeveloppement_std table in the stacomi database, see \link{choice_c,ref_stage-method}
-#' @param anneedebut The starting the first year, passed as character or integer
-#' @param anneefin the finishing year
+#' @param start_year The starting the first year, passed as character or integer
+#' @param end_year the finishing year
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_annual-class} with data selected
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_annual
 setMethod(
 		"choice_c",
@@ -270,11 +270,11 @@ setMethod(
 				dc,
 				taxa,
 				stage,
-				anneedebut,
-				anneefin,
+				start_year,
+				end_year,
 				silent = FALSE) {
 			# code for debug using example
-			#dc=c(5,6);taxa="Anguilla anguilla";stage=c("AGJ","AGG","CIV");anneedebut="1996";anneefin="2016"
+			#dc=c(5,6);taxa="Anguilla anguilla";stage=c("AGJ","AGG","CIV");start_year="1996";end_year="2016"
 			r_ann <- object
 			r_ann@dc = charge(r_ann@dc)
 			# loads and verifies the dc
@@ -287,22 +287,22 @@ setMethod(
 			r_ann@stage <-
 					charge_with_filter(object = r_ann@stage,
 							r_ann@dc@dc_selected,
-							r_ann@taxa@data$tax_code)
+							r_ann@taxa@taxa_selected)
 			r_ann@stage <- choice_c(r_ann@stage, stage)
 			
-			r_ann@anneedebut <- charge(object = r_ann@anneedebut,
+			r_ann@start_year <- charge(object = r_ann@start_year,
 					objectreport = "report_annual")
-			r_ann@anneedebut <- choice_c(
-					object = r_ann@anneedebut,
+			r_ann@start_year <- choice_c(
+					object = r_ann@start_year,
 					nomassign = "start_year",
-					annee = anneedebut,
+					annee = start_year,
 					silent = silent
 			)
-			r_ann@anneefin@data <- r_ann@anneedebut@data
-			r_ann@anneefin <- choice_c(
-					object = r_ann@anneefin,
+			r_ann@end_year@data <- r_ann@start_year@data
+			r_ann@end_year <- choice_c(
+					object = r_ann@end_year,
 					nomassign = "end_year",
-					annee = anneefin,
+					annee = end_year,
 					silent = silent
 			)
 			assign("report_annual", r_ann, envir = envir_stacomi)
@@ -342,27 +342,30 @@ setMethod(
 				std_name = NULL) {
 			r_ann <- x
 			dat = r_ann@data
-			tax = r_ann@taxa@data$tax_code
-			std = r_ann@stage@data$std_code
+			tax = r_ann@taxa@taxa_selected
+			std = r_ann@stage@stage_selected
 			dc = r_ann@dc@dc_selected
 			# giving names by default if NULL else checking that arguments dc_name, tax_name, std_name
 			#have the right length
-			if (is.null(dc_name))
-				dc_name = r_ann@dc@data[r_ann@dc@data$dc == dc, "dc_code"]
-			else
-			if (length(dc) != length(dc_name))
+			if (is.null(dc_name)){
+				dc_name = r_ann@dc@data$dc_code[r_ann@dc@data$dc %in% r_ann@dc@dc_selected]
+			} 
+			if (length(dc) != length(dc_name)) {
 				stop (stringr::str_c("dc_name argument should have length ", length(dc)))
-			if (is.null(tax_name))
-				tax_name = r_ann@taxa@data$tax_nom_latin
-			else
-			if (length(tax) != length(tax_name))
+			}
+			if (is.null(tax_name)){
+				tax_name = r_ann@taxa@data$tax_nom_latin[r_ann@taxa@data$tax_code %in% r_ann@taxa@taxa_selected]
+			} 
+			if (length(tax) != length(tax_name)){
 				stop (stringr::str_c("tax_name argument should have length ", length(tax)))
-			if (is.null(std_name))
-				std_name = r_ann@stage@data$std_libelle
-			else
-			if (length(std) != length(std_name))
+			}
+			if (is.null(std_name)){
+				std_name = r_ann@stage@data$std_libelle[r_ann@stage@data$std_code %in% r_ann@stage@stage_selected]
+			}
+
+			if (length(std) != length(std_name)){
 				stop (stringr::str_c("std_name argument should have length ", length(std)))
-			
+			}
 			
 			dat <-
 					dat[, c("annee",
@@ -497,7 +500,7 @@ setMethod(
 #' @param legend.text See barplot help
 #' @param ... additional arguments passed to barplot
 #' @return No return value, called for side effects
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases barplot.report_annual
 #' @seealso \link{report_annual-class} for examples
 #' @export
@@ -633,10 +636,11 @@ setMethod(
 #' \itemize{
 #' 		\item{plot.type="point": ggplot+geom_point}'
 #' }
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_annual
 #' @seealso \link{report_mig_interannual-class} for examples
 #' @return No return value, called for side effects
+#' @importFrom scales breaks_pretty
 #' @export
 setMethod(
 		"plot",
@@ -649,15 +653,17 @@ setMethod(
 			lesdic <- unique(dat$ope_dic_identifiant)
 			lestax <- unique(dat$lot_tax_code)
 			lesstd <- unique(dat$lot_std_code)
-			
 			if (nrow(r_ann@data) > 0) {
 				if (plot.type == "point") {
 					colnames(dat) <- c("effectif", "annee", "dc", "taxa", "stage")
 					dat$dc <- as.factor(dat$dc)
 					dat$taxa <- as.factor(dat$taxa)
 					if (length(lestax) == 1 & length(lesstd) & length(lesdic) == 1) {
+						# note below the scale is made to avoid 2000.5 2001 ... and too much breaks as well 
+						# see #27
 						g <- ggplot(dat, aes(x = annee, y = effectif)) + geom_point() +
 								geom_line() +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -673,6 +679,7 @@ setMethod(
 						g <- ggplot(dat, aes(x = annee, y = effectif)) +
 								geom_point(aes(col = dc)) +
 								geom_line(aes(col = dc)) +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -687,6 +694,7 @@ setMethod(
 					} else if (length(lestax) == 1 & length(lesdic) == 1) {
 						g <- ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = stage)) +
 								geom_line(aes(col = stage)) +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -701,6 +709,7 @@ setMethod(
 					} else if (length(lesdic) == 1 & length(lesstd) == 1) {
 						g <- ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = taxa)) +
 								geom_line(aes(col = taxa)) +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -718,6 +727,7 @@ setMethod(
 								ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = dc, shape =
 														stage)) +
 								geom_line(aes(col = dc, linetype = stage)) +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -734,6 +744,7 @@ setMethod(
 								ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = dc, shape =
 														taxa)) +
 								geom_line(aes(col = dc, shape = taxa)) +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -750,6 +761,7 @@ setMethod(
 								ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = taxa, shape =
 														stage)) +
 								geom_line(aes(col = taxa, shape = stage)) +
+								scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 								theme_bw()
 						print(g)
 						assign("g", g, envir_stacomi)
@@ -767,6 +779,7 @@ setMethod(
 									ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = taxa, shape =
 															stage)) +
 									geom_line(aes(col = taxa, shape = stage)) +
+									scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 									facet_wrap( ~ dc) +
 									theme_bw()
 							print(g)
@@ -775,6 +788,7 @@ setMethod(
 							g <- ggplot(dat, aes(x = annee, y = effectif)) + geom_point(aes(col = stage)) +
 									geom_line(aes(col = stage)) +
 									facet_grid(dc ~ stage) +
+									scale_x_continuous(breaks = scales::breaks_pretty(n=pmin(length(unique(dat$annee)),10))) +
 									theme_bw()
 							print(g)
 							

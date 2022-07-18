@@ -12,6 +12,8 @@ integrated into refreport objects.
 
 \describe{
 \item{\code{data}}{A \code{'data.frame'} of species available in the database}
+
+\item{\code{taxa_selected}}{Contains the code \code{'tax_code'} of the taxa selected by choice_c() method}
 }}
 
 \section{Objects from the Class}{
@@ -36,6 +38,6 @@ Other referential objects:
 \code{\link{ref_year-class}}
 }
 \author{
-cedric.briand'at'eptb-vilaine.fr
+cedric.briand@eptb-vilaine.fr
 }
 \concept{referential objects}

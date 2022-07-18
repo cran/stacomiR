@@ -28,8 +28,8 @@ stacomi(
   # as the dates are from august to august
   r_gew<-choice_c(r_gew,
 	  dc=c(6),			
-	  anneedebut="2009",
-	  anneefin="2015",
+	  start_year="2009",
+	  end_year="2015",
 	  selectedvalue=">1",
 	  silent=FALSE)
   r_gew<-connect(r_gew)	

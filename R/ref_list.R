@@ -8,7 +8,7 @@
 #' \item{list('listechoice')}{Object of class \code{'character'}}\item{:}{Object
 #' of class \code{'character'}} \item{list('label')}{Object of class
 #' \code{'character'}}\item{:}{Object of class \code{'character'}} }
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @keywords internal
 #' @family referential objects
 setClass(Class = "ref_list", representation = representation(listechoice = "character",
@@ -22,7 +22,7 @@ setClass(Class = "ref_list", representation = representation(listechoice = "char
 #' @param listechoice A character vector setting the possible values in which the user can select
 #' @param label A label for refliste
 #' @return An S4 object of class \link{ref_list-class} 
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  object=new('ref_list')
@@ -42,7 +42,7 @@ setMethod("charge", signature = signature("ref_list"), definition = function(obj
 #' @param selectedvalue the value selected in the combo
 #' @return An S4 object of class \link{ref_list-class} 
 #' @note the choice method assigns an object of class refList named ref_list in the environment envir_stacomi
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples  
 #' \dontrun{
 #' object=new('ref_list')
@@ -53,7 +53,7 @@ setMethod("choice_c", signature = signature("ref_list"), definition = function(o
     selectedvalue) {
     if (length(selectedvalue) > 1)
         stop("valeurchoisie should be a vector of length 1")
-    if (class(selectedvalue) == "numeric")
+    if (inherits(selectedvalue, "numeric"))
         selectedvalue <- as.character(selectedvalue)
     # the charge method must be performed before
 

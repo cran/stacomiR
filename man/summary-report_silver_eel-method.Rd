@@ -21,5 +21,5 @@ A list per DC with statistic for Durif stages, Pankhurst, MD Eye diameter, BL bo
 summary for report_silver_eel
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -19,5 +19,5 @@ Nothing, called for its side effect of deleting data in the database
 supprime method for report_mig_interannual class
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -12,8 +12,8 @@ stacomi(	database_expected=FALSE)
   bilesp<-choice_c(bilesp,
 	  dc=c(5,6,12),
 	  split="year", 
-	  anneedebut="2008",
-	  anneefin="2012",
+	  start_year="2008",
+	  end_year="2012",
 	  silent=FALSE)	
   bilesp <- connect(bilesp)
   bilesp <- calcule(bilesp)
@@ -22,8 +22,8 @@ stacomi(	database_expected=FALSE)
   bilesp <- choice_c(bilesp,
 	  dc=c(5,6,12),
 	  split="month",
-	  anneedebut="2015",
-	  anneefin="2016",
+	  start_year="2015",
+	  end_year="2016",
 	  silent=FALSE)
   bilesp <- charge(bilesp)
   bilesp <- connect(bilesp)

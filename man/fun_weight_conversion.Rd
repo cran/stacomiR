@@ -22,5 +22,5 @@ returns a table where weights and number are calculated from number and weights 
 performs a query to collect the conversion coefficients
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -27,7 +27,7 @@
 #' @slot limit2hm The size limit, in mm between 2 sea winter fishes and 3 sea winter fishes
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new("report_sea_age", ...)}
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_sea_age-example.R
@@ -62,10 +62,10 @@ setClass(
 )
 setValidity("report_sea_age", function(object)
 		{
-			rep1 = object@taxa@data$tax_code[1] == '2220'
+			rep1 = object@taxa@taxa_selected[1] == '2220'
 			label1 <-
 					'report_sea_age should only be for salmon (tax_code=2220)'
-			rep2 = all(object@stage@data$std_code %in% c('5', '11', 'BEC', 'BER', 'IND'))
+			rep2 = all(object@stage@stage_selected %in% c('5', '11', 'BEC', 'BER', 'IND'))
 			label2 <-
 					'Only stages 5,11,BEC,BER,IND should be used in report_sea_age'
 			return(ifelse(rep1 &
@@ -76,7 +76,7 @@ setValidity("report_sea_age", function(object)
 #' @param object An object of class \link{report_sea_age-class}
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return An object of class \link{report_sea_age-class} with slot data \code{@data} filled
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases connect.report_sea_age
 setMethod(
 		"connect",
@@ -96,9 +96,9 @@ setMethod(
 					" AND ope_dic_identifiant in ",
 					vector_to_listsql(object@dc@dc_selected),
 					" AND lot_tax_code in ",
-					vector_to_listsql(object@taxa@data$tax_code),
+					vector_to_listsql(object@taxa@taxa_selected),
 					" AND lot_std_code in ",
-					vector_to_listsql(object@stage@data$std_code),
+					vector_to_listsql(object@stage@stage_selected),
 					" AND car_par_code in ",
 					vector_to_listsql(object@par@par_selected),
 					sep = ""
@@ -120,7 +120,7 @@ setMethod(
 #' @param object An object of class \link{report_sea_age-class}
 #' @param h a handler
 #' @return An object of class \link{report_sea_age-class} with slots filled with user choice
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class \link{report_sea_age-class} with slots filled from values assigned in \code{envir_stacomi} environment
 #' @aliases charge.report_sea_age
 #' @keywords internal
@@ -213,7 +213,7 @@ setMethod(
 #' @param limit2hm Size limit of a salmon for a two sea winter fish
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return An object of class \link{report_sea_age-class}
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_sea_age
 setMethod(
 		"choice_c",
@@ -252,14 +252,14 @@ setMethod(
 			r_seaa@stage <-
 					charge_with_filter(object = r_seaa@stage,
 							r_seaa@dc@dc_selected,
-							r_seaa@taxa@data$tax_code)
+							r_seaa@taxa@taxa_selected)
 			r_seaa@stage <- choice_c(r_seaa@stage, stage, silent = silent)
 			r_seaa@par <-
 					charge_with_filter(
 							object = r_seaa@par,
 							r_seaa@dc@dc_selected,
-							r_seaa@taxa@data$tax_code,
-							r_seaa@stage@data$std_code
+							r_seaa@taxa@taxa_selected,
+							r_seaa@stage@stage_selected
 					)
 			r_seaa@par <- choice_c(r_seaa@par, par, silent = silent)
 			r_seaa@horodatedebut <- choice_c(
@@ -294,7 +294,7 @@ setMethod(
 #' returned
 #' @param object An object of class \code{\link{report_sea_age-class}}
 #' @param silent Default FALSE, if TRUE the program should no display messages
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class \link{report_sea_age-class} with calculated data in slot calcdata
 #' @aliases calcule.report_sea_age
 setMethod(
@@ -345,7 +345,7 @@ setMethod(
 #' }
 #' @param silent Default FALSE, if TRUE the program should no display messages.
 #' @return Nothing, called for its side effect of plotting
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_sea_age
 #' @export
 setMethod(
@@ -451,7 +451,7 @@ setMethod(
 #' @param silent Default FALSE, if TRUE the program should no display messages.
 #' @param ... Additional parameters
 #' @return The summary
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_sea_age
 #' @export
 setMethod(
@@ -504,7 +504,7 @@ setMethod(
 #' @param object an object of class \link{report_sea_age-class}
 #' @param silent : Default FALSE, if TRUE the program should no display messages.
 #' @return Nothing, called for its side effect of writing data to the database
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases write_database.report_sea_age
 #' @export
 setMethod(
@@ -523,9 +523,9 @@ setMethod(
 							arret = TRUE
 					)
 			}
-			if (class(r_seaa) != "report_sea_age")
+			if (!inherits(r_seaa, "report_sea_age"))
 				stop("the r_seaa should be of class report_sea_age")
-			if (class(silent) != "logical")
+			if (!inherits(silent, "logical"))
 				stop("the silent argument should be a logical")
 			data_in_base <- data_in_base[data_in_base$car_par_code == 'A124', ]
 			if (nrow(data_in_base) > 0) {
@@ -599,7 +599,7 @@ setMethod(
 					stringr::str_c(shQuote(x@taxa@data$tax_nom_latin), collapse = ","),
 					"),",
 					"stage=c(",
-					stringr::str_c(shQuote(x@stage@data$std_code), collapse = ","),
+					stringr::str_c(shQuote(x@stage@stage_selected), collapse = ","),
 					"),",
 					"par=c(",
 					stringr::str_c(shQuote(x@par@par_selected), collapse = ","),
@@ -629,7 +629,7 @@ setMethod(
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return Nothing, called for its side effect of deleting data in the database
 #' @aliases supprime.report_sea_age
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 setMethod(
 		"supprime",

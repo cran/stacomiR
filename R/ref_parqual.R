@@ -2,7 +2,7 @@
 #' 
 #' Class enabling to load the list of qualitative parameters and to select one
 #' of them. It inherits from 'ref_par', uses its 'choice' method
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @slot valqual='data.frame' the list of qualitative parameters
 #' @include ref_par.R
 #' @family referential objects
@@ -12,7 +12,7 @@ setClass(Class = "ref_parqual", representation = representation(valqual = "data.
 #' Loading method for Reparqual referential objects
 #' @param object An object of class \link{ref_parqual-class}
 #' @return An S4 object of class ref_parqual
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  object=new('ref_parqual')
@@ -20,7 +20,7 @@ setClass(Class = "ref_parqual", representation = representation(valqual = "data.
 #' }
 setMethod("charge", signature = signature("ref_parqual"), definition = function(object) {
     requete = new("RequeteDB")
-    requete@sql = "select * from ref.tg_parametre_par
+    requete@sql = "select par_code, par_nom, par_unite, par_nature, par_definition, qal_valeurs_possibles from ref.tg_parametre_par
      INNER JOIN ref.tr_parametrequalitatif_qal ON tr_parametrequalitatif_qal.qal_par_code::text = tg_parametre_par.par_code::text"
     requete <- stacomirtools::query(requete)
     # funout(gettext('The query to load parameters is done
@@ -35,7 +35,7 @@ setMethod("charge", signature = signature("ref_parqual"), definition = function(
 #' @param taxa_selected The taxa set in the report object
 #' @param stage_selected The stage set in the report object
 #' @return An S4 object of class \link{ref_parqual-class}
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  dc_selected=6
@@ -47,7 +47,7 @@ setMethod("charge", signature = signature("ref_parqual"), definition = function(
 setMethod("charge_with_filter", signature = signature("ref_parqual"), definition = function(object,
     dc_selected, taxa_selected, stage_selected) {
     requete = new("RequeteDBwhere")
-    requete@select = paste("SELECT DISTINCT ON (par_code) par_code, par_nom", " FROM ",
+    requete@select = paste("SELECT DISTINCT ON (par_code) par_code, par_nom, par_unite, par_nature, par_definition, qal_valeurs_possibles", " FROM ",
         get_schema(), "tg_dispositif_dis", " JOIN ", get_schema(), "t_dispositifcomptage_dic on dis_identifiant=dic_dis_identifiant",
         " JOIN ", get_schema(), "t_operation_ope on ope_dic_identifiant=dic_dis_identifiant",
         " JOIN ", get_schema(), "t_lot_lot on lot_ope_identifiant=ope_identifiant",
@@ -67,7 +67,7 @@ setMethod("charge_with_filter", signature = signature("ref_parqual"), definition
 #' this method is loaded to obtain the possible values of a qualitative parameter. Here data only contains one line
 #' @param object An object of class \link{ref_parqual-class}
 #' @return An S4 object of class \link{ref_parqual-class} with the valqual slot filled
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  dc_selected=6

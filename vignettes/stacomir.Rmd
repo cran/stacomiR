@@ -362,12 +362,7 @@ stage <- fun_stage_durif(silver_eel) # apply the function to the matrix
 stage[1:10] # look at the first 10 elements in vector silver
 ```
 
-### R-GTK2 graphical interface
 
-The program is intended to be used by 'non experienced' R users. Launching
-`stacomi()` will create the interface. The interface looks like :
-
-![](../man/figures/interface_graph_taille_sat.png)
 
 License
 -------

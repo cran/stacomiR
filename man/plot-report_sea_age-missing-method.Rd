@@ -25,5 +25,5 @@ Nothing, called for its side effect of plotting
 Plots of various type for report_sea_age
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -9,7 +9,7 @@ charge(object, ...)
 \arguments{
 \item{object}{Object}
 
-\item{...}{Additional parms}
+\item{...}{Additional parm}
 }
 \description{
 Generic method to load referentials

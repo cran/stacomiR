@@ -37,5 +37,5 @@ year 2000, meaning that day 1 would correspond to the first date of 2000,  which
 saturday, the last day of the week.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

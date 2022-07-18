@@ -18,8 +18,8 @@
 #' @slot data A \code{'data.frame'} data for report lot
 #' @slot calcdata  A list containing two processed data frames, data and coe
 #' @slot dc Object of class \code{\link{ref_dc-class}}, the counting device
-#' @slot anneedebut Object of class \code{\link{ref_year-class}}. ref_year allows to choose the year of beginning
-#' @slot anneefin Object of class \code{\link{ref_year-class}}
+#' @slot start_year Object of class \code{\link{ref_year-class}}. ref_year allows to choose the year of beginning
+#' @slot end_year Object of class \code{\link{ref_year-class}}
 #' ref_year allows to choose last year of the report
 #' @slot coe Object of class \code{\link{ref_coe-class}} class loading coefficient
 #' of conversion between quantity (weights or volumes of glass eel) and numbers
@@ -27,16 +27,16 @@
 #' class choose within a list, here the choice is whether subsamples or not. Subsamples
 #' in the stacomi database are samples with a non null value for parent sample. Migration
 #' counts are never made on subsamples but those can be integrated to calculate mean weights.
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_ge_weight-example.R
 #' @aliases report_ge_weight
 #' @export 
 setClass(Class = "report_ge_weight", representation = representation(data = "data.frame",
-				calcdata = "list", dc = "ref_dc", anneedebut = "ref_year", anneefin = "ref_year",
+				calcdata = "list", dc = "ref_dc", start_year = "ref_year", end_year = "ref_year",
 				coe = "ref_coe", liste = "ref_list"), prototype = prototype(data = data.frame(),
-				calcdata = list(), dc = new("ref_dc"), anneedebut = new("ref_year"), anneefin = new("ref_year"),
+				calcdata = list(), dc = new("ref_dc"), start_year = new("ref_year"), end_year = new("ref_year"),
 				coe = new("ref_coe"), liste = new("ref_list")))
 
 #' connect method for report_Poids_moyen
@@ -48,14 +48,14 @@ setClass(Class = "report_ge_weight", representation = representation(data = "dat
 #' @param silent Should the method be silent
 #' @return An object of class \link{report_ge_weight-class}  with slots data and coe filled from the database
 #' @note dates for the request are from august to august (a glass eel season)
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases connect.report_ge_weight
 setMethod("connect", signature = signature("report_ge_weight"), definition = function(object, silent=TRUE) {
 			# object<-r_gew loading mean weights
 			requete = new("RequeteDBwheredate")
-			requete@datedebut = strptime(paste(object@anneedebut@selected_year, "-08-01",
+			requete@datedebut = strptime(paste(object@start_year@year_selected, "-08-01",
 							sep = ""), format = "%Y-%m-%d")
-			requete@datefin = strptime(paste(object@anneefin@selected_year, "-08-01",
+			requete@datefin = strptime(paste(object@end_year@year_selected, "-08-01",
 							sep = ""), format = "%Y-%m-%d")
 			requete@colonnedebut = "ope_date_debut"
 			requete@colonnefin = "ope_date_fin"
@@ -87,32 +87,32 @@ setMethod("connect", signature = signature("report_ge_weight"), definition = fun
 #' command line interface for \link{report_ge_weight-class}
 #' @param object An object of class \link{report_ge_weight-class}
 #' @param dc A numeric or integer, the code of the dc, coerced to integer,see \link{choice_c,ref_dc-method}
-#' @param anneedebut The starting the first year, passed as character or integer
-#' @param anneefin the finishing year, must be > anneedebut (minimum one year in august to the next in august)
+#' @param start_year The starting the first year, passed as character or integer
+#' @param end_year the finishing year, must be > start_year (minimum one year in august to the next in august)
 #' @param selectedvalue A character to select and object in the \link{ref_list-class}
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_ge_weight-class}  with data selected
 #' The choice_c method fills in the data slot for classes \link{ref_dc-class} \link{ref_year-class}
 #' \link{ref_coe-class} \link{ref_list-class}
 #' @aliases choice_c.report_ge_weight
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod("choice_c", signature = signature("report_ge_weight"), definition = function(object,
-				dc, anneedebut, anneefin, selectedvalue, silent = FALSE) {
+				dc, start_year, end_year, selectedvalue, silent = FALSE) {
 			# code for debug using example
-			# dc=c(5,6);anneedebut='2015';anneefin='2016';selectedvalue='>1';silent=FALSE
+			# dc=c(5,6);start_year='2015';end_year='2016';selectedvalue='>1';silent=FALSE
 			if (length(selectedvalue) != 1)
 				stop("selectedvalue must be of length one")
 			r_gew <- object
-			stopifnot(anneefin > anneedebut)
+			stopifnot(end_year > start_year)
 			r_gew@dc = charge(r_gew@dc)
 			# loads and verifies the dc this will set dc_selected slot
 			r_gew@dc <- choice_c(object = r_gew@dc, dc)
 			# only taxa present in the report_mig are use
-			r_gew@anneedebut <- charge(object = r_gew@anneedebut, objectreport = "report_ge_weight")
-			r_gew@anneedebut <- choice_c(object = r_gew@anneedebut, nomassign = "start_year",
-					annee = anneedebut, silent = silent)
-			r_gew@anneefin@data <- r_gew@anneedebut@data
-			r_gew@anneefin <- choice_c(object = r_gew@anneefin, nomassign = "end_year", annee = anneefin,
+			r_gew@start_year <- charge(object = r_gew@start_year, objectreport = "report_ge_weight")
+			r_gew@start_year <- choice_c(object = r_gew@start_year, nomassign = "start_year",
+					annee = start_year, silent = silent)
+			r_gew@end_year@data <- r_gew@start_year@data
+			r_gew@end_year <- choice_c(object = r_gew@end_year, nomassign = "end_year", annee = end_year,
 					silent = silent)
 			r_gew@liste = charge(object = r_gew@liste, listechoice = c("=1", ">1", "tous"),
 					label = gettext("choice of number in sample (one, several,all)", domain = "R-stacomiR"))  # choix de la categorie d'effectif)
@@ -131,7 +131,7 @@ setMethod("choice_c", signature = signature("report_ge_weight"), definition = fu
 #' columns and renaming from \code{@data}) and \code{coe} daily coefficients extracted from the database 
 #' \code{@calcdata[["coe"]]} and prepared for graphs
 #' @aliases calcule.report_ge_weight
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod("calcule", signature = signature("report_ge_weight"), definition = function(object,
 				silent = FALSE) {
 			r_gew <- object
@@ -165,7 +165,7 @@ setMethod("calcule", signature = signature("report_ge_weight"), definition = fun
 #' '3' same as '1' but with size according to number.
 #' @param silent Stops displaying the messages
 #' @return Nothing, called for its side effect of plotting data
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_ge_weight
 #' @export
 setMethod("plot", signature(x = "report_ge_weight", y = "missing"), definition = function(x,
@@ -192,7 +192,7 @@ setMethod("plot", signature(x = "report_ge_weight", y = "missing"), definition =
 						tous = gettext("wet and dry weights", domain = "R-stacomiR"))
 				plot(x = don$date, y = don$w, xlab = gettext("date", domain = "R-stacomiR"),
 						ylab = gettext("mean weights", domain = "R-stacomiR"), col = "red", main = gettextf("Seasonal trend of %s, from %s to %s",
-								type_poids, r_gew@anneedebut@selected_year, r_gew@anneefin@selected_year,
+								type_poids, r_gew@start_year@year_selected, r_gew@end_year@year_selected,
 								domain = "R-stacomiR"), sub = "Trend of wet weights")
 				coe <- coe[order(coe$date), ]
 				points(coe$date, coe$w, type = "l", col = "black", lty = 2)
@@ -242,11 +242,12 @@ setMethod("plot", signature(x = "report_ge_weight", y = "missing"), definition =
 #'   please see example for further description on how to fit your own model, build the table of coefficients,
 #'   and write it to the database.}
 #' }
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases model.report_ge_weight
 setMethod("model", signature(object = "report_ge_weight"), definition = function(object,
 				model.type = "seasonal", silent = FALSE) {
 			# r_gew=get('report_ge_weight',envir_stacomi);silent=TRUE;require(ggplot2)
+			# r_gew <- bilPM
 			r_gew <- object
 			don <- r_gew@calcdata$data
 			coe <- r_gew@calcdata$coe
@@ -256,7 +257,7 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 			fndate <- function(data) {
 				if (!"date" %in% colnames(data))
 					stop("date should be in colnames(data)")
-				if (!class(data$date)[1] == "POSIXct")
+				if (!inherits(data$date[1], "POSIXct"))
 					stop("date should be POSIXct")
 				data$year <- lubridate::year(data$date)
 				# lubridate::yday(lubridate::dmy(01082008))
@@ -271,10 +272,13 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 				data$time = as.numeric(data$date - origine)
 				return(data)
 			}
+			don$date <- as.POSIXct(as.Date(don$date)) # bug the tz in CEST and GMT don't fit well
+			# and the range of time between don and newcoe becomes extremely different
 			don <- fndate(don)
 			newcoe = data.frame(date = seq, mean_weight = NA, number = NA, lot = NA, yday = lubridate::yday(seq))
 			newcoe$date = as.POSIXct(newcoe$date)
 			newcoe = fndate(newcoe)
+			
 			if (model.type == "seasonal") {
 				result <- data.frame(season = unique(don$season), year = unique(don$yearbis),
 						a = NA, T = NA, b = NA)
@@ -341,7 +345,9 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 				com = stringr::str_c("w ~ a*cos(2*pi*(doy-T)/365)+b with a period T.", " The julian time d0 used is this model is set at zero 1st of November doy = d + d0; d0 = 305.",
 						" Coefficients for the model (one line per season): season, a, T, b =",
 						result_to_text)
+				
 			} else if (model.type == "seasonal1") {
+				
 				g1 = mgcv::gam(w ~ s(yday, bs = "cc") + s(time), data = don, knots = list(yday = c(1,
 										365)))
 				# the knots=list(yday=c(1,365) is necessary for a smooth construction
@@ -349,7 +355,7 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 				summary(g1)
 				plot(g1, pages = 1)
 				predata <- newcoe
-				pred <- predict(g1, newdata = predata, se.fit = TRUE)
+				pred <- predict(g1, newdata = predata, se.fit = TRUE, type="response")
 				predata$pred_weight <- pred$fit
 				predata$pred_weight_lwr <- pred$fit - 1.96 * pred$se.fit
 				predata$pred_weight_upr <- pred$fit + 1.96 * pred$se.fit
@@ -367,44 +373,31 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 				if (!silent)
 					funout(gettext("gam model g1 assigned to envir_stacomi", domain = "R-stacomiR"))
 				com = "model seasonal1 = gam(w~s(yday,bs='cc')+s(time), knots = list(yday = c(1, 365)))"
+				
 			} else if (model.type == "seasonal2") {
-				######################################################### seasonal
-				######################################################### effects with
-				######################################################### a continuous
-				######################################################### sine-cosine
-				######################################################### wave,.  The
-				######################################################### formula for
-				######################################################### this is
-				######################################################### 'sin(omegavt)
-				######################################################### +
-				######################################################### cos(omegavt)',
-				######################################################### where vt is
-				######################################################### the time
-				######################################################### index
-				######################################################### variable
-				######################################################### \tomega is a
-				######################################################### constant that
-				######################################################### describes how
-				######################################################### the index
-				######################################################### variable
-				######################################################### relates to
-				######################################################### the full
-				######################################################### period (here,
-				######################################################### 2pi/365=0.0172).
+				
+				## seasonal effects with a continuous sine-cosine wave,.  The
+				## formula for this is 'sin(omegavt) + cos(omegavt)',
+				## where vt is the time index variable
+				## \tomega is a constant that describes how the index
+				## variable relates to the full period (here,
+				## 2pi/365=0.0172).
 				g2 = mgcv::gam(w ~ cos(0.0172 * doy) + sin(0.0172 * doy) + s(time), data = don)
 				print(gettext("One model per year, doy starts in august", domain = "R-stacomiR"))
 				summary(g2)
 				plot(g2, pages = 1)
 				predata <- newcoe
-				pred <- predict(g2, newdata = predata, se.fit = TRUE)
+				pred <-  predict(g2, newdata = predata, se.fit = TRUE, type="response")
 				predata$pred_weight <- pred$fit
 				predata$pred_weight_lwr <- pred$fit - 1.96 * pred$se.fit
 				predata$pred_weight_upr <- pred$fit + 1.96 * pred$se.fit
 				p <- ggplot(don) + geom_jitter(aes(x = date, y = w), col = "aquamarine4") +
 						geom_line(aes(x = date, y = pred_weight), data = predata) + geom_ribbon(data = predata,
-								aes(x = date, ymin = pred_weight_lwr, ymax = pred_weight_upr), alpha = 0.3,
-								fill = "wheat") + scale_x_datetime(date_breaks = "years", date_minor_breaks = "month") +
-						theme_minimal() + theme(panel.border = element_blank(), axis.line = element_line()) +
+								aes(x = date, ymin = pred_weight_lwr, ymax = pred_weight_upr), alpha = 0.8,
+								fill = "wheat") + 
+						scale_x_datetime(date_breaks = "years", date_minor_breaks = "month") +
+						theme_minimal() + 
+						theme(panel.border = element_blank(), axis.line = element_line()) +
 						xlab("Date")
 				if (!silent) print(p)
 				assign("p", p, envir = envir_stacomi)
@@ -414,15 +407,8 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 				if (!silent)
 					funout(gettext("gam model g2 assigned to envir_stacomi", domain = "R-stacomiR"))
 				
-				################################################################### comparison
-				################################################################### with
-				################################################################### Guerault
-				################################################################### and
-				################################################################### Desaunay
-				################################################################### (summary
-				################################################################### table
-				################################################################### in
-				################################################################### latex)
+				## comparison
+				## with Guerault and Desaunay (summary table in latex)
 				gamma = as.numeric(sqrt(g2$coefficients["cos(0.0172 * doy)"]^2 + g2$coefficients["sin(0.0172 * doy)"]^2))  #0.386
 				# compared with 0.111
 				phi = round(as.numeric(atan2(g2$coefficients["sin(0.0172 * doy)"], g2$coefficients["cos(0.0172 * doy)"]) -
@@ -470,8 +456,8 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 						coe_commentaires = com)
 				# will write only if the database is present
 				if (get("database_expected", envir_stacomi)) {
-					fileout = paste(get("datawd", envir = envir_stacomi), "import_coe", r_gew@anneedebut@selected_year,
-							r_gew@anneefin@selected_year, ".csv", sep = "")
+					fileout = paste(get("datawd", envir = envir_stacomi), "import_coe", r_gew@start_year@year_selected,
+							r_gew@end_year@year_selected, ".csv", sep = "")
 					utils::write.table(import_coe, file = fileout, row.names = FALSE, sep = ";")
 					if (! silent){ 
 						funout(paste(gettextf("data directory :%s", fileout, domain = "R-stacomiR")))
@@ -497,7 +483,7 @@ setMethod("model", signature(object = "report_ge_weight"), definition = function
 #' @param object An object of class \link{report_ge_weight-class}
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return Nothing, called for its side effect of writing to the database
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases write_database.report_ge_weight
 setMethod("write_database", signature = signature("report_ge_weight"), definition = function(object,
 				silent = FALSE) {

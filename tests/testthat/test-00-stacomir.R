@@ -4,15 +4,15 @@ context("stacomi base connection")
 # while crashing in some test for reportFonctionnement DF or report_dc, 
 #the program will set time to GMT, this will cause some errors hard to understand in some of 
 # the classes (report_mig, report_mig_mult), with the following you can check this problem
-test_that("Test that the program is running under the right locale",{
-			skip_on_cran()
-			if(Sys.info()["sysname"] == "Linux")
-				expect_equal(Sys.getlocale(category = "LC_TIME"),"fr_FR.UTF-8")
-			else
-				expect_equal(Sys.getlocale(category = "LC_TIME"),"French_France.1252")	
-			
-		}
-)
+# test_that("Test that the program is running under the right locale",{
+# 			skip_on_cran()
+# 			if(Sys.info()["sysname"] == "Linux")
+# 				expect_equal(Sys.getlocale(category = "LC_TIME"),"fr_FR.UTF-8")
+# 			else
+# 				expect_equal(Sys.getlocale(category = "LC_TIME"),"French_France.1252")	
+# 			
+# 		}
+# )
 
 test_that("Test that user host and password are set for test",{
 			skip_on_cran()

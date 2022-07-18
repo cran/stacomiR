@@ -9,7 +9,7 @@
 #' @param DC  The counting device
 #' @param silent Message displayed or not
 #' @return No return value, called for side effects
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 funstat = function(tableau, time.sequence, taxa, stage, DC, silent) {
     if (!silent)
@@ -33,18 +33,18 @@ funstat = function(tableau, time.sequence, taxa, stage, DC, silent) {
     }
     resum = resum[, moislab, drop = FALSE]
     resum = as.data.frame(resum)
-    resum["somme", "report"] = round(sum(tableau$Effectif_total, na.rm = TRUE), 2)
-    resum["moyennes_journalieres", "report"] = mean(tableau$Effectif_total, na.rm = TRUE)
-    # resum['moyennes_journalieres','report']=round(mean(tableau$Effectif_total,
+    resum["somme", "year"] = round(sum(tableau$Effectif_total, na.rm = TRUE), 2)
+    resum["moyennes_journalieres", "year"] = mean(tableau$Effectif_total, na.rm = TRUE)
+    # resum['moyennes_journalieres','year']=round(mean(tableau$Effectif_total,
     # na.rm=TRUE),2)
     # resum['ecarts_types','report']=round(sd(tableau$Effectif_total,
     # na.rm=TRUE),2)
     if (taxa == "Anguilla anguilla" & stage == "civelle") {
-        resum["poids_depuis_effectif", "report"] = round(sum(tableau$poids_depuis_effectif,
+        resum["poids_depuis_effectif", "year"] = round(sum(tableau$poids_depuis_effectif,
             na.rm = TRUE), 2)
-        resum["poids_mesure", "report"] = round(sum(tableau$Poids_total, na.rm = TRUE),
+        resum["poids_mesure", "year"] = round(sum(tableau$Poids_total, na.rm = TRUE),
             2)
-        resum["Poids_total", "report"] = round(sum(Poids_total, na.rm = TRUE), 2)
+        resum["Poids_total", "year"] = round(sum(Poids_total, na.rm = TRUE), 2)
     }
     resum = cbind(label = paste("DC", DC, taxa, stage, annee, sep = "_"), resum)
     # funout(paste(DC,taxa,stage,annee,'\n'))

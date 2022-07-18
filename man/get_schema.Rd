@@ -16,6 +16,6 @@ The schema in envir_stacomi
 this function gets the schema from envir stacomi and throws warning
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

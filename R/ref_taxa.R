@@ -6,15 +6,16 @@
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new('ref_taxa', ...)}.   
 #' @slot data A \code{'data.frame'} of species available in the database
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @slot taxa_selected Contains the code \code{'tax_code'} of the taxa selected by choice_c() method
+#' @author cedric.briand@eptb-vilaine.fr
 #' @family referential objects
-setClass(Class = "ref_taxa", representation = representation(data = "data.frame"))
+setClass(Class = "ref_taxa", representation = representation(data = "data.frame",taxa_selected = "character"))
 
 
 #' Loading method for ref_taxa referential objects
 #' 
 #' @return An S4 object of class ref_taxa
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @param object An object of class \link{ref_taxa-class}
 #' @return An S4 object of class \link{ref_taxa-class} with all taxa loaded from the database
 #' @examples \dontrun{
@@ -32,7 +33,7 @@ setMethod("charge", signature = signature("ref_taxa"), definition = function(obj
 #' @param object An object of class \link{ref_taxa-class}
 #' @param dc_selected A counting device selected, only taxa attached to this dc are selected
 #' @return An S4 object of class \link{ref_taxa-class} with all taxa present on a DC (counting device)
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples \dontrun{
 #'  dc_selected=6
 #'  object=new('ref_taxa')
@@ -62,7 +63,7 @@ setMethod("charge_with_filter", signature = signature("ref_taxa"), definition = 
 #' @param object An object from the class ref_taxa
 #' @param taxa The vector of taxa, can be either code (numeric) or latin name
 #' @return An S4 object of class \link{ref_taxa-class} with data filtered according to the taxa
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples
 #' \dontrun{
 #' object=new('ref_taxa')
@@ -74,19 +75,28 @@ setMethod("choice_c", signature = signature("ref_taxa"), definition = function(o
     taxa) {
     if (is.null(taxa)) {
         funout(gettext("No value for argument taxa\n", domain = "R-stacomiR"), arret = TRUE)
-    } else if (class(taxa) == "character") {
+    } else if (inherits(taxa, "character") & suppressWarnings(all(is.na(as.numeric(taxa))))) {
+			# taxa is 'Anguilla anguilla'
         libellemanquants <- taxa[!taxa %in% object@data$tax_nom_latin]
         if (length(libellemanquants) > 0)
             warning(gettextf("Taxa not present :\n %s", stringr::str_c(libellemanquants,
                 collapse = ", "), domain = "R-stacomiR"))
-        object@data <- object@data[object@data$tax_nom_latin %in% taxa, ]
-    } else if (class(taxa) == "numeric") {
-        codemanquants <- taxa[!taxa %in% object@data$tax_code]
+        object@taxa_selected <- object@data[object@data$tax_nom_latin %in% taxa,"tax_code"]
+    } else if (inherits(taxa, "numeric")){
+			# taxa is  2038
+        codemanquants <- taxa[!as.character(taxa) %in% object@data$tax_code]
         if (length(codemanquants) > 0)
             warning(gettextf("Taxa not present :\n %s", stringr::str_c(codemanquants,
                 collapse = ", "), domain = "R-stacomiR"))
-        object@data <- object@data[object@data$tax_code %in% taxa, ]
-    }
+        object@taxa_selected <- object@data[object@data$tax_code %in% as.character(taxa),"tax_code"]
+    } else if (inherits(taxa, "character") & !suppressWarnings(all(is.na(as.numeric(taxa))))){
+			# taxa is "2038"
+			codemanquants <- taxa[!taxa %in% object@data$tax_code]
+			if (length(codemanquants) > 0)
+				warning(gettextf("Taxa not present :\n %s", stringr::str_c(codemanquants,
+										collapse = ", "), domain = "R-stacomiR"))
+			object@taxa_selected <- object@data[object@data$tax_code %in% taxa, "tax_code"]		
+		}
     if (nrow(object@data) == 0) {
         funout(gettext("Stop there is no line in the taxa table (problem with the DB link ?)\n",
             domain = "R-stacomiR"), arret = TRUE)

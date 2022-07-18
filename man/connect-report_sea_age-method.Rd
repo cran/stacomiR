@@ -19,5 +19,5 @@ An object of class \link{report_sea_age-class} with slot data \code{@data} fille
 connect method for report_sea_age
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -16,6 +16,6 @@ boolean The test for the object refannee
 validity_year tests for validity within the class
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

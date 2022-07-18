@@ -23,6 +23,6 @@ This method verifies that boxes have been clicked in the user interface and gets
 envir_stacomi
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

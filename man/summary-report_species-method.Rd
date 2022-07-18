@@ -19,5 +19,5 @@ nothing, but writes summary in \code{get("datawd", envir = envir_stacomi)}, and 
 generate csv and html output in the user data directory
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

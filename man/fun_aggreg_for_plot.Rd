@@ -18,5 +18,5 @@ Calculates a data.frame where all components within the list calcdata are aggreg
 and formatted for plot
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

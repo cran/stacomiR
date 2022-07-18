@@ -20,5 +20,5 @@ An S4 object of class \link{ref_textbox-class} label selected
 Choice_c method for ref_textbox referential objects
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

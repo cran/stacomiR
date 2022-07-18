@@ -7,9 +7,9 @@
 \title{Counts of number per taxa/stages}
 \description{
 This class is used to make the assessment of all species, and their number. It is intended
-as a simple way to check what fishes are present (taxa + development stage). Unlike the report_annual,
-it is not restricted to chosen taxa or stages but gives counts for all species present. The taxa is reported unless 
-a taxa has several case, in which case the different stages for the taxa will be reported
+as a simple way to check what fishes are present (taxa + development stage). It was altered to include ref_taxa,
+to allow excluding some of the most numerous taxa from reports. The taxa is reported unless 
+a taxa has several stages, in which case the different stages for the taxa will be reported
 Using the split arguments
 the calc method of the class will count numbers, subsamples are not accounted for in the Overview.
 The split argument currently takes values year or month. The class is intended to be used over long periods
@@ -21,9 +21,11 @@ year/week/month.
 \describe{
 \item{\code{dc}}{an object of class \link{ref_dc-class}}
 
-\item{\code{anneedebut}}{Object of class \code{\link{ref_year-class}}}
+\item{\code{taxa}}{Object of class \link{ref_taxa-class}: the species}
 
-\item{\code{anneefin}}{Object of class \code{\link{ref_year-class}}}
+\item{\code{start_year}}{Object of class \code{\link{ref_year-class}}}
+
+\item{\code{end_year}}{Object of class \code{\link{ref_year-class}}}
 
 \item{\code{data}}{\code{data.frame}}
 
@@ -47,8 +49,8 @@ stacomi(	database_expected=FALSE)
   bilesp<-choice_c(bilesp,
 	  dc=c(5,6,12),
 	  split="year", 
-	  anneedebut="2008",
-	  anneefin="2012",
+	  start_year="2008",
+	  end_year="2012",
 	  silent=FALSE)	
   bilesp <- connect(bilesp)
   bilesp <- calcule(bilesp)
@@ -57,8 +59,8 @@ stacomi(	database_expected=FALSE)
   bilesp <- choice_c(bilesp,
 	  dc=c(5,6,12),
 	  split="month",
-	  anneedebut="2015",
-	  anneefin="2016",
+	  start_year="2015",
+	  end_year="2016",
 	  silent=FALSE)
   bilesp <- charge(bilesp)
   bilesp <- connect(bilesp)
@@ -99,7 +101,7 @@ Other report Objects:
 \code{\link{report_silver_eel-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

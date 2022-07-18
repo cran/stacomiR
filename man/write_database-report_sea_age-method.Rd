@@ -21,5 +21,5 @@ The sea age characteristic is calculated from the measured or calculated size of
 defined by the user.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

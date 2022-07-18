@@ -6,7 +6,7 @@
 #' @include ref_dc.R
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new("report_ope")}.
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @concept report Object
 #' @keywords classes
 #' @aliases report_ope

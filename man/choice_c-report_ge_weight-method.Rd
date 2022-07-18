@@ -5,16 +5,16 @@
 \alias{choice_c.report_ge_weight}
 \title{command line interface for \link{report_ge_weight-class}}
 \usage{
-\S4method{choice_c}{report_ge_weight}(object, dc, anneedebut, anneefin, selectedvalue, silent = FALSE)
+\S4method{choice_c}{report_ge_weight}(object, dc, start_year, end_year, selectedvalue, silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_ge_weight-class}}
 
 \item{dc}{A numeric or integer, the code of the dc, coerced to integer,see \link{choice_c,ref_dc-method}}
 
-\item{anneedebut}{The starting the first year, passed as character or integer}
+\item{start_year}{The starting the first year, passed as character or integer}
 
-\item{anneefin}{the finishing year, must be > anneedebut (minimum one year in august to the next in august)}
+\item{end_year}{the finishing year, must be > start_year (minimum one year in august to the next in august)}
 
 \item{selectedvalue}{A character to select and object in the \link{ref_list-class}}
 
@@ -29,5 +29,5 @@ The choice_c method fills in the data slot for classes \link{ref_dc-class} \link
 command line interface for \link{report_ge_weight-class}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

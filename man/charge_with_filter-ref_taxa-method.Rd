@@ -24,5 +24,5 @@ Loading method for ref_taxa referential objects searching only taxa existing for
  charge_with_filter(object,dc_selected=dc_selected)}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

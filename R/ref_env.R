@@ -8,15 +8,20 @@
 #' \code{new('ref_env', ...)}. 
 #' @slot dataframe Data concerning the
 #' measure station
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @slot env_selected The selected measure station 
+#' @author cedric.briand@eptb-vilaine.fr
 #' @keywords classes
-setClass(Class = "ref_env", representation = representation(data = "data.frame"),
-    prototype = prototype(data = data.frame()))
+setClass(Class = "ref_env", representation = 
+				representation(data = "data.frame",
+						env_selected="character"),
+    prototype = prototype(
+				data = data.frame(),
+				env_selected=character()))
 
 #' Loading method for ref_env referential object
 #' @return An S4 object of class ref_env with data loaded from the database
 #' @param object An object of class \link{ref_env-class}
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  object=new('ref_env')
@@ -42,10 +47,10 @@ setMethod("charge", signature = signature("ref_env"), definition = function(obje
 #' @param object an object of class ref_env
 #' @param stationMesure a character vector of the monitoring station code (corresponds to stm_libelle in the tj_stationmesure_stm table)
 #' @return an object of class \link{ref_env-class} with the monitoring station selected
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod("choice_c", signature = signature("ref_env"), definition = function(object,
     stationMesure) {
-    if (class(stationMesure) != "character") {
+    if (!inherits(stationMesure, "character")) {
         stop("the stationmesure should be of class character")
     }
     if (length(stationMesure) == 0) {
@@ -59,7 +64,7 @@ setMethod("choice_c", signature = signature("ref_env"), definition = function(ob
     if (length(libellemanquants) > 0)
         warning(gettextf("stationmesure code not present :\n %s", stringr::str_c(libellemanquants,
             collapse = ", "), domain = "R-stacomiR"))
-    object@data <- object@data[object@data$stm_libelle %in% stationMesure, ]
+    object@env_selected <- object@data$stm_libelle[object@data$stm_libelle %in% stationMesure]
     assign("ref_env", object, envir_stacomi)
     return(object)
 })

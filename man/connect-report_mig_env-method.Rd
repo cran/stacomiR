@@ -19,5 +19,5 @@ an object of report_mig_env class
 connect method for report_mig_env class
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

@@ -21,6 +21,6 @@ fills also the data slot by the connect method. It is not necessary to run the c
 if the choice is made from the command line using the choice_c method.
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

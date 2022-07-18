@@ -22,5 +22,5 @@ Nothing, called for its side effect, plotting
 Plots of various type for reportcarlot
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

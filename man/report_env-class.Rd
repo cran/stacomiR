@@ -69,7 +69,7 @@ Other report Objects:
 \code{\link{report_species-class}}
 }
 \author{
-cedric.briand'at'eptb-vilaine.fr
+cedric.briand@eptb-vilaine.fr
 }
 \concept{report Objects}
 \keyword{classes}

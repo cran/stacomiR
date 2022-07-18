@@ -42,5 +42,5 @@ An object of class \link{report_mig-class} with data selected
 uses the choice_c methods of these object to select the data.
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

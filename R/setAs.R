@@ -1,8 +1,8 @@
 setAs("report_mig", "report_mig_interannual", function(from) {
     start_year = new("ref_year")
     end_year = new("ref_year")
-    start_year@selected_year = min(get_year(from@timestep))
-    end_year@selected_year = max(get_year(from@timestep))
+    start_year@year_selected = min(get_year(from@timestep))
+    end_year@year_selected = max(get_year(from@timestep))
     report_mig_interannual = new("report_mig_interannual")
     report_mig_interannual@dc = from@dc
     report_mig_interannual@taxa = from@taxa
@@ -18,7 +18,7 @@ setAs("report_mig_interannual", "report_mig_mult", function(from) {
     report_mig_mult@dc = from@dc
     report_mig_mult@taxa = from@taxa
     report_mig_mult@stage = from@stage
-    report_mig_mult@timestep@dateDebut = strptime(stringr::str_c(from@start_year@selected_year,
+    report_mig_mult@timestep@dateDebut = strptime(stringr::str_c(from@start_year@year_selected,
         "-01-01"), format = "%Y-%m-%d")
     report_mig_mult@timestep@nb_step = 364
     return(report_mig_mult)
@@ -43,7 +43,7 @@ setAs("report_mig_interannual", "report_annual", function(from) {
     r_ann@dc = from@dc
     r_ann@taxa = from@taxa
     r_ann@stage = from@stage
-    r_ann@anneedebut = from@start_year
-    r_ann@anneefin = from@end_year
+    r_ann@start_year = from@start_year
+    r_ann@end_year = from@end_year
     return(r_ann)
 })

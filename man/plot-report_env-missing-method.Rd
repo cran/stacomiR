@@ -3,7 +3,7 @@
 \name{plot,report_env,missing-method}
 \alias{plot,report_env,missing-method}
 \alias{plot.report_env}
-\title{h_report_envgraph Internal method}
+\title{Plot method for report_env}
 \usage{
 \S4method{plot}{report_env,missing}(x, silent = FALSE)
 }
@@ -11,24 +11,13 @@
 \item{x}{An object of class \link{report_env-class}}
 
 \item{silent}{Stops displaying the messages}
-
-\item{h}{a handler}
-
-\item{...}{Additional parameters}
 }
 \value{
 Nothing, called for its side effect of plotting data
 }
 \description{
-h_report_envgraph Internal method
+Plot method for report_env
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
-
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
-\keyword{Plot}
-\keyword{for}
-\keyword{internal}
-\keyword{method}
-\keyword{report_env}

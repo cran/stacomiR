@@ -19,6 +19,6 @@ An object of class \link{report_env-class} with data set from values assigned in
 charge method for report_env class
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{internal}

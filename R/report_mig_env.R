@@ -17,13 +17,13 @@
 #' @include utilities.R
 #' @slot report_mig_mult \link{report_mig_mult-class}
 #' @slot report_env \link{report_env-class}
-#' @author cedric.briand"at"eptb-vilaine.fr marion.legrand"at"logrami.fr
+#' @author cedric.briand@eptb-vilaine.fr marion.legrand@logrami.fr
 #' @family report Objects
 #' @keywords classes
 #' @aliases report_mig_env
 #' @keywords classes
 #' @example inst/examples/report_mig_env-example.R
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @export
@@ -51,7 +51,7 @@ setValidity("report_mig_env",
 #' @param object An object of class \link{report_mig_env-class}
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return an object of report_mig_env class
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_mig_env
 setMethod(
   "connect",
@@ -78,7 +78,7 @@ setMethod(
 #' @param silent Boolean default FALSE, if TRUE information messages not displayed.
 #' @aliases choice_c.report_mig_env
 #' @return An object of class \link{report_env-class} with data selected
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod(
   "choice_c",
   signature = signature("report_mig_env"),
@@ -124,7 +124,7 @@ setMethod(
 #' @param object An object of class \link{report_mig_env-class}
 #' @param silent Should the function remain silent (boolean)
 #' @return An object of class \link{report_mig_env-class} with data set from values assigned in \code{envir_stacomi} environment
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases charge.report_mig_env
 setMethod(
   "charge",
@@ -184,7 +184,7 @@ setMethod(
 #' @param color_station A named vector of station color (e.g. c("temp_gabion"="red","coef_maree"="blue","phases_lune"="green")) default null
 #' @param color_dc A named vector giving the color for each dc default null (e.g. c("5"="#4D4D4D","6"="#E6E6E6","12"="#AEAEAE"))
 #' @return Nothing, called for its side effect of plotting 
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_mig_env
 #' @export
 setMethod(
@@ -203,8 +203,14 @@ setMethod(
     grdata <- fun_aggreg_for_plot(r_mig_env@report_mig_mult)
     # we collect the dataset used to build the graph
     
-    taxa = as.character(r_mig_env@report_mig_mult@taxa@data$tax_nom_latin)
-    stage = as.character(r_mig_env@report_mig_mult@stage@data$std_libelle)
+    taxa = as.character(r_mig_env@report_mig_mult@taxa@data[
+						r_mig_env@report_mig_mult@taxa@data$tax_code %in% 
+								r_mig_env@report_mig_mult@taxa@taxa_selected, "tax_nom_latin"]
+		)
+    stage = as.character(r_mig_env@report_mig_mult@stage@data[
+						r_mig_env@report_mig_mult@stage@data$std_code%in% 
+								r_mig_env@report_mig_mult@stage@stage_selected,"std_libelle"]
+		)
     dc <- unique(grdata$DC)
     stations <- r_mig_env@report_env@stationMesure@data
     dc_code <- r_mig_env@report_mig_mult@dc@data$dc_code[match(dc, r_mig_env@report_mig_mult@dc@data$dc)]
@@ -220,11 +226,18 @@ setMethod(
       )
     }
     
-    # we collect libelle from station
-    for (i in 1:length(unique(tableauCE$env_stm_identifiant))) {
-      tableauCE[unique(tableauCE$env_stm_identifiant)[i] == tableauCE$env_stm_identifiant, "stm_libelle"] <-
-        stations[stations$stm_identifiant == unique(tableauCE$env_stm_identifiant)[i], "stm_libelle"]
-    }
+    # we collect libelle and source of data from station
+			tableauCE<-merge(tableauCE,stations, by.x="env_stm_identifiant", by.y="stm_identifiant")
+			# (?<= ) lookbehind, get the string : with a space after but not capture it. .* capture anything after
+	    # currently we've added the source of data within the stm_description string so as not to change the db
+   	  tableauCE$source <- unlist(regmatches(tableauCE$stm_description,gregexpr("(?<=:([[:space:]])).*", tableauCE$stm_description, perl =TRUE)))
+			
+			
+
+		
+		
+		
+		
     # the data can be in the POSIXct format, we need to round them
     tableauCE$date <-
       as.POSIXct(Hmisc::roundPOSIXt(tableauCE$env_date_debut, digits = "days"))
@@ -326,7 +339,7 @@ setMethod(
     
     cs <-
       colortable(color = color_station,
-                 vec = stations$stm_libelle,
+                 vec = unique(tableauCE$stm_libelle),
                  palette = "Accent")
     cs <- stacomirtools::chnames(cs, "name", "stm_libelle")
     #######################
@@ -345,6 +358,11 @@ setMethod(
       killfactor(merge(tableauCEquan, cs, by = "stm_libelle"))
     tableauCEqual <-
       killfactor(merge(tableauCEqual, cs, by = "stm_libelle"))
+	   ######################
+		 #  source of data
+     #######################
+		 source <- paste("source:",paste(unique(tableauCE$source), collapse=", "))
+	
     
     g <- ggplot(plotdata) +
       geom_bar(aes(x = date, y = effectif, fill = color),
@@ -374,7 +392,8 @@ setMethod(
         guide = "legend"
       ) +
       scale_shape(guide = "legend", name = gettext("Qualitative parm")) +
-      theme_bw()
+      theme_bw() +
+			labs(caption=source)
     print(g)
     assign("g", g, envir_stacomi)
     if (!silent)

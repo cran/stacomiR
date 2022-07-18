@@ -31,5 +31,5 @@ Loading method for Reparqual referential objects searching only those parameters
 }
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

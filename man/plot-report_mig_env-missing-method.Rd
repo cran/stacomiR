@@ -23,5 +23,5 @@ Nothing, called for its side effect of plotting
 Plot method for report_mig_env
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

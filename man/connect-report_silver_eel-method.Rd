@@ -19,5 +19,5 @@ An object of class \link{report_silver_eel-class} with slot data \code{@data} fi
 connect method for report_silver_eel
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

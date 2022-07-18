@@ -28,6 +28,6 @@ current step } }
 \code{\linkS4class{ref_timestep_daily}}
 }
 \author{
-cedric.briand"at"eptb-vilaine.fr
+cedric.briand@eptb-vilaine.fr
 }
 \concept{report Object}

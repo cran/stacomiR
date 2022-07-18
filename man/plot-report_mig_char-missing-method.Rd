@@ -3,7 +3,7 @@
 \name{plot,report_mig_char,missing-method}
 \alias{plot,report_mig_char,missing-method}
 \alias{plot.report_mig_char}
-\title{handler for plot}
+\title{plot method for report_mig_char}
 \usage{
 \S4method{plot}{report_mig_char,missing}(x, color_parm = NULL, plot.type = "qual", silent = FALSE, ...)
 }
@@ -18,26 +18,13 @@ parameters (if plot.type=qual).}
 \item{silent}{Boolean default FALSE, if TRUE information messages not displayed}
 
 \item{...}{Additional parameters}
-
-\item{h}{handler}
 }
 \value{
 Nothing, called for its side effect of plotting data
 }
 \description{
-handler for plot
+plot method for report_mig_char
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
-\keyword{This}
-\keyword{calls}
-\keyword{for}
-\keyword{generic}
-\keyword{handler}
-\keyword{internal}
-\keyword{method}
-\keyword{plot}
-\keyword{report_mig_char}
-\keyword{stat}
-\keyword{the}

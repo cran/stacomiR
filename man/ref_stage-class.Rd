@@ -7,6 +7,14 @@
 \description{
 Representation of a fish phase
 }
+\section{Slots}{
+
+\describe{
+\item{\code{data}}{A data frame containing data loaded from the database by either charge or charge_with_filter methods}
+
+\item{\code{stage_selected}}{Contains the code \code{'tax_code'} of the stage selected by choice_c() method}
+}}
+
 \section{Objects from the Class}{
  Objects can be created by calls of the form
 \code{new('ref_stage', data='data.frame')}.  \describe{
@@ -32,7 +40,7 @@ Other referential objects:
 \code{\link{ref_year-class}}
 }
 \author{
-cedric.briand'at'eptb-vilaine.fr
+cedric.briand@eptb-vilaine.fr
 }
 \concept{referential objects}
 \keyword{classes}

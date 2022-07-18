@@ -17,6 +17,6 @@ fun_report_mig_interannual(dat, annee = NULL, timesplit = NULL)
 a data frame with mean, max, and min calculated for each timesplit
 }
 \description{
-function called for bilamMigrationInterannelle objects renames columns
+function called for report_mig_mult objects renames columns
 replaces nulls, and calculates reports with time period larger than day
 }

@@ -25,5 +25,5 @@ Function to calculate daily migration from migration monitoring whose length is 
  typically video recording whose period are instant events.
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

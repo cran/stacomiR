@@ -12,7 +12,7 @@
 #' @slot horodatefin \link{ref_horodate-class}
 #' @slot stationMesure \link{ref_env-class}
 #' @slot data \code{data.frame}
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @family report Objects
 #' @keywords classes
 #' @aliases report_env
@@ -29,11 +29,14 @@ setClass(Class = "report_env", representation = representation(stationMesure = "
 #' @param object An object of class \link{report_env-class}
 #' @param silent Default FALSE, if TRUE the program should no display messages
 #' @return An object of class \link{report_env-class} with slot data filled from the database
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases connect.report_env
 setMethod("connect", signature = signature("report_env"), definition = function(object,
     silent = FALSE) {
     # object<-r_env
+			if (length(object@stationMesure@env_selected)==0) warning("No measure station selected")
+			stm_selected <- object@stationMesure@data[object@stationMesure@data$stm_libelle %in% object@stationMesure@env_selected,"stm_identifiant"]
+
     requete = new("RequeteDBwheredate")
     requete@datedebut = strptime(object@horodatedebut@horodate, format = "%Y-%m-%d")
     requete@datefin = strptime(object@horodatefin@horodate, format = "%Y-%m-%d")
@@ -45,7 +48,7 @@ setMethod("connect", signature = signature("report_env"), definition = function(
         " LEFT JOIN ref.tr_valeurparametrequalitatif_val on env_val_identifiant=val_identifiant",
         sep = "")
     requete@order_by <- "ORDER BY env_stm_identifiant, env_date_debut"
-    tmp <- vector_to_listsql(object@stationMesure@data$stm_identifiant)
+    tmp <- vector_to_listsql(stm_selected)
     requete@and = paste(" AND env_stm_identifiant IN ", tmp)
     requete <- stacomirtools::query(requete)
     object@data <- stacomirtools::killfactor(stacomirtools::getquery(requete))
@@ -63,7 +66,7 @@ setMethod("connect", signature = signature("report_env"), definition = function(
 #' @param datefin The finishing date of the report, for this class this will be used to calculate the number of daily steps.
 #' @param silent Boolean default FALSE, if TRUE information messages not displayed.
 #' @return An object of class \link{report_env-class} with data selected
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_env
 setMethod("choice_c", signature = signature("report_env"), definition = function(object,
     stationMesure, datedebut, datefin, silent = FALSE) {
@@ -85,7 +88,7 @@ setMethod("choice_c", signature = signature("report_env"), definition = function
 #' charge method for report_env class
 #' @param object An object of class \link{report_env-class}
 #' @param silent Default FALSE, if TRUE the program should no display messages
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases charge.report_env
 #' @return An object of class \link{report_env-class} with data set from values assigned in \code{envir_stacomi} environment
 #' @keywords internal
@@ -115,21 +118,11 @@ setMethod("charge", signature = signature("report_env"), definition = function(o
     return(object)
 })
 
-# deprecated0.6
-##' h_report_envgraph Internal method
-##' @param h a handler
-##' @param ... Additional parameters
-##' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
-##' @keywords internal
-# h_report_envgraph = function(h,...)  {
-# report_env<-get('report_env',envir=envir_stacomi)
-# report_env=charge(report_env) report_env=connect(report_env) plot(report_env)
-# }
 #' Plot method for report_env
 #' @param x An object of class \link{report_env-class}
 #' @param silent Stops displaying the messages
 #' @return Nothing, called for its side effect of plotting data
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_env
 #' @export
 setMethod("plot", signature(x = "report_env", y = "missing"), definition = function(x,

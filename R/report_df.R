@@ -20,7 +20,7 @@
 #' @slot df An object of class \code{ref_df-class}
 #' @slot horodatedebut An object of class \code{ref_horodate-class}
 #' @slot horodatefin An object of class \code{ref_horodate-class}
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_df-example.R
@@ -147,7 +147,7 @@ setMethod(
 #' @param horodatefin A POSIXt or Date or character to fix the last date of the report
 #' @param silent Should program be silent or display messages
 #' @return An object of class \link{ref_df-class}  with data selected
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_df
 setMethod(
 		"choice_c",
@@ -199,25 +199,33 @@ setMethod(
 #' 	}
 #'
 #' @note The program cuts periods which overlap between two month. The splitting of different periods into month is
-#' assigned to the \code{envir_stacomi} environment
-#' @param x An object of class \link{report_df-class}
-#' @param y From the formals but missing
-#' @param plot.type One of \code{barchart},\code{box}. Defaut to \code{barchart} showing a summary of the df operation per month, can also be \code{box},
-#' a plot with adjacent rectangles.
+#' assigned to the \code{envir_stacomi} environment.
+#' @param x An object of class \link{report_df-class}.
+#' @param plot.type 1 to 4.
 #' @param silent Stops displaying the messages.
-#' @param main The title of the graph, if NULL a default title will be plotted with the number of the DF
-#' @return Nothing but prints the different plots
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @param main The title of the graph, if NULL a default title will be plotted with the number of the DF.
+#' @param color_type_oper Named vector of color for the graph, must match type operation default to c(
+#'								"Fonc normal" = "#1B9E77","Arr ponctuel" = "#E6AB02", "Arr maint" = "#9E0142",
+#'								"Dysfonc" = "#E41A1C","Non connu" = "#999999").
+#' @param color_etat Named vector state value (must match the names "TRUE", "FALSE").
+#' @return Nothing but prints the different plots.
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_df
 #' @export
 setMethod(
 		"plot",
-		signature(x = "report_df", y = "ANY"),
+		signature(x = "report_df", y = "missing"),
+		# attention laisser sur une ligne sinon plante au check
 		definition = function(x,
-				y,
 				plot.type = 1,
 				silent = FALSE,
-				main = NULL) {
+				main = NULL,
+				color_type_oper = 	c("Fonc normal" = "#1B9E77", 
+				                     "Arr ponctuel" = "#E6AB02", 
+				                     "Arr maint" = "#9E0142",
+				                     "Dysfonc" = "#E41A1C",
+				                     "Non connu" = "#999999"),
+				color_etat = c("TRUE"="chartreuse3","FALSE"="orangered3")) {
 			#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 			#           PLOT OF TYPE BARCHART (plot.type=1 (true/false) or plot.type=2)
 			#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -307,7 +315,7 @@ setMethod(
 						geom_bar(stat = 'identity') +
 						scale_fill_manual(
 								gettext("operation"),
-								values = c("#E41A1C", "#E6AB02", "#9E0142", "#1B9E77", "#999999")
+								values = color_type_oper
 						)
 				
 				t_periodefonctdispositif_per_mois = t_periodefonctdispositif_per_mois[order(t_periodefonctdispositif_per_mois$per_etat_fonctionnement), ]
@@ -321,12 +329,12 @@ setMethod(
 						ggtitle(main) +
 						geom_bar(stat = 'identity', aes(fill = per_etat_fonctionnement)) +
 						scale_fill_manual(gettext("operation", domain = "R-stacomiR"),
-								values = c("#E41A1C", "#4DAF4A"))
+								values = color_etat)
 				
 				if (plot.type == "1")
-					print(g)
-				if (plot.type == "2")
 					print(g1)
+				if (plot.type == "2")
+					print(g)
 				assign("periodeDF",
 						t_periodefonctdispositif_per_mois,
 						envir_stacomi)
@@ -360,13 +368,7 @@ setMethod(
 				)
 				debut = graphdate(time.sequence[1])
 				fin = graphdate(time.sequence[length(time.sequence)])
-				mypalette <- RColorBrewer::brewer.pal(12, "Paired")
-				#display.brewer.all()
-				mypalette1 <-
-						c("#1B9E77",
-								"#AE017E",
-								"orange",
-								RColorBrewer::brewer.pal(12, "Paired"))
+
 				# creation d'un graphique vide
 				if (is.null(main))
 					main <- ""
@@ -393,7 +395,7 @@ setMethod(
 							ybottom = 0.6,
 							xright = fin,
 							ytop = 0.9,
-							col = mypalette[4],
+							col = "grey",
 							border = NA,
 							lwd = 1
 					)
@@ -402,7 +404,7 @@ setMethod(
 							ybottom = 0.1,
 							xright = fin,
 							ytop = 0.4,
-							col = mypalette[1],
+							col = color_type_oper["Non connu"],
 							border = NA,
 							lwd = 1
 					)
@@ -410,7 +412,7 @@ setMethod(
 							x = "bottom",
 							legend = gettext("Func", "Stop", "Normal func", domain = "R-stacomiR"),
 							pch = c(16, 16),
-							col = c(mypalette[4], mypalette[6], mypalette[1]),
+							col = c("grey", color_type_oper["Non connu"]),
 							#horiz=TRUE,
 							ncol = 5,
 							bty = "n"
@@ -424,7 +426,7 @@ setMethod(
 								xright = graphdate(t_periodefonctdispositif_per$per_date_fin[t_periodefonctdispositif_per$per_etat_fonctionnement ==
 														1]),
 								ytop = 0.9,
-								col = mypalette[4],
+								col = color_etat["TRUE"],
 								border = NA,
 								lwd = 1
 						)
@@ -438,7 +440,7 @@ setMethod(
 								xright = graphdate(t_periodefonctdispositif_per$per_date_fin[t_periodefonctdispositif_per$per_etat_fonctionnement ==
 														0]),
 								ytop = 0.9,
-								col = mypalette[6],
+								col = color_etat["FALSE"],
 								border = NA,
 								lwd = 1
 						)
@@ -449,18 +451,19 @@ setMethod(
 									tempsdebut = t_periodefonctdispositif_per$per_date_debut,
 									tempsfin = t_periodefonctdispositif_per$per_date_fin,
 									libelle = t_periodefonctdispositif_per$libelle,
+									color = 	 color_type_oper[t_periodefonctdispositif_per$libelle],
 									date = FALSE
 							)
-					nomperiode <- vector()
+
 					
 					for (j in 1:length(listeperiode)) {
-						nomperiode[j] <- substr(listeperiode[[j]]$nom, 1, 17)
+
 						rect(
 								xleft = graphdate(listeperiode[[j]]$debut),
 								ybottom = 0.1,
 								xright = graphdate(listeperiode[[j]]$fin),
 								ytop = 0.4,
-								col = mypalette1[j],
+								col = listeperiode[[j]]$color,
 								border = NA,
 								lwd = 1
 						)
@@ -470,7 +473,7 @@ setMethod(
 							y = 0.6,
 							legend = gettext("Func.", "Stop", domain = "R-stacomiR"),
 							pch = c(15, 15),
-							col = c(mypalette[4], mypalette[6]),
+							col = color_etat,
 							bty = "n",
 							horiz = TRUE,
 							text.width = (fin - debut) / 6 ,
@@ -479,9 +482,9 @@ setMethod(
 					legend  (
 							x = debut,
 							y = 0.1,
-							legend = c(nomperiode),
+							legend = names(color_type_oper),
 							pch = c(15, 15),
-							col = c(mypalette1[1:length(listeperiode)]),
+							col = color_type_oper,
 							bty = "n",
 							horiz = TRUE,
 							text.width = (fin - debut) / 8,
@@ -525,20 +528,14 @@ setMethod(
 										xmax = xmax,
 										ymin = Hdeb,
 										ymax = Hfin,
-										col = factor(per_tar_code),
-										fill = factor(per_tar_code)
+										col = libelle,
+										fill = libelle
 								),
 								alpha = 0.5
 						) +
 						scale_fill_manual(
 								"type",
-								values = c(
-										"1" = "#40CA2C",
-										"2" = "#C8B22D",
-										"3" = "#AB3B26",
-										"4" = "#B46BED",
-										"5" = "#B8B8B8"
-								),
+								values = color_type_oper,
 								labels = gettext(
 										"Normal oper",
 										"Operational stop",
@@ -550,13 +547,7 @@ setMethod(
 						) +
 						scale_colour_manual(
 								"type",
-								values = c(
-										"1" = "#40CA2C",
-										"2" = "#C8B22D",
-										"3" = "#AB3B26",
-										"4" = "#B46BED",
-										"5" = "#B8B8B8"
-								),
+								values = color_type_oper,
 								labels = gettext(
 										"Normal oper",
 										"Operational stop",
@@ -591,7 +582,7 @@ setMethod(
 #' @note The program cuts periods which overlap between two month
 #' @param ... additional parameters
 #' @return Nothing, called for its side effect of plotting data
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 funbarchartDF = function(...) {
 	report_df <- get("report_df", envir = envir_stacomi)
@@ -715,7 +706,7 @@ setMethod(
 #' @param silent Should the program stay silent or display messages, default FALSE
 #' @param ... Additional parameters (not used there)
 #' @return Nothing, called for its side effect of writing html, csv files and printing summary
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_df
 #' @export
 setMethod(
@@ -743,47 +734,54 @@ setMethod(
 					),
 					fsep = "\\"
 			)
-			write.table(
-					t_periodefonctdispositif_per,
-					file = path1,
-					row.names = FALSE,
-					col.names = TRUE,
-					sep = ";"
+			res <- tryCatch(
+					write.table(
+							t_periodefonctdispositif_per,
+							file = path1,
+							row.names = FALSE,
+							col.names = TRUE,
+							sep = ";"
+					), error = function(e) e,
+					finally =
+							if (!silent)	funout(gettextf("Writing of %s \n", path1, domain = "R-stacomiR"))
 			)
-			if (!silent)
-				funout(gettextf("Writing of %s \n", path1))
-			path1html <- file.path(
-					path.expand(get("datawd", envir = envir_stacomi)),
-					paste(
-							"t_periodefonctdispositif_per_DF_",
-							report_df@df@df_selected,
-							"_",
-							annee,
-							".html",
-							sep = ""
-					),
-					fsep = "\\"
-			)
-			if (!silent)
-				funout(gettextf(
-								"Writing of %s this might take a while, please be patient ...\n",
-								path1html
-						))
-			funhtml(
-					t_periodefonctdispositif_per,
-					caption = paste(
-							"t_periodefonctdispositif_per_DF_",
-							report_df@df@df_selected,
-							"_",
-							annee,
-							sep = ""
-					),
-					top = TRUE,
-					outfile = path1html,
-					clipboard = FALSE,
-					append = FALSE,
-					digits = 2
-			)
+			if (inherits(res, "simpleError")) {
+				warnings("The table could not be reported, please modify datawd with options(stacomiR.path='path/to/directory'")
+			} else {
+				
+				path1html <- file.path(
+						path.expand(get("datawd", envir = envir_stacomi)),
+						paste(
+								"t_periodefonctdispositif_per_DF_",
+								report_df@df@df_selected,
+								"_",
+								annee,
+								".html",
+								sep = ""
+						),
+						fsep = "\\"
+				)
+				if (!silent)
+					funout(gettextf(
+									"Writing of %s this might take a while, please be patient ...\n",
+									path1html
+							))
+				funhtml(
+						t_periodefonctdispositif_per,
+						caption = paste(
+								"t_periodefonctdispositif_per_DF_",
+								report_df@df@df_selected,
+								"_",
+								annee,
+								sep = ""
+						),
+						top = TRUE,
+						outfile = path1html,
+						clipboard = FALSE,
+						append = FALSE,
+						digits = 2
+				)
+			}
 			t_periodefonctdispositif_per <- report_df@data
 			print(gettextf("summary statistics for DF=%s", report_df@df@df_selected))
 			print(gettextf("df_code=%s", report_df@df@data[report_df@df@data$df ==

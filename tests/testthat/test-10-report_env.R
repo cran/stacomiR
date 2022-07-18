@@ -33,7 +33,7 @@ test_that("test plot method", {
 					silent = TRUE
 			)
 			r_env <- connect(r_env, silent = TRUE)
-			expect_error(r_env <- plot(r_env), NA)
+			expect_error(suppressWarnings(r_env <- plot(r_env)), NA)
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 			
 		})

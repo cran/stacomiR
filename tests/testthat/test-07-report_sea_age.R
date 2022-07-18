@@ -91,10 +91,9 @@ test_that("test plot summary print r_seaa", {
 			stacomi(database_expected = TRUE, sch= "logrami")
 			env_set_test_stacomi()
 			data(r_seaa)
-			expect_error({
-						plot(r_seaa, plot.type=1,  silent=TRUE)
-						plot(r_seaa, plot.type=2, silent=TRUE)},
-					NA)
+			expect_error(plot(r_seaa, plot.type=1,  silent=TRUE), NA)
+			expect_error(plot(r_seaa, plot.type=2, silent=TRUE), NA)
+			expect_error(plot(r_seaa, plot.type=2, silent=TRUE), NA)
 			expect_output(summary(r_seaa))
 			expect_output(print(r_seaa))				
 				rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)

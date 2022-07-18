@@ -22,5 +22,5 @@ been made in the graphical interface, this method is used to load data on migrat
 fishway operations, and counting devices operations as data from those are displayed in the main plots.
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

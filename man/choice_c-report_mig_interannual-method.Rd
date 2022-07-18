@@ -5,7 +5,7 @@
 \alias{choice_c.report_mig_interannual}
 \title{command line interface for report_mig_interannual class}
 \usage{
-\S4method{choice_c}{report_mig_interannual}(object, dc, taxa, stage, anneedebut, anneefin, silent = FALSE)
+\S4method{choice_c}{report_mig_interannual}(object, dc, taxa, stage, start_year, end_year, silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_mig_interannual-class}}
@@ -17,9 +17,9 @@ it should match the ref.tr_taxon_tax referential table in the stacomi database, 
 
 \item{stage}{A stage code matching the ref.tr_stadedeveloppement_std table in the stacomi database, see \link{choice_c,ref_stage-method}}
 
-\item{anneedebut}{The starting the first year, passed as character or integer}
+\item{start_year}{The starting the first year, passed as character or integer}
 
-\item{anneefin}{the finishing year}
+\item{end_year}{the finishing year}
 
 \item{silent}{Boolean, if TRUE, information messages are not displayed}
 }
@@ -31,5 +31,5 @@ The choice_c method fills in the data slot for classes \link{ref_dc-class}, \lin
 command line interface for report_mig_interannual class
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

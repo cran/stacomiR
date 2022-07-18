@@ -25,5 +25,5 @@ this method performs the sum over the year attention this function does
 not count subsamples.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

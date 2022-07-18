@@ -28,7 +28,7 @@
 #' @slot horodatefin An object of class \link{ref_horodate-class}
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new("report_silver_eel", ...)}
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_silver_eel-example.R
@@ -59,10 +59,10 @@ setClass(
 )
 setValidity("report_silver_eel", function(object)
 {
-  rep1 = object@taxa@data$tax_code[1] == '2038'
+  rep1 = object@taxa@taxa_selected[1] == '2038'
   label1 <-
     'report_silver_eel should only be for eel (tax_code=2038)'
-  rep2 = all(object@stage@data$std_code %in% c('AGG', 'AGJ'))
+  rep2 = all(object@stage@stage_selected %in% c('AGG', 'AGJ'))
   label2 <-
     'Only stages silver (AGG) and yellow (AGJ) should be used in report_silver_eel'
   return(ifelse(rep1 &
@@ -73,7 +73,7 @@ setValidity("report_silver_eel", function(object)
 #' @param object An object of class \link{report_silver_eel-class}
 #' @param silent Boolean if TRUE messages are not displayed
 #' @return An object of class \link{report_silver_eel-class} with slot data \code{@data} filled
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases connect.report_silver_eel
 setMethod(
   "connect",
@@ -93,9 +93,9 @@ setMethod(
       " AND ope_dic_identifiant in ",
       vector_to_listsql(object@dc@dc_selected),
       " AND lot_tax_code in ",
-      vector_to_listsql(object@taxa@data$tax_code),
+      vector_to_listsql(object@taxa@taxa_selected),
       " AND lot_std_code in ",
-      vector_to_listsql(object@stage@data$std_code),
+      vector_to_listsql(object@stage@stage_selected),
       " AND car_par_code in ",
       vector_to_listsql(object@par@par_selected),
       sep = ""
@@ -117,7 +117,7 @@ setMethod(
 #' @param object An object of class \link{report_silver_eel-class}
 #' @param h a handler
 #' @return An object of class \link{report_silver_eel-class}  with slots filled from values assigned in \code{envir_stacomi} environment
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of the class
 #' @aliases charge.report_silver_eel
 #' @keywords internal
@@ -196,7 +196,7 @@ setMethod(
 #' @param horodatefin The finishing date of the report, for this class this will be used to calculate the number of daily steps.
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_mig-class}
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases choice_c.report_silver_eel
 setMethod(
   "choice_c",
@@ -223,14 +223,14 @@ setMethod(
     r_silver@stage <-
       charge_with_filter(object = r_silver@stage,
                          r_silver@dc@dc_selected,
-                         r_silver@taxa@data$tax_code)
+                         r_silver@taxa@taxa_selected)
     r_silver@stage <- choice_c(r_silver@stage, stage)
     r_silver@par <-
       charge_with_filter(
         object = r_silver@par,
         r_silver@dc@dc_selected,
-        r_silver@taxa@data$tax_code,
-        r_silver@stage@data$std_code
+        r_silver@taxa@taxa_selected,
+        r_silver@stage@stage_selected
       )
     r_silver@par <- choice_c(r_silver@par, par, silent = silent)
     r_silver@horodatedebut <- choice_c(
@@ -263,7 +263,7 @@ setMethod(
 #' @return An object of class \link{report_silver_eel-class} with slot calcdata filled, as a list
 #' for each counting device
 #' @aliases calcule.report_silver_eel
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod(
   "calcule",
   signature = signature("report_silver_eel"),
@@ -399,7 +399,7 @@ setMethod(
 #' @param silent Stops displaying the messages
 #' @return A lattice xy.plot if \code{plot.type =1}, a lattice barchart if \code{plot.type=2}, nothing but plots a series of graphs in 
 #' a single plot if \code{plot.type=3}, a lattice cloud object if \code{plot.type=4}
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_silver_eel
 #' @importFrom stats update
 #' @export
@@ -528,6 +528,7 @@ setMethod(
     }
     ######################################
     # Migration according to stage, month and year
+    # !! throws a warning calling par(new=TRUE) with no plot, no dev.new()
     ######################################
     if (plot.type == "2") {
       datdc1 <- dplyr::select(datdc, ouv, annee, mois, stage)
@@ -922,7 +923,7 @@ setMethod(
 #' @param silent Should the program stay silent or display messages, default FALSE
 #' @param ... Additional parameters
 #' @return A list per DC with statistic for Durif stages, Pankhurst, MD Eye diameter, BL body length and weight W
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_silver_eel
 #' @export
 setMethod(
@@ -1034,7 +1035,7 @@ setMethod(
       stringr::str_c(shQuote(x@taxa@data$tax_nom_latin), collapse = ","),
       "),",
       "stage=c(",
-      stringr::str_c(shQuote(x@stage@data$std_code), collapse = ","),
+      stringr::str_c(shQuote(x@stage@stage_selected), collapse = ","),
       "),",
       "par=c(",
       stringr::str_c(shQuote(x@par@par_selected), collapse = ","),
@@ -1063,7 +1064,7 @@ setMethod(
 #' @param action, action 1,2,3 or 4 corresponding to plot
 #' @param ... Additional parameters
 #' @return Nothing
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 funplotreport_silver_eel = function(action, ...) {
   r_silver <- get(x = "report_arg", envir = envir_stacomi)
@@ -1082,7 +1083,7 @@ funplotreport_silver_eel = function(action, ...) {
 #' @param data A dataset with columns BL, W, Dv, Dh, FL corresponding to body length (mm),
 #' Weight (g), vertical eye diameter (mm), vertical eye diameter (mm), and pectoral fin length (mm)
 #' @returns A data.frame with durif stages per individual
-#' @author Laurent Beaulaton \email{laurent.beaulaton"at"onema.fr}
+#' @author Laurent Beaulaton \email{laurent.beaulaton@onema.fr}
 #' @export
 fun_stage_durif = function(data) {
   # see section Good Practise in ? data

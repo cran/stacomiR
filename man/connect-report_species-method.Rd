@@ -19,5 +19,5 @@ An object of class \link{report_species-class} with data slot filled with slot d
 connect method for report_species
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

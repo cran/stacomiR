@@ -25,12 +25,19 @@ To change the language use Sys.setenv(LANG = 'fr') or Sys.setenv(LANG = 'en')
  require(stacomiR)
 #launch stacomi 
  \dontrun{ 
-stacomi(database_expected=TRUE, datawd='~',sch= "iav.")
+stacomi(database_expected=TRUE, datawd='~',sch= "iav")
 }
-#launch stacomi without connection to the database
+# launch stacomi without connection to the database
 stacomi(database_expected=FALSE)
-
+# launch stacomi with options
+options(
+	stacomiR.dbname = "bd_contmig_nat",
+	stacomiR.host = readline(prompt = "Enter host: "),
+	stacomiR.port = "5432",
+	stacomiR.user = readline(prompt = "Enter user: "),
+	stacomiR.password = readline(prompt = "Enter password: ")
+)
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

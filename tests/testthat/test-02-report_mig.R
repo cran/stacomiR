@@ -142,6 +142,7 @@ test_that("Test writing an example to the database",
 			stacomi(database_expected = TRUE)
 			data("r_mig")
 			r_mig <- calcule(r_mig, silent = TRUE)
+			
 			expect_output(write_database(object = r_mig, silent = FALSE, check_for_bjo = FALSE))
 			# by default in r_mig we don't want to check for multiannual bilan
 			# it is written again in the database

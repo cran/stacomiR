@@ -57,30 +57,31 @@ test_that("report_dc plot method works", {
 			data(r_dc)
 			r_dc <- r_dc
 			expect_error({
-			plot(r_dc, plot.type = "1", silent = TRUE)
-			plot(r_dc,
-					plot.type = "2",
-					silent = TRUE,
-					main = "An example title")
-			plot(r_dc,
-					plot.type = "3",
-					silent = TRUE,
-					main = "An example title")
-			plot(r_dc,
-					plot.type = "4",
-					silent = TRUE,
-					main = "An example title")
-		}, NA)
+						invisible(capture.output(plot(r_dc, plot.type = "1", silent = TRUE)))
+						invisible(capture.output(plot(r_dc,
+								plot.type = "2",
+								silent = TRUE,
+								main = "An example title")))
+						plot(r_dc,
+								plot.type = "3",
+								silent = TRUE,
+								main = "An example title")
+						plot(r_dc,
+								plot.type = "4",
+								silent = TRUE,
+								main = "An example title")
+					}, NA)
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 		})
 
 
 test_that("report_dc summary method works", {
 			skip_on_os("linux")
+			skip_on_os("solaris")
 			stacomi(database_expected = FALSE)
 			data(r_dc)
 			r_dc <- r_dc
-			expect_output(summary(r_dc, silent = FALSE), "summary")
+			expect_output(summary(r_dc, silent = TRUE))
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 		})
 

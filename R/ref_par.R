@@ -5,7 +5,7 @@
 #' @slot data A data.frame
 #' @slot par_selected A character vector corresponding to par_code
 #' @section Objects from the Class: Objects can be created by calls of the form
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @keywords classes
 #' @slot data='data.frame' the list of parameters
 #' @family referential objects
@@ -33,7 +33,7 @@ setValidity("ref_par", method = function(object) {
 #' @aliases charge.ref_par
 #' @param object An object of class \link{ref_par-class}
 #' @return An S4 object of class ref_par
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An S4 object of class \link{ref_par-class} 
 #' @examples 
 #' \dontrun{
@@ -42,9 +42,9 @@ setValidity("ref_par", method = function(object) {
 #' }
 setMethod("charge", signature = signature("ref_par"), definition = function(object) {
     requete = new("RequeteDB")
-    requete@sql = paste("SELECT par_code, par_nom  from ref.tg_parametre_par")
+    requete@sql = paste("SELECT par_code, par_nom, par_unite, par_nature, par_definition  from ref.tg_parametre_par")
     requete <- stacomirtools::query(requete)
-    funout(gettext("Loading parameters query completed\n", domain = "R-stacomiR"))
+    #funout(gettext("Loading parameters query completed\n", domain = "R-stacomiR"))
     object@data <- requete@query
     return(object)
 })
@@ -57,7 +57,7 @@ setMethod("charge", signature = signature("ref_par"), definition = function(obje
 #' @param taxa_selected The taxa selected for the report
 #' @param stage_selected The stage selected for the report
 #' @return An S4 object of class \link{ref_par-class} 
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  object=new('ref_par')
@@ -66,7 +66,7 @@ setMethod("charge", signature = signature("ref_par"), definition = function(obje
 setMethod("charge_with_filter", signature = signature("ref_par"), definition = function(object,
     dc_selected, taxa_selected, stage_selected) {
     requete = new("RequeteDBwhere")
-    requete@select = paste("SELECT DISTINCT ON (par_code) par_code, par_nom", " FROM ",
+    requete@select = paste("SELECT DISTINCT ON (par_code) par_code, par_nom, par_unite, par_nature, par_definition", " FROM ",
 				get_schema(), "tg_dispositif_dis", " JOIN ", get_schema(), "t_dispositifcomptage_dic on dis_identifiant=dic_dis_identifiant",
         " JOIN ", get_schema(), "t_operation_ope on ope_dic_identifiant=dic_dis_identifiant",
         " JOIN ", get_schema(), "t_lot_lot on lot_ope_identifiant=ope_identifiant",
@@ -87,18 +87,15 @@ setMethod("charge_with_filter", signature = signature("ref_par"), definition = f
 
 #' Command line interface to select a parameter
 #' 
-#' the choice_c method is intended to have the same behaviour as choice (which creates a
-#' widget in the graphical interface) but from the command line. 
-#' If an objectreport is passed as a parameter, the method will do a charge_with_filter to select only the taxa present in the counting devices.
 #' @aliases choice_c.ref_par
 #' @param object an object of class  \link{ref_par-class}
 #' @param par A character vector of par
 #' @param silent Default FALSE but not used there
 #' @return An object of class \link{ref_par-class}
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod("choice_c", signature = signature("ref_par"), definition = function(object,
     par, silent = FALSE) {
-    if (class(par) == "numeric") {
+    if (inherits(par , "numeric")) {
         par <- as.character(par)
     }
     if (any(is.na(par)))
@@ -116,8 +113,15 @@ setMethod("choice_c", signature = signature("ref_par"), definition = function(ob
         warning(paste(gettextf("No data for par %s", object@par_selected[!concord],
             domain = "R-stacomiR")))
     }
+		# to work with daughter class
+		if (inherits(object, "ref_parquan")) {
+			assign("ref_parquan", object, envir = envir_stacomi)
+			} else if (inherits(object, "ref_parqual")){
+				assign("ref_parqual", object, envir = envir_stacomi)	
+			} else {
+				assign("ref_par", object, envir = envir_stacomi)
+			}				
 
-    assign("ref_par", object, envir = envir_stacomi)
     return(object)
 })
 

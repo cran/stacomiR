@@ -1,11 +1,11 @@
 #' Validity check for ref_horodate
 #'
 #' @param object A ref_horodate object
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 validity_ref_horodate = function(object)
 {
-  rep1 = class(object@horodate)[2] == "POSIXt"
+  rep1 = inherits(object@horodate[2], "POSIXt")
   
   return(ifelse(rep1, TRUE, FALSE))
 }
@@ -19,7 +19,7 @@ validity_ref_horodate = function(object)
 #' @slot horodate a "POSIXt"
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new("ref_horodate", \dots{})}.
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family referential objects
 setClass(
   Class = "ref_horodate",
@@ -56,7 +56,7 @@ setMethod(
       stop("horodate should be a vector of length 1")
     if (is.null(horodate))
       stop("horodate should not be null")
-    if (class(horodate) == "character") {
+    if (inherits(horodate, "character")) {
       if (grepl("/", horodate)) {
         .horodate = strptime(horodate, format = "%d/%m/%Y %H:%M:%s")
         if (is.na(.horodate)) {
@@ -97,9 +97,9 @@ setMethod(
         )
       }
       
-    } else if (class(horodate) == "Date") {
+    } else if (inherits(horodate, "Date")) {
       .horodate <- as.POSIXlt(horodate)
-    } else if (class(horodate)[2] == "POSIXt") {
+    } else if (inherits(horodate[2] , "POSIXt")) {
       .horodate = horodate
     }
     if (is.na(.horodate))

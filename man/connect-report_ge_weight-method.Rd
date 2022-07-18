@@ -24,5 +24,5 @@ and the connect method loads them from the table using the \link{ref_coe-class}
 dates for the request are from august to august (a glass eel season)
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

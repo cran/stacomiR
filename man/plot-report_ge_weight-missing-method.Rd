@@ -26,5 +26,5 @@ Plot method for report_ge_weight'
 the model method provides plots for the fitted models
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

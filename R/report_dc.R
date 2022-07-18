@@ -12,7 +12,7 @@
 #' @slot horodatefin An object of class \code{ref_horodate-class}
 #' @section Objects from the Class: Objects can be created by calls of the form
 #' \code{new("report_dc", ...)}.
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @example inst/examples/report_dc-example.R
 #' @family report Objects
 #' @keywords classes
@@ -80,7 +80,7 @@ setMethod(
 					stacomirtools::query(req) # appel de la methode connect de l'object DBWHEREDATE
 			object@data <- req@query
 			if (!silent)
-				funout(gettext("Time steps loaded fot this counting device\n", domain =
+				funout(gettext("Time steps loaded for this counting device\n", domain =
 										"R-stacomiR"))
 			return(object)
 		}
@@ -142,7 +142,7 @@ setMethod(
 #' @param silent Should program be silent or display messages
 #' @aliases choice_c.report_dc
 #' @return An object of class \link{ref_dc-class} with data selected
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @export
 setMethod(
 		"choice_c",
@@ -187,41 +187,52 @@ setMethod(
 #' Different plots for report_dc
 #'
 #' \itemize{
-#'      \item{plot.type=1}{A barplot of the operation time per month}
-#' 		\item{plot.type=2}{Barchat giving the time per type of operation }
-#' 		\item{plot.type=2}{Rectangle plots drawn along a line}
-#'      \item{plot.type=4}{Plots per day drawn over the period to show the operation of a df, days in x, hours in y}
+#' \item{plot.type=1}{A barplot of the operation time per month}
+#' \item{plot.type=2}{Barchat giving the time per type of operation }
+#' \item{plot.type=2}{Rectangle plots drawn along a line}
+#' \item{plot.type=4}{Plots per day drawn over the period to show the operation of a df, days in x, hours in y}
 #' 	}
 #'
 #' @note The program cuts periods which overlap between two month.
 #' The splitting of different periods into month is
-#' assigned to the \code{envir_stacomi} environment
-#' @param x An object of class \link{report_dc-class}
-#' @param y From the formals but missing
-#' @param plot.type One of \code{barchart},\code{box}. Defaut to \code{barchart} showing
-#'  a summary of the df operation per month, can also be \code{box},
+#' assigned to the \code{envir_stacomi} environment.
+#' @param x An object of class \link{report_dc-class}.
+#' @param plot.type 1 to 4, barplot, barchart, rectangle plot and box showing details of daily operation,
 #' a plot with adjacent rectangles.
-#' @param silent Stops displaying the messages.
+#' @param silent Stops displaying the messages default to FALSE 
 #' @param main The title of the graph, if NULL a default title will be plotted
-#' with the number of the DF
-#' @return Nothing but prints the different plots
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' with the number of the DF.
+#' @param color_type_oper Named vector of color for the graph, must match type operation default to 
+#' c("Fonc normal" = "#76BEBE",
+#'  "Arr ponctuel" = "#FF6700",
+#'  "Arr maint" = "#9E0142",
+#'  "Dysfonc" = "#EE1874",
+#'  "Non connu" = "#999999").
+#' @param color_etat Named vector state value (must match the names "TRUE", "FALSE").
+#' @return Nothing but prints the different plots.
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_dc
 #' @importFrom utils setTxtProgressBar
 #' @export
 setMethod(
 		"plot",
-		signature(x = "report_dc", y = "ANY"),
+		signature(x = "report_dc", y = "missing"),
 		definition =
 				function(x,
-						y,
 						plot.type = 1,
 						silent = FALSE,
-						main = NULL) {
+						main = NULL,
+						color_type_oper = 	c("Fonc normal" = "#76BEBE",
+						                     "Arr ponctuel" = "#FF6700", 
+						                     "Arr maint" = "#9E0142",
+						                     "Dysfonc" = "#EE1874",
+						                     "Non connu" = "#999999"),
+						color_etat=c("TRUE"="#0F313A","FALSE"="#CEB99A")) {
 			#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 			#           PLOT OF TYPE BARCHART (plot.type=1 (true/false) or plot.type=2)
 			#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 			#report_dc<-r_dc; require(RGtk2); require(lubridate);require(ggplot2);main=NULL;silent=FALSE;plot.type="1"
+			
 			report_dc <- x
 			plot.type <- as.character(plot.type)# to pass also characters
 			if (!plot.type %in% c("1", "2", "3", "4"))
@@ -258,7 +269,7 @@ setMethod(
 				z = 0 # compteur tableau t_periodefonctdispositif_per_mois
 				for (j in 1:nrow(t_periodefonctdispositif_per)) {
 					#cat( j
-		      setTxtProgressBar(progress_bar,j / nrow(t_periodefonctdispositif_per))
+					setTxtProgressBar(progress_bar,j / nrow(t_periodefonctdispositif_per))
 					if (j > 1)
 						t_periodefonctdispositif_per_mois = rbind(t_periodefonctdispositif_per_mois,
 								t_periodefonctdispositif_per[j, ])
@@ -298,6 +309,7 @@ setMethod(
 					main <-
 							gettextf("Operation of the counting device %s",
 									report_dc@dc@dc_selected)
+				
 				# graphic
 				#modification of the order
 				
@@ -312,7 +324,7 @@ setMethod(
 						geom_bar(stat = 'identity') +
 						scale_fill_manual(
 								gettext("type_oper.", domain = "R-stacomiR"),
-								values = c("#FF6700", "#EE1874", "#9E0142", "#76BEBE", "#999999")
+								values = color_type_oper
 						) +
 						theme(
 								plot.background = element_rect(fill = "white"),
@@ -339,7 +351,7 @@ setMethod(
 						xlab(gettext("month", domain = "R-stacomiR")) +
 						geom_bar(stat = 'identity', aes(fill = per_etat_fonctionnement)) +
 						scale_fill_manual(gettext("operation", domain = "R-stacomiR"),
-								values = c("#0F313A", "#CEB99A")) +
+								values = color_etat) +
 						theme(
 								plot.background = element_rect(fill = "white"),
 								panel.background = element_rect(fill = "white"),
@@ -354,13 +366,37 @@ setMethod(
 								axis.text = element_text(colour = "black")
 						)
 				
-				if (plot.type == "1")
+				if (plot.type == "1") {
 					print(g)
-				if (plot.type == "2")
-					print(g1)
+					assign(x = "g_report_dc_1",
+							value = g,
+							envir = envir_stacomi)
+					if (!silent){
+						funout(text =
+										gettext(
+												"Writing the ggplot into envir_stacomi environment : g_report_dc_1=get('g_report_dc_1',envir_stacomi)\n",
+												domain = "R-stacomiR"
+										)
+						)
+					}
+				} # end if plot 1
+				if (plot.type == "2"){
+					print(g1) 
+					assign("g_report_dc_2",
+							g1,
+							envir = envir_stacomi)			
+					if (!silent){
+						funout(
+								gettext(
+										"Writing the ggplot into envir_stacomi environment : g_report_dc_2=get('g_report_dc_2',envir_stacomi)\n",
+										domain = "R-stacomiR"
+								)
+						)
+					}
+				} # end if plot 2
 				assign("periodeDC",
 						t_periodefonctdispositif_per_mois,
-						envir_stacomi)
+						envir = envir_stacomi)
 				if (!silent)
 					funout(
 							gettext(
@@ -387,13 +423,9 @@ setMethod(
 				)
 				debut = graphdate(time.sequence[1])
 				fin = graphdate(time.sequence[length(time.sequence)])
-				mypalette <- RColorBrewer::brewer.pal(12, "Paired")
-				#display.brewer.all()
-				mypalette1 <-
-						c("#1B9E77",
-								"#AE017E",
-								"orange",
-								RColorBrewer::brewer.pal(12, "Paired"))
+				
+				
+				
 				# creation d'un graphique vide
 				if (is.null(main))
 					main <- ""
@@ -420,7 +452,7 @@ setMethod(
 							ybottom = 0.6,
 							xright = fin,
 							ytop = 0.9,
-							col = mypalette[4],
+							col = "grey",
 							border = NA,
 							lwd = 1
 					)
@@ -429,7 +461,7 @@ setMethod(
 							ybottom = 0.1,
 							xright = fin,
 							ytop = 0.4,
-							col = mypalette[1],
+							col = color_type_oper["Non connu"],
 							border = NA,
 							lwd = 1
 					)
@@ -437,9 +469,9 @@ setMethod(
 							x = "bottom",
 							legend = gettext("Func.", "Stop", "Normal func", domain = "R-stacomiR"),
 							pch = c(16, 16),
-							col = c(mypalette[4], mypalette[6], mypalette[1]),
+							col = c("grey", color_type_oper["Non connu"]),
 							#horiz=TRUE,
-							ncol = 5,
+							ncol = 3,
 							bty = "n"
 					)
 				} else {
@@ -451,7 +483,7 @@ setMethod(
 								xright = graphdate(t_periodefonctdispositif_per$per_date_fin[t_periodefonctdispositif_per$per_etat_fonctionnement ==
 														1]),
 								ytop = 0.9,
-								col = mypalette[4],
+								col = color_etat["TRUE"],
 								border = NA,
 								lwd = 1
 						)
@@ -465,7 +497,7 @@ setMethod(
 								xright = graphdate(t_periodefonctdispositif_per$per_date_fin[t_periodefonctdispositif_per$per_etat_fonctionnement ==
 														0]),
 								ytop = 0.9,
-								col = mypalette[6],
+								col = color_etat["FALSE"],
 								border = NA,
 								lwd = 1
 						)
@@ -477,18 +509,19 @@ setMethod(
 								tempsdebut = t_periodefonctdispositif_per$per_date_debut,
 								tempsfin = t_periodefonctdispositif_per$per_date_fin,
 								libelle = t_periodefonctdispositif_per$libelle,
+								color = color_type_oper[t_periodefonctdispositif_per$libelle],
 								date = FALSE
 						)
-				nomperiode <- vector()
 				
 				for (j in 1:length(listeperiode)) {
-					nomperiode[j] <- substr(listeperiode[[j]]$nom, 1, 17)
+					
+					
 					rect(
 							xleft = graphdate(listeperiode[[j]]$debut),
 							ybottom = 0.1,
 							xright = graphdate(listeperiode[[j]]$fin),
 							ytop = 0.4,
-							col = mypalette1[j],
+							col = listeperiode[[j]]$color,
 							border = NA,
 							lwd = 1
 					)
@@ -497,15 +530,12 @@ setMethod(
 						x = debut,
 						y = 0.6,
 						legend = gettext(
-								"Normal oper",
-								"Operational stop",
+								"Normal",
 								"Stop",
-								"Dysfunct",
-								"Unknown",
 								domain = "R-stacomiR"
 						),
 						pch = c(15, 15),
-						col = c(mypalette[4], mypalette[6]),
+						col = color_etat,
 						bty = "n",
 						horiz = TRUE,
 						text.width = (fin - debut) / 6 ,
@@ -514,13 +544,13 @@ setMethod(
 				legend  (
 						x = debut,
 						y = 0.1,
-						legend = c(nomperiode),
+						legend = names(color_type_oper),
 						pch = c(15, 15),
-						col = c(mypalette1[1:length(listeperiode)]),
+						col = color_type_oper,
 						bty = "n",
 						horiz = TRUE,
-						text.width = (fin - debut) / 8,
-						cex = 0.7
+						text.width = (fin - debut) / 6,
+						cex = 0.8
 				)
 				graphics::text(
 						x = debut,
@@ -561,17 +591,13 @@ setMethod(
 										xmax = xmax,
 										ymin = Hdeb,
 										ymax = Hfin,
-										fill = factor(per_tar_code)
+										fill = libelle
 								),
 								alpha = 0.8) +
 						scale_fill_manual(
 								"type",
 								values = c(
-										"1" = "#377F07",
-										"2" = "#DCE032",
-										"3" = "#C42306",
-										"4" = "#AAEDF6",
-										"5" = "#191917"
+										color_type_oper
 								),
 								labels = gettext(
 										"Normal oper",
@@ -598,27 +624,23 @@ setMethod(
 						)
 				
 				print(g)
+				assign("g_report_dc_4",
+						g,
+						envir = envir_stacomi)			
+				if (!silent)
+					funout(
+							gettext(
+									"Writing the ggplot into envir_stacomi environment : g_report_dc_4 <- get('g_report_dc_4',envir_stacomi)\n",
+									domain = "R-stacomiR"
+							)
+					)
 				
 			}
 			return(invisible(NULL))
 		}
 )
 
-#' Function to create a barchart (lattice) corresponding to the periods
-#' @param ... Additional parameters
-#' @return Nothing, assigns the data frame \code{periodeDC} allowing to build the lattice graph in the environment envir_stacomi
-#' @keywords internal
-#' @author cedric.briand
-funbarchartDC = function(...) {
-	report_dc <- get("report_dc", envir = envir_stacomi)
-	report_dc = charge(report_dc)
-	report_dc = connect(report_dc)
-	if (nrow(report_dc@data) == 0) {
-		funout(gettext("No data for this counting device\n"), arret = TRUE)
-	}
-	plot(report_dc, plot.type = 1, silent = FALSE)
-	return(invisible(NULL))
-}
+
 
 
 
@@ -652,29 +674,14 @@ setMethod(
 		}
 )
 
-#' funtableDC create a table output for report_dc class
-#' @param ... Additional parameters
-#' @return Nothing, calls the summary method on data assigned in envir_stacomi
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
-#' @keywords internal
-funtableDC = function(...) {
-	report_dc <- get("report_dc", envir = envir_stacomi)
-	report_dc = charge(report_dc)
-	report_dc = connect(report_dc)
-	
-	if (nrow(report_dc@data) == 0) {
-		funout(gettext("No data for this counting device\n"), arret = TRUE)
-	}
-	summary(report_dc)
-	return(invisible(NULL))
-}
+
 
 #' summary for report_dc, write csv and html output, and prints summary statistics
 #' @param object An object of class \code{\link{report_dc-class}}
 #' @param silent Should the program stay silent or display messages, default FALSE
 #' @param ... Additional parameters (not used there)
 #' @return Nothing, called for its side effect of writing html, csv files and printing summary
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_dc
 #' @export
 setMethod(
@@ -705,44 +712,52 @@ setMethod(
 					),
 					fsep = "\\"
 			)
-			write.table(
-					t_periodefonctdispositif_per,
-					file = path1,
-					row.names = FALSE,
-					col.names = TRUE,
-					sep = ";"
+			res <- tryCatch(
+					write.table(
+							t_periodefonctdispositif_per,
+							file = path1,
+							row.names = FALSE,
+							col.names = TRUE,
+							sep = ";"
+					), error = function(e) e,
+					finally =
+							if (!silent)	funout(gettextf("Writing of %s \n", path1, domain = "R-stacomiR"))
 			)
-			funout(gettext("Writing of %s \n", path1, domain = "R-stacomiR"))
-			path1html <-
-					file.path(
-							path.expand(get("datawd", envir = envir_stacomi)),
-							paste(
-									"t_periodefonctdispositif_per_DC_",
-									report_dc@dc@dc_selected,
-									"_",
-									annee,
-									".html",
-									sep = ""
-							),
-							fsep = "\\"
-					)
-			funout(gettextf(
-							"Writing of %s this might take a while, please be patient ...\n",
-							path1html
-					))
-			funhtml(
-					t_periodefonctdispositif_per,
-					caption = gettextf(
-							"t_periodefonctdispositif_per_DC_%s_%s",
-							report_dc@dc@dc_selected,
-							annee
-					),
-					top = TRUE,
-					outfile = path1html,
-					clipboard = FALSE,
-					append = FALSE,
-					digits = 2
-			)
+			if (inherits(res, "simpleError")) {
+				warnings("The table could not be reported, please modify datawd with options(stacomiR.path='path/to/directory'")
+			} else {
+				# reports works anyways, write html
+				path1html <-
+						file.path(
+								path.expand(get("datawd", envir = envir_stacomi)),
+								paste(
+										"t_periodefonctdispositif_per_DC_",
+										report_dc@dc@dc_selected,
+										"_",
+										annee,
+										".html",
+										sep = ""
+								),
+								fsep = "\\"
+						)
+				funout(gettextf(
+								"Writing of %s this might take a while, please be patient ...\n",
+								path1html
+						))
+				funhtml(
+						t_periodefonctdispositif_per,
+						caption = gettextf(
+								"t_periodefonctdispositif_per_DC_%s_%s",
+								report_dc@dc@dc_selected,
+								annee
+						),
+						top = TRUE,
+						outfile = path1html,
+						clipboard = FALSE,
+						append = FALSE,
+						digits = 2
+				)
+			}
 			print(gettextf("summary statistics for CD=%s", report_dc@dc@dc_selected),
 					domain = "R-stacomiR")
 			print(gettextf("dc_code=%s", report_dc@dc@data[report_dc@dc@data$dc ==

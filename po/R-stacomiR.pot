@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stacomiR 0.6.0\n"
-"POT-Creation-Date: 2021-11-15 10:30\n"
+"Project-Id-Version: stacomiR 0.6.0.5\n"
+"POT-Creation-Date: 2022-03-11 11:05\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "Writing monthly summary in the database"
+msgid "Writing monthly summary (n=%s) in the database"
 msgstr ""
 
 msgid "The length of color must be 11"
@@ -106,6 +106,9 @@ msgstr ""
 msgid "Calculation of the monthly balance sheet"
 msgstr ""
 
+msgid "Writing of %s"
+msgstr ""
+
 msgid "writing of %s"
 msgstr ""
 
@@ -149,9 +152,6 @@ msgid "horodate should not be null"
 msgstr ""
 
 msgid "Formatting problem, the character vector you are trying to pass as horodate could not be parsed. Check example or documentation"
-msgstr ""
-
-msgid "Loading parameters query completed"
 msgstr ""
 
 msgid "No data for selected device, taxa and stage"
@@ -250,7 +250,7 @@ msgstr ""
 msgid "No selected dc in repor_dc@dc@dc_selected, did you forget to use the method charge ?"
 msgstr ""
 
-msgid "Time steps loaded fot this counting device"
+msgid "Time steps loaded for this counting device"
 msgstr ""
 
 msgid "You need to choose the starting date"
@@ -289,6 +289,12 @@ msgstr ""
 msgid "operation"
 msgstr ""
 
+msgid "Writing the ggplot into envir_stacomi environment : g_report_dc_1=get('g_report_dc_1',envir_stacomi)"
+msgstr ""
+
+msgid "Writing the ggplot into envir_stacomi environment : g_report_dc_2=get('g_report_dc_2',envir_stacomi)"
+msgstr ""
+
 msgid "Writing the table into envir_stacomi environment : write periodeDC=get('periodeDC',envir_stacomi)"
 msgstr ""
 
@@ -304,6 +310,18 @@ msgstr ""
 msgid "Normal func"
 msgstr ""
 
+msgid "Normal"
+msgstr ""
+
+msgid "Operation of the counting device"
+msgstr ""
+
+msgid "Shutdowns types for this counting device"
+msgstr ""
+
+msgid "Working of the counting device"
+msgstr ""
+
 msgid "Normal oper"
 msgstr ""
 
@@ -316,16 +334,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-msgid "Operation of the counting device"
-msgstr ""
-
-msgid "Shutdowns types for this counting device"
-msgstr ""
-
-msgid "Working of the counting device"
-msgstr ""
-
-msgid "Writing of %s"
+msgid "Writing the ggplot into envir_stacomi environment : g_report_dc_4 <- get('g_report_dc_4',envir_stacomi)"
 msgstr ""
 
 msgid "Writing of %s this might take a while, please be patient ..."
@@ -374,6 +383,9 @@ msgid "summary statistics for DF=%s"
 msgstr ""
 
 msgid "df_code=%s"
+msgstr ""
+
+msgid "No measure station selected"
 msgstr ""
 
 msgid "Environmental conditions loading query completed"
@@ -529,16 +541,13 @@ msgstr ""
 msgid "Summary exists :%s Overwrite ?"
 msgstr ""
 
-msgid "with"
-msgstr ""
-
-msgid "without"
-msgstr ""
-
 msgid "This report should be for just one taxa"
 msgstr ""
 
 msgid "length(object@parqual)==1|length(object@parquan)==1 not TRUE"
+msgstr ""
+
+msgid "with"
 msgstr ""
 
 msgid "You need to choose at least one parameter qualitative or quantitative"
@@ -556,7 +565,13 @@ msgstr ""
 msgid "The parameter %s is not in the selected parameters"
 msgstr ""
 
-msgid "No data for this parameter, nothing to do"
+msgid "No data for this parameter : %s, nothing to do"
+msgstr ""
+
+msgid "Only NA produced, please check the bounds"
+msgstr ""
+
+msgid "You are producing %s NA values, maybe change your limits"
 msgstr ""
 
 msgid "%s lines have been converted from quantitative to qualitative parameters"
@@ -569,6 +584,9 @@ msgid "The calculated data are in slot calcdata"
 msgstr ""
 
 msgid "no data in calcdata, have you forgotten to run calculations ?"
+msgstr ""
+
+msgid "No data loaded in qualitative parameters"
 msgstr ""
 
 msgid "Classes"
@@ -661,16 +679,25 @@ msgstr ""
 msgid "Running report_mig to correct data for year %s"
 msgstr ""
 
+msgid "There is a difference between report_annual Na= %s and report_mig"
+msgstr ""
+
+msgid "Nj= %s but the sums are the same between report_mig and the database (t_bilanmigrationjournalier_bjo)."
+msgstr ""
+
+msgid "This difference is due to migration report overlapping between two years and the program. No writing in the db."
+msgstr ""
+
 msgid "Data changed, rerun ?"
 msgstr ""
 
-msgid "Attention, there is no migration summary for this year"
+msgid "Attention, there is no migration summary for these year"
 msgstr ""
 
 msgid ", this taxa and this stage (report_mig_interannual.r)"
 msgstr ""
 
-msgid "Annual migrations query completed"
+msgid "Interannual migrations query completed"
 msgstr ""
 
 msgid "Writing report_mig_interannual in the environment envir_stacomi : write r_mig_interannual=get('report_mig_interannual',envir_stacomi)"
@@ -709,7 +736,7 @@ msgstr ""
 msgid "Attention : you have to complete a migration summary for at least one of the selected year before launching a inter-annual summary"
 msgstr ""
 
-msgid "Migration for years"
+msgid "Migration"
 msgstr ""
 
 msgid "Historical amplitude"
@@ -724,7 +751,7 @@ msgstr ""
 msgid "Choose year"
 msgstr ""
 
-msgid "%s %s, Cumulated numbers %s"
+msgid "%s, %s, %s cum %s"
 msgstr ""
 
 msgid "Annual migration percentage"
@@ -746,6 +773,12 @@ msgid "not working for seasonal plot"
 msgstr ""
 
 msgid "plot.type argument invalid"
+msgstr ""
+
+msgid "The chosen year"
+msgstr ""
+
+msgid "should be in available years :"
 msgstr ""
 
 msgid "Choice made, and object report_mig_mult assigned in envir_stacomi"
@@ -941,6 +974,9 @@ msgid "horodatedebut not in column names for data"
 msgstr ""
 
 msgid "horodatefin not column names for data"
+msgstr ""
+
+msgid "Palette %s has only got %s values and you need %s"
 msgstr ""
 
 msgid "The color argument should have length %s"

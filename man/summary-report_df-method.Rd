@@ -21,5 +21,5 @@ Nothing, called for its side effect of writing html, csv files and printing summ
 summary for report_df, write csv and html output, and prints summary statistics
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

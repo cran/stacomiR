@@ -9,7 +9,7 @@
 #' @slot listechoice A character vector giving possible choices
 #' @slot label A character, title of the box giving the possible choices
 #' @slot selected An \code{Integer}  the initial selected value (as an index), first=1 used in gradio
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @family referential objects
 setClass(Class = "ref_choice", representation = representation(listechoice = "ANY",
     label = "character", selected = "integer", selectedvalue = "ANY"), prototype = list(selectedvalue = vector()))
@@ -22,7 +22,7 @@ setClass(Class = "ref_choice", representation = representation(listechoice = "AN
 #' @param vecteur A vector of name, see example code.
 #' @param label Labels for the choices
 #' @param selected An integer indicating which object is selected at launch
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #' object=new('ref_choice')
@@ -42,7 +42,7 @@ setMethod("charge", signature = signature("ref_choice"), definition = function(o
 #' @param object An object of class \link{ref_choice-class}
 #' @param selectedvalue the value selected in the combo
 #' @return An S4 object of class \link{ref_choice-class} 
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples  
 #' \dontrun{
 #' object=new('ref_list')
@@ -54,7 +54,7 @@ setMethod("choice_c", signature = signature("ref_choice"), definition = function
 
     if (length(selectedvalue) > 1)
         stop("valeurchoisie should be a vector of length 1")
-    if (class(selectedvalue) == "numeric")
+    if (inherits(selectedvalue,"numeric"))
         selectedvalue <- as.character(selectedvalue)
     # the charge method must be performed before
 

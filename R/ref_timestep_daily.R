@@ -17,7 +17,7 @@
 #' \item{list('nocurrent_step')}{Object of class \code{'integer'} Number of the
 #' current step }\item{:}{Object of class \code{'integer'} Number of the
 #' current step } }
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @seealso \code{\linkS4class{ref_timestep}}
 #' @keywords classes
 setClass(Class = "ref_timestep_daily", contains = "ref_timestep", prototype = (step_duration = 86400))
@@ -50,7 +50,7 @@ setValidity(Class = "ref_timestep_daily", function(object) {
 #' @param object An object of class \link{ref_timestep_daily-class}
 #' @param datedebut A character (format \code{'15/01/1996'} or \code{'1996-01-15'} or \code{'15-01-1996'}), or POSIXct object
 #' @param datefin A character 
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples
 #' \dontrun{
 #'  object=new('ref_dc')
@@ -60,7 +60,7 @@ setValidity(Class = "ref_timestep_daily", function(object) {
 #' @return An S4 object of class \link{ref_timestep_daily-class} with date selected
 setMethod("choice_c", signature = signature("ref_timestep_daily"), definition = function(object,
     datedebut, datefin) {
-    if (class(datedebut) == "character") {
+    if (inherits(datedebut, "character")) {
         if (grepl("/", datedebut)) {
             datedebut = strptime(datedebut, format = "%d/%m/%Y")
             if (is.na(datedebut)) {
@@ -78,7 +78,7 @@ setMethod("choice_c", signature = signature("ref_timestep_daily"), definition = 
     }
 
     # the datedebut can have a POSIXct format
-    if (class(datefin) == "character") {
+    if (inherits(datefin, "character")) {
         if (grepl("/", datefin)) {
             datefin = strptime(datefin, format = "%d/%m/%Y")
             if (is.na(datefin)) {

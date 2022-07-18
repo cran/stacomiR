@@ -1,3 +1,48 @@
+# stacomiR 0.6.0.7
+
+* created function to load schema
+* fixed problem with report_mig_char example (broken since new qualitative parameter for age was inserted in the database)
+* fixed problem with x scale ugly https://forgemia.inra.fr/stacomi/stacomir/-/issues/27 fixed 
+
+
+# stacomiR 0.6.0.6
+
+* allows to load ggplots after plot for report_dc and report_df
+* fixes the problem of method for plot no longer working with signature(x = "report_dc", y = "ANY") and changed to
+"missing"
+* allows to pass arguments for colors in plot.report_dc
+* fixed problems with broken translation see https://forgemia.inra.fr/stacomi/stacomir/-/issues/20
+
+# stacomiR 0.6.0.5
+
+* fixes the way environmental stations are loaded.
+
+
+# stacomiR 0.6.0.4
+
+* fixed different output for parameters between charge and charge_with_filter from ref_parquan and ref_parqual.
+* the choice_c method also assigns subclasses in envir_stacomi.
+* updated the set_as_qualitative method to avoid bugs when running it several times.
+* rewrote tests
+
+
+# stacomiR 0.6.0.3
+
+* fixed problems for report interannual, allowing it for several DC including the graphs
+* fixed but in report_mig / report_mig_mug write database for numbers of type "PONCTUEL"
+* fixed problem in report_interannual, always writing the db when there is a difference between report_mig and report_annual e.g.
+when operations are overlapping between years
+
+# stacomiR 0.6.0.2
+
+* fixes the way taxa and stage are loaded
+* replaced some french labels in slots
+
+# stacomiR 0.6.0.1
+
+* Minor fix for Solaris, non portable path '~' now issue a warning asking the user for a new path
+* Code coverage 79.2 %
+
 # stacomiR 0.6.0
 
 stacomir based on gwidget was dropped from CRAN in May 2020, it has been completely reprogrammed to remove all dependence to

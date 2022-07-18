@@ -30,7 +30,7 @@ This is where the graphical interface stores its objects
 try \code{ls(envir=envir_stacomi)}
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \keyword{datasets}
 \keyword{environment}

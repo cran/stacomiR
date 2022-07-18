@@ -16,5 +16,5 @@ an object of class ref_dc with data loaded
 Method to load the counting devices of the control station
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

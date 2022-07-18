@@ -8,7 +8,7 @@
 #' @param df_selected Object of class \code{'integer'} The identifier of the fishway
 #' @param ouvrage Object of class \code{'integer'} The attached dam
 #' @param data Object of class \code{'data.frame'} Data concerning the fishway
-#' @author cedric.briand'at'eptb-vilaine.fr
+#' @author cedric.briand@eptb-vilaine.fr
 #' @family referential objects
 setClass(Class = "ref_df", representation = representation(df_selected = "integer",
 				ouvrage = "integer", data = "data.frame"))
@@ -32,7 +32,7 @@ setValidity("ref_df", method = function(object) {
 #' Loading method for DF referential objects
 #' @param object An object of class \link{ref_df-class}
 #' @return An object of class ref_df with df loaded
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples 
 #' \dontrun{
 #'  object=new('ref_df')
@@ -63,7 +63,7 @@ setMethod("charge", signature = signature("ref_df"), definition = function(objec
 #' report_df class.
 #' @param object an object of class \link{ref_df-class}
 #' @param df a character vector of df chosen
-#' @author Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class ref_df with df selected
 #' @examples
 #' \dontrun{
@@ -77,9 +77,9 @@ setMethod("charge", signature = signature("ref_df"), definition = function(objec
 setMethod("choice_c", signature = signature("ref_df"), definition = function(object,
 				df) {
 			# object<-ref_df
-			if (class(df) == "numeric") {
+			if (inherits(df, "numeric")) {
 				df <- as.integer(df)
-			} else if (class(df) == "character") {
+			} else if (inherits(df, "character")) {
 				
 				suppressWarnings(expr = {df <- as.integer(as.numeric(df))})
 

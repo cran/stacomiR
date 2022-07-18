@@ -19,5 +19,5 @@ An object of class \link{report_sample_char-class} with slot data \code{@data} f
 connect method for report_sample_char
 }
 \author{
-Cedric Briand \email{cedric.briand'at'eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

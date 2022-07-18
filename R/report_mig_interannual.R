@@ -21,7 +21,7 @@
 #' ref_year allows to choose last year of the report
 #' @slot calcdata A \code{list} of calculated data, filled in by the calcule method
 #'
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @family report Objects
 #' @keywords classes
 #' @example inst/examples/report_mig_interannual-example.R
@@ -54,13 +54,13 @@ setValidity("report_mig_interannual", function(object)
 			# if more than one taxa, the connect method will fail when trying to run the write_database for missing data
 			# also plots have not been developed accordingly
 			rep1 = ifelse(
-					length(object@taxa@data$tax_code) == 1,
+					length(object@taxa@taxa_selected) == 1,
 					TRUE,
 					gettext("report_mig_interannual can only take one taxa", domain = "R-stacomiR")
 			)
 			# same for stage
 			rep2 = ifelse(
-					length(object@stage@data$std_code) == 1,
+					length(object@stage@stage_selected) == 1,
 					TRUE,
 					gettext("report_mig_interannual can only take one stage", domain = "R-stacomiR")
 			)
@@ -82,7 +82,7 @@ setValidity("report_mig_interannual", function(object)
 #' @param silent Stops messages from being displayed if silent=TRUE, default FALSE
 #' @param check Checks that data are corresponding between report_annual and report_mig
 #' @return report_mig_interannual an instantiated object with values filled with user choice
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases connect.report_mig_interannual
 #' @importFrom utils menu
 setMethod(
@@ -116,9 +116,9 @@ setMethod(
 			
 			
 			fn_connect <- function() {
-				les_annees = (object@start_year@selected_year):(object@end_year@selected_year)
-				tax = object@taxa@data$tax_code
-				std = object@stage@data$std_code
+				les_annees = (object@start_year@year_selected):(object@end_year@year_selected)
+				tax = object@taxa@taxa_selected
+				std = object@stage@stage_selected
 				dic = object@dc@dc_selected
 				requete = new("RequeteDBwhere")
 				requete@where = paste(
@@ -140,8 +140,15 @@ setMethod(
 				)
 				requete@order_by = " ORDER BY bjo_jour "
 				requete <- stacomirtools::query(requete)
-				data <- stacomirtools::killfactor(requete@query)
+				t_bilanmigrationjournalier_bjo <- requete@query
+				if (nrow(t_bilanmigrationjournalier_bjo)>0) {
+					t_bilanmigrationjournalier_bjo <- stacomirtools::killfactor(t_bilanmigrationjournalier_bjo)
+				}
+				return(t_bilanmigrationjournalier_bjo)
 			}
+			
+			#---------------------------------------------------------------------------------------			
+			
 			object@data <- fn_connect()
 			if (nrow(object@data) == 0) {
 				funout(
@@ -175,6 +182,7 @@ setMethod(
 						data2 <- object@data[object@data$bjo_dis_identifiant == dic[i], ]
 						data21 <-
 								dplyr::select(data2, bjo_annee, bjo_valeur, bjo_labelquantite)
+						
 						data22 <- dplyr::group_by(data21, bjo_annee, bjo_labelquantite)
 						if (nrow(data22) == 0)
 							data22$bjo_valeur <- as.numeric(data22$bjo_valeur)
@@ -198,8 +206,8 @@ setMethod(
 					# as we have changed the report_annual to split data between years
 					# some unwanted data might step in outside the year range
 					# we correct for that
-					compared_numbers <- compared_numbers[compared_numbers$annee >= object@start_year@selected_year &
-									compared_numbers$annee <= object@end_year@selected_year, ]
+					compared_numbers <- compared_numbers[compared_numbers$annee >= object@start_year@year_selected &
+									compared_numbers$annee <= object@end_year@year_selected, ]
 					
 					#-------------------------------------------------------------------------------------
 					# First test, if missing data, the program will propose to load the data by running report_mig
@@ -234,8 +242,8 @@ setMethod(
 							bM = choice_c(
 									bM,
 									dc = dic[i],
-									taxa = object@taxa@data$tax_nom_latin,
-									stage = object@stage@data$std_code,
+									taxa = object@taxa@taxa_selected,
+									stage = object@stage@stage_selected,
 									datedebut = stringr::str_c(Y, "-01-01"),
 									datefin = stringr::str_c(Y, "-12-31")
 							)
@@ -264,8 +272,8 @@ setMethod(
 					# as some of the "effectif_total" in the bjo table correspond to weights not counts.
 					#-------------------------------------------------------------------------------------
 					
-					if (object@taxa@data$tax_code == 2038 &
-							object@stage@data$std_code == "CIV") {
+					if (object@taxa@taxa_selected == 2038 &
+							object@stage@stage_selected == "CIV") {
 						if (!silent)
 							funout(
 									gettext(
@@ -274,7 +282,7 @@ setMethod(
 									)
 							)
 						
-					} else if (!all(compared_numbers$effectif == compared_numbers$effectif_bjo)) {
+					} else if (!all(round(compared_numbers$effectif) == round(compared_numbers$effectif_bjo))) {
 						index_different_years <-
 								which(round(compared_numbers$effectif) != round(compared_numbers$effectif_bjo))
 						differing_years <- compared_numbers$annee[index_different_years]
@@ -295,21 +303,38 @@ setMethod(
 								bM = choice_c(
 										bM,
 										dc = dic[i],
-										taxa = object@taxa@data$tax_nom_latin,
-										stage = object@stage@data$std_code,
+										taxa = object@taxa@taxa_selected,
+										stage = object@stage@stage_selected,
 										datedebut = stringr::str_c(Y, "-01-01"),
 										datefin = stringr::str_c(Y, "-12-31")
 								)
 								bM <- charge(bM, silent = silent)
 								bM <- connect(bM, silent = silent)
 								bM <- calcule(bM, silent = silent)
+								# report annual may have different numbers from report mig
+								# so I'm adding an additional check there
+								bma_num <- compared_numbers[compared_numbers$annee==Y,"effectif"]
+								bjo_num <- compared_numbers[compared_numbers$annee==Y,"effectif_bjo"]
+								bjo_num_new <- sum(bM@calcdata[[stringr::str_c("dc_", dic[i])]][["data"]][,"Effectif_total"])
 								if (nrow(bM@data) > 0) {
-									# check for bjo will ensure that previous report are deleted
-									write_database(bM,
-											silent = silent,
-											check_for_bjo = TRUE)
-								}
-							} # end for loop to write new reports
+									if (!round(bjo_num_new) == round(bjo_num)){
+										# check for bjo will ensure that previous report are deleted
+										write_database(bM,
+												silent = silent,
+												check_for_bjo = TRUE)
+									} else {									
+											funout(
+													gettextf(
+															paste("There is a difference between report_annual Na= %s and report_mig ",
+																	"Nj= %s but the sums are the same between report_mig and the database (t_bilanmigrationjournalier_bjo).",
+																	"This difference is due to migration report overlapping between two years and the program. No writing in the db."),
+															round(bma_num), round(bjo_num),
+															domain = "R-StacomiR"
+													)
+											)										
+									} # end else  numbers are equal => do nothing
+								} # end test nrow
+							}  # end for loop to write new reports
 							# the data are loaded again
 							object@data <- fn_connect()
 							# I need to assign the result one step up (in the environment of the connect function)
@@ -338,7 +363,7 @@ setMethod(
 			# Final check for data
 			# index of data already present in the database
 			#-------------------------------------------------------------------------------------
-			les_annees = object@start_year@selected_year:object@end_year@selected_year
+			les_annees = object@start_year@year_selected:object@end_year@year_selected
 			index = unique(object@data$bjo_annee) %in% les_annees
 			# s'il manque des donnees pour certaines annees selectionnnees"
 			if (!silent) {
@@ -346,7 +371,7 @@ setMethod(
 				{
 					funout(paste(
 									gettext(
-											"Attention, there is no migration summary for this year\n",
+											"Attention, there is no migration summary for these year\n",
 											domain = "R-stacomiR"
 									),
 									paste(les_annees[!index], collapse = ","),
@@ -360,7 +385,7 @@ setMethod(
 				# si toutes les annees sont presentes
 				if (length(les_annees[index]) > 0) {
 					funout(paste(
-									gettext("Annual migrations query completed", domain = "R-stacomiR"),
+									gettext("Interannual migrations query completed", domain = "R-stacomiR"),
 									paste(les_annees[index], collapse = ","),
 									"\n"
 							))
@@ -373,7 +398,7 @@ setMethod(
 #' supprime method for report_mig_interannual class, deletes values in table t_bilanmigrationjournalier_bjo
 #' @param object An object of class \link{report_mig_interannual-class}
 #' @return nothing, called for its side effect, removing lines from the database
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases supprime.report_mig_interannual
 setMethod(
 		"supprime",
@@ -381,9 +406,9 @@ setMethod(
 		definition = function(object)
 		{
 			# recuperation des annees taxa et stage concernes
-			les_annees = (object@start_year@selected_year):(object@end_year@selected_year)
-			tax = object@taxa@data$tax_code
-			std = object@stage@data$std_code
+			les_annees = (object@start_year@year_selected):(object@end_year@year_selected)
+			tax = object@taxa@taxa_selected
+			std = object@stage@stage_selected
 			dic = object@dc@dc_selected
 			con = new("ConnectionDB")
 			con <- connect(con)
@@ -426,7 +451,7 @@ setMethod(
 #' @param object An object of class \link{report_mig_interannual-class}
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class  \link{report_mig_interannual-class} with slots set from values assigned in \code{envir_stacomi} environment
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases charge.report_mig_interannual
 #' @keywords internal
 setMethod(
@@ -498,13 +523,13 @@ setMethod(
 #' @param taxa Either a species name in latin or the SANDRE code for species (ie 2038=Anguilla anguilla),
 #' it should match the ref.tr_taxon_tax referential table in the stacomi database, see \link{choice_c,ref_taxa-method}
 #' @param stage A stage code matching the ref.tr_stadedeveloppement_std table in the stacomi database, see \link{choice_c,ref_stage-method}
-#' @param anneedebut The starting the first year, passed as character or integer
-#' @param anneefin the finishing year
+#' @param start_year The starting the first year, passed as character or integer
+#' @param end_year the finishing year
 #' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_mig_interannual-class} with data selected
 #' The choice_c method fills in the data slot for classes \link{ref_dc-class}, \link{ref_taxa-class}, \link{ref_stage-class} and two slots of \link{ref_year-class}
 #' @aliases choice_c.report_mig_interannual
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 setMethod(
 		"choice_c",
 		signature = signature("report_mig_interannual"),
@@ -512,11 +537,11 @@ setMethod(
 				dc,
 				taxa,
 				stage,
-				anneedebut,
-				anneefin,
+				start_year,
+				end_year,
 				silent = FALSE) {
 			# code for debug using example
-			#report_mig_interannual<-r_mig_interannual;dc=c(16);taxa="Anguilla anguilla";stage=c("AGJ");anneedebut="1984";anneefin="2016"
+			#report_mig_interannual<-r_mig_interannual;dc=c(16);taxa="Anguilla anguilla";stage=c("AGJ");start_year="1984";end_year="2016"
 			report_mig_interannual <- object
 			report_mig_interannual@dc = charge(report_mig_interannual@dc)
 			# loads and verifies the dc
@@ -532,12 +557,13 @@ setMethod(
 					charge_with_filter(
 							object = report_mig_interannual@stage,
 							report_mig_interannual@dc@dc_selected,
-							report_mig_interannual@taxa@data$tax_code
+							report_mig_interannual@taxa@taxa_selected
 					)
 			report_mig_interannual@stage <-
 					choice_c(report_mig_interannual@stage, stage)
 			# depending on report_object the method will load data and issue a warning if data are not present
 			# this is the first step, the second verification will be done in method connect
+			
 			report_mig_interannual@start_year <-
 					charge(object = report_mig_interannual@start_year,
 							objectreport = "report_mig_interannual")
@@ -545,7 +571,7 @@ setMethod(
 					choice_c(
 							object = report_mig_interannual@start_year,
 							nomassign = "start_year",
-							annee = anneedebut,
+							annee = start_year,
 							silent = silent
 					)
 			report_mig_interannual@end_year@data <-
@@ -554,7 +580,7 @@ setMethod(
 					choice_c(
 							object = report_mig_interannual@end_year,
 							nomassign = "end_year",
-							annee = anneefin,
+							annee = end_year,
 							silent = silent
 					)
 			assign("report_mig_interannual", report_mig_interannual, envir = envir_stacomi)
@@ -625,8 +651,8 @@ setMethod(
 					)
 			# there should be just one station, this will be tested
 			station <- report_mig_interannual@dc@station
-			taxa <- report_mig_interannual@taxa@data$tax_code
-			stage <- report_mig_interannual@stage@data$std_code
+			taxa <- report_mig_interannual@taxa@taxa_selected
+			stage <- report_mig_interannual@stage@stage_selected
 			if (length(unique(report_mig_interannual@dc@station)) != 1)
 				stop(
 						"You have more than one station in the report, the dc from the report should belong to the same station"
@@ -719,7 +745,7 @@ setMethod(
 
 #' statistics per time period
 #'
-#' function called for bilamMigrationInterannelle objects renames columns
+#' function called for report_mig_mult objects renames columns
 #' replaces nulls, and calculates reports with time period larger than day
 #'
 #' @param dat a data frame with columns ("bjo_annee","bjo_jour","bjo_labelquantite","bjo_valeur")
@@ -745,12 +771,12 @@ fun_report_mig_interannual = function(dat,
 						),
 						c("annee", "jour", "labelquantite", "valeur")
 				)
-		dat = dat[, c("annee", "jour", "valeur")]
+		dat <- dat[, c("annee", "jour", "valeur")]
 		if (!is.null(annee)) {
 			dat <- dat[dat$annee != annee, ]
 		}
-		dat$jour = trunc.POSIXt(dat$jour, digits = 'days')
-		dat$jour = as.Date(strptime(strftime(dat$jour, '2000-%m-%d'), '%Y-%m-%d'))
+		dat$jour <- trunc.POSIXt(dat$jour, digits = 'days')
+		dat$jour <- as.Date(strptime(strftime(dat$jour, '2000-%m-%d'), '%Y-%m-%d'))
 		
 		
 		if (!is.null(timesplit)) {
@@ -781,8 +807,8 @@ fun_report_mig_interannual = function(dat,
 			rm(datc)
 		} else {
 			# if null default value is day
-			timesplit = "jour"
-			jour2000 = as.Date(seq.POSIXt(
+			timesplit <- "jour"
+			jour2000 <- as.Date(seq.POSIXt(
 							from = strptime("2000-01-01", format = '%Y-%m-%d'),
 							to = strptime("2000-12-31", format = '%Y-%m-%d'),
 							by = "day"
@@ -791,10 +817,10 @@ fun_report_mig_interannual = function(dat,
 				# days without report are added with a zero
 				jour2000restant <-
 						jour2000[!jour2000 %in% dat[dat$annee == j, "jour"]]
-				dat0 = data.frame("jour" = jour2000restant,
+				dat0 <- data.frame("jour" = jour2000restant,
 						"annee" = j,
 						"valeur" = NA)
-				dat = rbind(dat, dat0)
+				dat <- rbind(dat, dat0)
 			} # end for
 		}
 		
@@ -857,7 +883,7 @@ fun_report_mig_interannual = function(dat,
 #'      \item{plot.type="seasonal": plot to display summary statistics about the migration period}
 #' }
 #' @return Nothing, called for its side effect of plotting
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases plot.report_mig_interannual
 #' @export
 setMethod(
@@ -906,8 +932,11 @@ setMethod(
 							"2 weeks" = "quinzaine",
 							timesplit
 					)
+			
 			# plot.type="line";require(ggplot2)
+			
 			if (nrow(report_mig_interannual@data) > 0) {
+				
 				if (plot.type == "line") {
 					dat <- report_mig_interannual@data
 					dat <- dat[dat$bjo_labelquantite == "Effectif_total", ]
@@ -928,22 +957,32 @@ setMethod(
 					dat$annee <- as.factor(dat$annee)
 					dat <- stacomirtools::killfactor(dat)
 					titre = paste(
-							gettext("Migration for years "),
-							paste(min(dat$annee), max(dat$annee), collapse = ":"),
+							gettext("Migration "),
+							paste(min(dat$annee), max(dat$annee), collapse = "-"),
 							", ",
-							report_mig_interannual@dc@data$dis_commentaires[report_mig_interannual@dc@data$dc ==
-											report_mig_interannual@dc@dc_selected]
+							paste(report_mig_interannual@dc@data$dis_commentaires[report_mig_interannual@dc@data$dc %in%
+													report_mig_interannual@dc@dc_selected], collapse="+"),
+							sep=""
 					)
 					soustitre = paste(
-							report_mig_interannual@taxa@data$tax_nom_latin,
+							report_mig_interannual@taxa@data[
+									report_mig_interannual@taxa@data$tax_code %in% 
+											report_mig_interannual@taxa@taxa_selected,
+									"tax_nom_latin"],
 							", ",
-							report_mig_interannual@stage@data$std_libelle,
+							report_mig_interannual@stage@data[
+									report_mig_interannual@stage@data$std_code %in% 
+											report_mig_interannual@stage@stage_selected,
+									"std_libelle"],
+							", ",
 							sep = ""
 					)
 					g <- ggplot(dat, aes(x = jour, y = valeur))
 					g <-
 							g + geom_line(aes(color = annee)) + labs(title = paste(titre, "\n", soustitre)) +
-							scale_x_datetime(name = "date")
+							scale_x_datetime(name = "date", date_breaks = "1 month",
+									date_labels = "%b") +
+							theme_bw()
 					print(g)
 					assign("g", g, envir = envir_stacomi)
 					if (!silent)
@@ -1044,10 +1083,18 @@ setMethod(
 						g <-
 								g + labs(
 										title = paste(
-												report_mig_interannual@taxa@data$tax_nom_latin,
+												paste(report_mig_interannual@dc@dc_selected,collapse="+"),
+												report_mig_interannual@taxa@data[
+														report_mig_interannual@taxa@data$tax_code %in% 
+																report_mig_interannual@taxa@taxa_selected,
+														"tax_nom_latin"],
 												",",
-												report_mig_interannual@stage@data$std_libelle,
-												unique(as.character(tmp$annee)),
+												report_mig_interannual@stage@data[
+														report_mig_interannual@stage@data$std_code %in% 
+																report_mig_interannual@stage@stage_selected,
+														"std_libelle"],
+												",",
+												paste(newdat$annee),
 												"/",
 												amplitude
 										)
@@ -1076,9 +1123,10 @@ setMethod(
 				} else if (plot.type == "step") {
 					dat <- report_mig_interannual@data
 					dat <- fun_report_mig_interannual(dat)
+					# runs the default with daily migration
 					#dat=dat[order(dat$annee,dat$jour),]
-					dat$valeur[is.na(dat$valeur)] <-
-							0 # sinon si il ne reste qu'une ligne peut planter
+					dat$valeur[is.na(dat$valeur)] <-0 
+					# otherwise if only one line it may crash
 					if (silent == FALSE) {
 						the_choice <- select.list(
 								choices = as.character(unique(dat$annee)),
@@ -1092,7 +1140,7 @@ setMethod(
 					amplitude <- paste(min(as.numeric(as.character(dat$annee))),
 							"-", max(as.numeric(as.character(dat$annee))), sep = "")
 					#################
-					# calculation of cumusums
+					# calculation of cumsums
 					###################
 					
 					for (an in unique(dat$annee)) {
@@ -1120,9 +1168,16 @@ setMethod(
 					g <-
 							g + labs(
 									title = gettextf(
-											"%s %s, Cumulated numbers %s",
-											report_mig_interannual@taxa@data$tax_nom_latin,
-											report_mig_interannual@stage@data$std_libelle,
+											"%s, %s, %s cum %s",
+											paste(report_mig_interannual@dc@dc_selected, collapse="+"),
+											report_mig_interannual@taxa@data[
+													report_mig_interannual@taxa@data$tax_code %in% 
+															report_mig_interannual@taxa@taxa_selected,
+													"tax_nom_latin"],
+											report_mig_interannual@stage@data[
+													report_mig_interannual@stage@data$std_code %in% 
+															report_mig_interannual@stage@stage_selected,
+													"std_libelle"],
 											amplitude
 									)
 							)
@@ -1313,10 +1368,15 @@ setMethod(
 						
 						g <-
 								g + labs(
-										title = paste(
-												report_mig_interannual@taxa@data$tax_nom_latin,
+										title = paste(		report_mig_interannual@taxa@data[
+														report_mig_interannual@taxa@data$tax_code %in% 
+																report_mig_interannual@taxa@taxa_selected,
+														"tax_nom_latin"],
 												",",
-												report_mig_interannual@stage@data$std_libelle,
+												report_mig_interannual@stage@data[
+														report_mig_interannual@stage@data$std_code %in% 
+																report_mig_interannual@stage@stage_selected,
+														"std_libelle"],
 												", bilan par",
 												timesplit,
 												unique(as.character(tmp$annee)),
@@ -1454,9 +1514,15 @@ setMethod(
 						g <-
 								g + labs(
 										title = paste(
-												report_mig_interannual@taxa@data$tax_nom_latin,
+												report_mig_interannual@taxa@data[
+														report_mig_interannual@taxa@data$tax_code %in% 
+																report_mig_interannual@taxa@taxa_selected,
+														"tax_nom_latin"],
 												",",
-												report_mig_interannual@stage@data$std_libelle,
+												report_mig_interannual@stage@data[
+														report_mig_interannual@stage@data$std_code %in% 
+																report_mig_interannual@stage@stage_selected,
+														"std_libelle"],
 												", report par",
 												timesplit,
 												unique(as.character(tmp$annee)),
@@ -1534,9 +1600,16 @@ setMethod(
 						g <-
 								g + labs(
 										title = paste(
-												report_mig_interannual@taxa@data$tax_nom_latin,
+												paste(report_mig_interannual@dc@dc_selected,collapse=" + "),
+												report_mig_interannual@taxa@data[
+														report_mig_interannual@taxa@data$tax_code %in% 
+																report_mig_interannual@taxa@taxa_selected,
+														"tax_nom_latin"],
 												",",
-												report_mig_interannual@stage@data$std_libelle,
+												report_mig_interannual@stage@data[
+														report_mig_interannual@stage@data$std_code %in% 
+																report_mig_interannual@stage@stage_selected,
+														"std_libelle"],
 												", saisonnalite de la migration"
 										)
 								)
@@ -1617,14 +1690,15 @@ setMethod(
 							col = c("Q0", "Q5", "Q50", "Q95", "Q100", "d90"),
 							timesplit_ = timesplit
 					)
+					
 					datadic1 <-
 							dplyr::select(datadic,
-									timesplit,
-									"bjo_annee",
-									"bjo_valeur",
-									"bjo_labelquantite")
+									{{timesplit}},
+									bjo_annee,
+									bjo_valeur,
+									bjo_labelquantite)
 					datadic1 <-
-							dplyr::group_by(datadic1, "bjo_annee", timesplit, "bjo_labelquantite")
+							dplyr::group_by(datadic1, bjo_annee, dplyr::across(dplyr::all_of(timesplit)), bjo_labelquantite)
 					datadic1 <- dplyr::summarize(datadic1, bjo_valeur = sum(bjo_valeur))
 					datadic1 <-
 							dplyr::ungroup(datadic1) %>% dplyr::filter(bjo_labelquantite == "Effectif_total")
@@ -1657,8 +1731,7 @@ setMethod(
 									data = dat3
 							) +
 							geom_errorbarh(
-									aes(
-											x = Q50,
+									aes(											
 											y = year,
 											xmin = Q5,
 											xmax = Q95
@@ -1668,11 +1741,11 @@ setMethod(
 									col = "black"
 							) +
 							ylab(Hmisc::capitalize(gettext("year", domain = "R-stacomiR"))) +
-							xlab(Hmisc::capitalize(timesplit)) +
+							xlab(Hmisc::capitalize({{timesplit}})) +
 							scale_x_date(
 									name = timesplit,
 									date_breaks = "month",
-									date_minor_breaks = getvalue(new("ref_period"), timesplit),
+									date_minor_breaks = getvalue(new("ref_period"), {{timesplit}}),
 									date_labels = "%b"
 							) +
 							theme_bw()
@@ -1713,16 +1786,17 @@ setMethod(
 #' if silent=FALSE. Mean, min and max are historical statistics with the selected year excluded from the
 #' historical dataset.
 #' @param object An object of class \code{\link{report_mig_interannual-class}}
+#' @param year_choice The year chosen to calculate statistics which will be displayed beside the historical series, 
 #' @param silent Should the program stay silent or display messages, default FALSE
 #' @param ... Additional parameters (not used there)
-#' @author Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+#' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @aliases summary.report_mig_interannual
 #' @return A list, one element per DC
 #' @export
 setMethod(
 		"summary",
 		signature = signature(object = "report_mig_interannual"),
-		definition = function(object, silent = FALSE, ...) {
+		definition = function(object, year_choice=NULL, silent = FALSE, ...) {
 			# table generated with funtable
 			# TODO traitement des poids
 			#object<-r_mig_interannual
@@ -1752,10 +1826,10 @@ setMethod(
 									"Date d'export du report"
 							)
 					)
-			dat$Annee = as.factor(dat$Annee)
-			dat = dat[, -1]
-			tmp = dat$Jour
-			DC = object@dc@dc_selected
+			dat$Annee <- as.factor(dat$Annee)
+			dat <- dat[, -1]
+			tmp <- dat$Jour
+			DC <- object@dc@dc_selected
 			dat <- chnames(dat, "Jour", "debut_pas")
 			# debut_pas must be column name in tableau
 			listDC <- list()
@@ -1764,25 +1838,33 @@ setMethod(
 				funtable(
 						tableau = dat[dat$bjo_dis_identifiant == DC, ],
 						time.sequence = tmp,
-						taxa = object@taxa@data$tax_nom_latin,
-						stage = object@stage@data$std_libelle,
+						taxa = object@taxa@data[object@taxa@data$tax_code %in% object@taxa@taxa_selected, "tax_nom_latin"],
+						stage = object@stage@data[object@stage@data$std_code %in% object@stage@stage_selected, "std_libelle"],
 						DC[i],
 						resum = NULL,
 						silent = silent
 				)
 				# Summary statistics
 				dat = object@data
-				if (silent == FALSE) {
-					the_choice = as.numeric(
-							select.list(
-									choices = as.character(unique(dat$bjo_annee)[order(unique(dat$bjo_annee))]),
-									preselect = as.character(max(dat$bjo_annee)),
-									"choice annee",
-									multiple = FALSE
-							)
-					)
+				if (is.null(year_choice)){
+					if (silent == FALSE) {
+						the_choice <- as.numeric(
+								select.list(
+										choices = as.character(unique(dat$bjo_annee)[order(unique(dat$bjo_annee))]),
+										preselect = as.character(max(dat$bjo_annee)),
+										"choice annee",
+										multiple = FALSE
+								)
+						)
+					} else {
+						the_choice <- max((dat$bjo_annee))
+					}
 				} else {
-					the_choice = max((dat$bjo_annee))
+					if (!year_choice%in%unique(dat$bjo_annee)) {
+						stop(paste("The chosen year",year_choice,"should be in available years : ", 
+										paste(as.character(unique(dat$bjo_annee)[order(unique(dat$bjo_annee))]), collapse=",")))
+					}
+					the_choice <- as.numeric(year_choice)
 				}
 				# we use the function that split data per time stamp to generate the full sequence of monthly data
 				dat <-
@@ -1792,7 +1874,7 @@ setMethod(
 				colnames(dat)[colnames(dat) == "maxtab"] <- "max"
 				colnames(dat)[colnames(dat) == "mintab"] <- "min"
 				dat <- dat[dat$annee == the_choice, ]
-				dat$mois = strftime(dat$mois, "%b")
+				dat$mois <- strftime(dat$mois, "%b")
 				dat$moyenne <- round(dat$moyenne)
 				dat <- dat[, c("annee", "mois", "min", "moyenne", "max", "valeur")]
 				colnames(dat) <- c("annee", "mois", "min", "mean", "max", "valeur")

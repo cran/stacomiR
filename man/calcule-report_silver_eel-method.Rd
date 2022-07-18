@@ -22,5 +22,5 @@ size, weight, eye diameter, pectoral fin measurement, lateral line and constrast
 line per silver eel). It will also calculate Durif silvering index and Pankhurst and Fulton's K.
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }

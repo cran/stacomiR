@@ -19,9 +19,9 @@ This class displays annual migration counts, for several counting device, taxa o
 
 \item{\code{stage}}{An object of class \code{\link{ref_stage-class}}, multiple values allowed}
 
-\item{\code{anneedebut}}{Object of class \code{\link{ref_year-class}}. ref_year allows to choose year of beginning}
+\item{\code{start_year}}{Object of class \code{\link{ref_year-class}}. ref_year allows to choose year of beginning}
 
-\item{\code{anneefin}}{Object of class \code{\link{ref_year-class}}
+\item{\code{end_year}}{Object of class \code{\link{ref_year-class}}
 ref_year allows to choose last year of the report}
 }}
 
@@ -51,8 +51,8 @@ stacomi(database_expected=FALSE)
 	  dc=c(5,6,12),
 	  taxa=c("Anguilla anguilla"),
 	  stage=c("AGJ","AGG"),
-	  anneedebut="1996",
-	  anneefin="2015",
+	  start_year="1996",
+	  end_year="2015",
 	  silent=FALSE)
   r_ann<-connect(r_ann)	
 }
@@ -66,10 +66,10 @@ xtr_ann<-stacomiR::xtable(r_ann,
 \dontrun{
   path=file.path(path.expand(get("datawd",envir=envir_stacomi)),
 	  paste(paste(r_ann@dc@dc_selected,collapse="+"),"_",
-		  paste(r_ann@taxa@data$tax_code,collapse="+"),"_",
-		  paste(r_ann@stage@data$std_code,collapse="+"),"_",
-		  r_ann@anneedebut@selected_year,":",
-		  r_ann@anneefin@selected_year,".html",sep=""),fsep ="/")
+		  paste(r_ann@taxa@taxa_selected,collapse="+"),"_",
+		  paste(r_ann@stage@stage_selected,collapse="+"),"_",
+		  r_ann@start_year@year_selected,":",
+		  r_ann@end_year@year_selected,".html",sep=""),fsep ="/")
 # here you can add an argument file=path
   print(xtr_ann,type="html")
   
@@ -118,7 +118,7 @@ Other report Objects:
 \code{\link{report_species-class}}
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
 \concept{report Objects}
 \keyword{classes}

@@ -23,5 +23,5 @@ size is taken to ensure all salmon are either of age 1 or 2, but no age 3 are
 returned
 }
 \author{
-Cedric Briand \email{cedric.briand"at"eptb-vilaine.fr}
+Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 }
