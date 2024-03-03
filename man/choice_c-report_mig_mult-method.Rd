@@ -3,7 +3,7 @@
 \name{choice_c,report_mig_mult-method}
 \alias{choice_c,report_mig_mult-method}
 \alias{choice_c.report_mig_mult}
-\title{command line interface for report_mig_mult class}
+\title{command line used to build report_mig_mult class}
 \usage{
 \S4method{choice_c}{report_mig_mult}(object, dc, taxa, stage, datedebut, datefin, silent = FALSE)
 }

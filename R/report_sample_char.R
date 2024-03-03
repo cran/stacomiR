@@ -223,41 +223,39 @@ setMethod("plot", signature(x = "report_sample_char", y = "missing"), definition
     plot.type <- as.character(plot.type)  # to pass also characters
     if (!plot.type %in% c("1", "2", "3"))
         stop("plot.type must be 1,2,3")
-    if (exists("report_sample_char", envir_stacomi)) {
-        report_sample_char <- get("report_sample_char", envir_stacomi)
-    } else {
+    if (!exists("report_sample_char", envir_stacomi)) {
         if (!silent)
-            funout(gettext("You need to launch computation first, clic on calc\n",
+            funout(gettext("No report_sample_char in envir_stacomi, you need to launch calcule() first \n",
                 domain = "R-stacomiR"), arret = TRUE)
     }
     name_param <- report_sample_char
     if (plot.type == 1) {
         g <- ggplot(report_sample_char@data, aes(x = car_valeur_quantitatif))
-        g <- g + stat_density(aes(ymax = ..density.., ymin = -..density..), fill = "grey50",
+        g <- g + stat_density(aes(ymax = after_stat(density), ymin = -after_stat(density)), fill = "grey50",
             colour = "grey10", geom = "ribbon", position = "identity") + facet_grid(. ~
             annee) + coord_flip()
         print(g)
-        assign("g", g, envir_stacomi)
+        assign("g1", g, envir_stacomi)
         if (!silent)
-            funout(gettext("To obtain the graphical object, type :  g<-get(\"g\",envir_stacomi)\n",
+            funout(gettext("To obtain the graphical object, type :  g<-get(\"g1\",envir_stacomi)\n",
                 domain = "R-stacomiR"))
     } else if (plot.type == 2) {
         g <- ggplot(report_sample_char@data)
         g <- g + geom_boxplot(aes(x = mois, y = car_valeur_quantitatif, fill = std_libelle)) +
             facet_grid(annee ~ .)
         print(g)
-        assign("g", g, envir_stacomi)
+        assign("g2", g, envir_stacomi)
         if (!silent)
-            funout(gettext("To obtain the graphical object, type :  g<-get(\"g\",envir_stacomi)\n",
+            funout(gettext("To obtain the graphical object, type :  g<-get(\"g2\",envir_stacomi)\n",
                 domain = "R-stacomiR"))
 
     } else if (plot.type == 3) {
         g <- ggplot(report_sample_char@data)
         g <- g + geom_point(aes(x = ope_date_debut, y = car_valeur_quantitatif))
         print(g)
-        assign("g", g, envir_stacomi)
+        assign("g3", g, envir_stacomi)
         if (!silent)
-            funout(gettext("To obtain the graphical object, type :  g<-get(\"g\",envir_stacomi)\n",
+            funout(gettext("To obtain the graphical object, type :  g<-get(\"g3\",envir_stacomi)\n",
                 domain = "R-stacomiR"))
     }
     return(invisible(NULL))

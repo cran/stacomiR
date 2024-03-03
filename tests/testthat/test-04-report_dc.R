@@ -2,7 +2,7 @@ context("report_dc")
 
 test_that("Test an instance of report_dc", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_dc <- new("report_dc")
 			r_dc <- choice_c(
@@ -34,7 +34,7 @@ test_that("Test an instance of report_dc", {
 
 test_that("report_dc charge method works", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()			
 			r_dc <- new("report_dc")
 			r_dc <- choice_c(
@@ -53,7 +53,7 @@ test_that("report_dc charge method works", {
 
 
 test_that("report_dc plot method works", {
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_dc)
 			r_dc <- r_dc
 			expect_error({
@@ -78,7 +78,7 @@ test_that("report_dc plot method works", {
 test_that("report_dc summary method works", {
 			skip_on_os("linux")
 			skip_on_os("solaris")
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_dc)
 			r_dc <- r_dc
 			expect_output(summary(r_dc, silent = TRUE))
@@ -87,7 +87,7 @@ test_that("report_dc summary method works", {
 
 
 test_that("report_dc print method works", {
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_dc)
 			r_dc <- r_dc
 			expect_output(print(r_dc))

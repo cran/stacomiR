@@ -1,14 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stacomiR 0.6.0.5\n"
-"POT-Creation-Date: 2022-03-11 11:05\n"
+"Project-Id-Version: stacomiR 0.6.1\n"
+"POT-Creation-Date: 2024-03-03 10:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Writing monthly summary (n=%s) in the database"
 msgstr ""
@@ -55,13 +56,13 @@ msgstr ""
 msgid "Unknow operation type"
 msgstr ""
 
+msgid "working"
+msgstr ""
+
 msgid "stop"
 msgstr ""
 
 msgid "CD"
-msgstr ""
-
-msgid "working"
 msgstr ""
 
 msgid "stopped"
@@ -535,10 +536,13 @@ msgstr ""
 msgid "the silent argument should be a logical"
 msgstr ""
 
-msgid "Writing daily summary in the database %s"
+msgid "Writing daily summary in the database for year %s, %s rows inserted"
 msgstr ""
 
 msgid "Summary exists :%s Overwrite ?"
+msgstr ""
+
+msgid "Internal error in report mig, write_database, the menu command should return 0 or 1"
 msgstr ""
 
 msgid "This report should be for just one taxa"
@@ -616,7 +620,10 @@ msgstr ""
 msgid "You don't have any environmental conditions within the time period"
 msgstr ""
 
-msgid "Attention, on one station :%s there are several entries for the same day :%s we will calculate average for numeric\tand use the first value for qualitative parameter"
+msgid "the source of data is not present in column stm_description of table tj_stationmesure_stm for stations: %s. \n Please consider adding it by adding something like source: Banque hydro at the end of the line in table tj_stationmesure_stm column stm_description"
+msgstr ""
+
+msgid "Attention, on one station :there are several entries for the same day : we will calculate average for numeric\tand use the first value for qualitative parameter"
 msgstr ""
 
 msgid "Number, %s, %s"
@@ -685,7 +692,7 @@ msgstr ""
 msgid "Nj= %s but the sums are the same between report_mig and the database (t_bilanmigrationjournalier_bjo)."
 msgstr ""
 
-msgid "This difference is due to migration report overlapping between two years and the program. No writing in the db."
+msgid "This shouldn't be the case, please check administrator."
 msgstr ""
 
 msgid "Data changed, rerun ?"
@@ -698,6 +705,12 @@ msgid ", this taxa and this stage (report_mig_interannual.r)"
 msgstr ""
 
 msgid "Interannual migrations query completed"
+msgstr ""
+
+msgid "%s rows deleted in %st_bilanmigrationjournalier_bjo"
+msgstr ""
+
+msgid "%s rows deleted in %st_bilanmigrationmensuel_bme"
 msgstr ""
 
 msgid "Writing report_mig_interannual in the environment envir_stacomi : write r_mig_interannual=get('report_mig_interannual',envir_stacomi)"
@@ -736,7 +749,19 @@ msgstr ""
 msgid "Attention : you have to complete a migration summary for at least one of the selected year before launching a inter-annual summary"
 msgstr ""
 
+msgid "year choice should be a character vector of length one, e.g. '2012'"
+msgstr ""
+
+msgid "year_choice :%s is not within year range %s"
+msgstr ""
+
+msgid "Year choice"
+msgstr ""
+
 msgid "Migration"
+msgstr ""
+
+msgid "Writing the graphical object into envir_stacomi environment : write g=get('g_line',envir_stacomi)"
 msgstr ""
 
 msgid "Historical amplitude"
@@ -745,10 +770,7 @@ msgstr ""
 msgid "Interannual mean"
 msgstr ""
 
-msgid "Writing the graphical object into envir_stacomi environment : write g=get(\"gi\",envir_stacomi) with i=%s"
-msgstr ""
-
-msgid "Choose year"
+msgid "Writing the graphical object into envir_stacomi environment : write g=get('g_standard',envir_stacomi)"
 msgstr ""
 
 msgid "%s, %s, %s cum %s"
@@ -760,16 +782,34 @@ msgstr ""
 msgid "year"
 msgstr ""
 
-msgid "\"Writing the graphical object into envir_stacomi environment : write g=get(\"gi\",envir_stacomi) with i=%s"
+msgid "Writing the graphical object into envir_stacomi environment : write g=get('g_step',envir_stacomi)"
 msgstr ""
 
-msgid "Warning : you have to complete a migration summary for at least one of the selected year before launching a inter-annual summary"
+msgid "Writing the graphical object into envir_stacomi environment : write g=get('g_barchart',envir_stacomi)"
+msgstr ""
+
+msgid "\"Writing the graphical object into envir_stacomi environment : write g=get(\"g_pointrange\",envir_stacomi)"
+msgstr ""
+
+msgid "fortnight"
+msgstr ""
+
+msgid "Somme des pourcentages annuels de migration par quinzaine"
+msgstr ""
+
+msgid "migration seasonality"
+msgstr ""
+
+msgid "Writing the graphical object into envir_stacomi environment : write g=get('g_density',envir_stacomi)"
 msgstr ""
 
 msgid "Internal error, timesplit"
 msgstr ""
 
 msgid "not working for seasonal plot"
+msgstr ""
+
+msgid "Writing the graphical object into envir_stacomi environment : write g=get('g_seasonal',envir_stacomi)"
 msgstr ""
 
 msgid "plot.type argument invalid"
@@ -779,6 +819,12 @@ msgid "The chosen year"
 msgstr ""
 
 msgid "should be in available years :"
+msgstr ""
+
+msgid "mean"
+msgstr ""
+
+msgid "value"
 msgstr ""
 
 msgid "Choice made, and object report_mig_mult assigned in envir_stacomi"
@@ -799,10 +845,13 @@ msgstr ""
 msgid "Stage has length zero, are you connected to the right schema, do you use the right stage ?"
 msgstr ""
 
-msgid "The plot has been assigned to p in envir_stacomi,write p<-get('p',envir_stacomi) to retrieve the object"
+msgid "The plot has been assigned to p_step in envir_stacomi,write p<-get('p_step',envir_stacomi) to retrieve the object"
 msgstr ""
 
 msgid "The data for the plot have been assigned to envir_stacomi,write grdata<-get('grdata',envir_stacomi) to retrieve the object"
+msgstr ""
+
+msgid "The plot has been assigned to p_multiple in envir_stacomi,write p<-get('pmultiple',envir_stacomi) to retrieve the object"
 msgstr ""
 
 msgid "dc=%s Conversion weight / number"
@@ -832,10 +881,16 @@ msgstr ""
 msgid "plot.type must be 1,2,3"
 msgstr ""
 
-msgid "You need to launch computation first, clic on calc"
+msgid "No report_sample_char in envir_stacomi, you need to launch calcule() first"
 msgstr ""
 
-msgid "To obtain the graphical object, type :  g<-get(\"g\",envir_stacomi)"
+msgid "To obtain the graphical object, type :  g<-get(\"g1\",envir_stacomi)"
+msgstr ""
+
+msgid "To obtain the graphical object, type :  g<-get(\"g2\",envir_stacomi)"
+msgstr ""
+
+msgid "To obtain the graphical object, type :  g<-get(\"g3\",envir_stacomi)"
 msgstr ""
 
 msgid "Data loaded"
@@ -845,6 +900,9 @@ msgid "you need to choose a value for limit1hm"
 msgstr ""
 
 msgid "you need to choose a value for limit2hm"
+msgstr ""
+
+msgid "Writing report_sea_age in the environment envir_stacomi : write r_seaa=get('r_seaa',envir_stacomi)"
 msgstr ""
 
 msgid "limit1hm should be numeric or integer"
@@ -862,6 +920,9 @@ msgstr ""
 msgid "plot.type must be 1,2"
 msgstr ""
 
+msgid "You need to launch computation first, clic on calc"
+msgstr ""
+
 msgid "The graphical object is written is env_stacomi, type p<-get('p',envir=envir_stacomi)"
 msgstr ""
 
@@ -875,6 +936,9 @@ msgid "Writing  %s age values in the database"
 msgstr ""
 
 msgid "No data to remove"
+msgstr ""
+
+msgid "Writing report_silver_eel in the environment envir_stacomi : write r_silver<-get('r_silver',envir_stacomi)"
 msgstr ""
 
 msgid "No data of silver or yellow eel on the selected period"
@@ -898,7 +962,7 @@ msgstr ""
 msgid "Weight(g)"
 msgstr ""
 
-msgid "Query failed for the view vue_ope_lot_car"
+msgid "Query failed for for report species"
 msgstr ""
 
 msgid "data loaded from the database for report_species"
@@ -935,6 +999,9 @@ msgid "the object g has been assigned to envir_stacomi"
 msgstr ""
 
 msgid "attention, negative numbers were transformed into positive numbers"
+msgstr ""
+
+msgid "no user set by default, reverted to user <- \"postgres\" and  password <- \"postgres\", \n\t\t\t\t\t\t\t\tyou can change it with options(\"stacomiR.user\"=user) and options(\"stacomiR.password\"=password)"
 msgstr ""
 
 msgid "Problem during the test, connection to the database is established but failed to connect to the right schema argument passed to stacomi"

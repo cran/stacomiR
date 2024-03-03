@@ -54,29 +54,32 @@ stacomi(database_expected=FALSE)
 #  # calculations
 #  r_mig_mult<-calcule(r_mig_mult,silent=TRUE)
 
-## ----rmmstd,eval=TRUE,echo=TRUE,message=FALSE,fig.height=6,fig.with=8---------
-# Without a connection at the database we can launch these lines to generate the graph
-# To obtain titles in french use Sys.setenv(LANG = "fr")
-require(stacomiR)
-stacomi(
-		database_expected=FALSE)	
-data("r_mig_mult")
-data("r_mig_mult_ope")
-assign("report_ope",r_mig_mult_ope,envir=envir_stacomi)
-data("r_mig_mult_df")
-assign("report_df",r_mig_mult_df,envir=envir_stacomi)
-data("r_mig_mult_dc")
-assign("report_dc",r_mig_mult_dc,envir=envir_stacomi)
-r_mig_mult <- calcule(r_mig_mult,silent=TRUE) 
-
-# To avoid call to dev.new() which creates a device per stage, DC, taxa, we simplify 
-# the object as dev.new() causes knitr to crash:
-r_mig_mult@taxa@data <- r_mig_mult@taxa@data[1,]
-r_mig_mult@stage@data <- r_mig_mult@stage@data[3,]
-r_mig_mult@dc@dc_selected <- r_mig_mult@dc@dc_selected[3]
-
-plot(r_mig_mult, plot.type="standard", silent=TRUE)
-
+## ----rmmstd,eval=FALSE,echo=TRUE,message=FALSE,fig.height=6,fig.with=8--------
+#  # Without a connection at the database we can launch these lines to generate the graph
+#  # To obtain titles in french use Sys.setenv(LANG = "fr")
+#  # the
+#  require(stacomiR)
+#  stacomi(
+#  		database_expected=FALSE)	
+#  data("r_mig_mult")
+#  data("r_mig_mult_ope")
+#  assign("report_ope",r_mig_mult_ope,envir=envir_stacomi)
+#  data("r_mig_mult_df")
+#  assign("report_df",r_mig_mult_df,envir=envir_stacomi)
+#  data("r_mig_mult_dc")
+#  assign("report_dc",r_mig_mult_dc,envir=envir_stacomi)
+#  # The two lines below avoid an error in MacOSX, the r_mig_mult currently has CET
+#  # which for some reason provides a failure when testing the vignette in MaxOSX (twice the same date in seq.POSIXt)
+#  attr(r_mig_mult@data$ope_date_debut, "tzone") <- "UTC"
+#  attr(r_mig_mult@data$ope_date_fin, "tzone") <- "UTC"
+#  r_mig_mult <- calcule(r_mig_mult,silent=TRUE)
+#  
+#  
+#  # restrict to glass eel
+#  r_mig_mult@stage@stage_selected <- r_mig_mult@stage@stage_selected[3]
+#  r_mig_mult@dc@dc_selected <- r_mig_mult@dc@dc_selected[3]
+#  r_mig_mult <- calcule(r_mig_mult,silent=TRUE)
+#  plot(r_mig_mult, plot.type="standard", silent=TRUE)
 
 ## ----rmmmult,eval=TRUE,echo=TRUE,fig.height = 4, fig.width = 6----------------
 

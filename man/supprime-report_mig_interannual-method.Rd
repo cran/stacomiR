@@ -5,10 +5,12 @@
 \alias{supprime.report_mig_interannual}
 \title{supprime method for report_mig_interannual class, deletes values in table t_bilanmigrationjournalier_bjo}
 \usage{
-\S4method{supprime}{report_mig_interannual}(object)
+\S4method{supprime}{report_mig_interannual}(object, silent = TRUE)
 }
 \arguments{
 \item{object}{An object of class \link{report_mig_interannual-class}}
+
+\item{silent}{Should the operation be returning the number of rows deleted}
 }
 \value{
 nothing, called for its side effect, removing lines from the database

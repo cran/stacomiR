@@ -4,14 +4,14 @@
 \alias{stacomi}
 \title{stacomi Main launcher for program stacomi}
 \usage{
-stacomi(database_expected=TRUE, datawd = "~", sch = "iav")
+stacomi(database_expected=TRUE, datawd = "~", sch = "test")
 }
 \arguments{
 \item{database_expected}{Boolean, if \code{TRUE} pre launch tests will be run to test the connection validity}
 
 \item{datawd}{The data working directory}
 
-\item{sch}{The schema in the stacomi database default 'iav.'}
+\item{sch}{The schema in the stacomi database default 'test'.}
 }
 \value{
 Nothing, called for its side effect of loading
@@ -37,6 +37,8 @@ options(
 	stacomiR.user = readline(prompt = "Enter user: "),
 	stacomiR.password = readline(prompt = "Enter password: ")
 )
+# another usefull option to print all queries run by stacomiR to the console
+ options('stacomiR.printqueries'= TRUE)
 }
 \author{
 Cedric Briand \email{cedric.briand@eptb-vilaine.fr}

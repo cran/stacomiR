@@ -36,7 +36,7 @@
 Nothing, called for its side effect
 }
 \description{
-\itemize{
+\describe{
 		\item{plot.type="standard"}{calls \code{\link{fungraph}} and \code{\link{fungraph_glasseel}} functions to plot as many "report_mig"
 			as needed, the function will test for the existence of data for one dc, one taxa, and one stage}
 		\item{plot.type="step"}{creates Cumulated graphs for report_mig_mult.  Data are summed per day for different dc taxa and stages}

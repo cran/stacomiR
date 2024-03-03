@@ -1,6 +1,6 @@
 Package: stacomiR
-Version: 0.6.0.7
-Date: 2022-07-16
+Version: 0.6.1
+Date: 2024-03-03
 Title: Fish Migration Monitoring
 Authors@R: c(person("Cedric", "Briand", role = c("aut", "cre"), email = "cedric.briand00@gmail.com"),
 	      person("Marion", "Legrand", role = "aut", email="tableau-salt-loire@logrami.fr"),
@@ -15,29 +15,29 @@ Description: Graphical outputs and treatment for a database of fish pass
     English. See <http://stacomir.r-forge.r-project.org/> for more information on
     'STACOMI'.     
 License: GPL (>= 2)
-URL: http://stacomir.r-forge.r-project.org/
-BugReports: https://github.com/MarionLegrandLogrami/stacomiR/issues
+Encoding: UTF-8
+URL: https://forgemia.inra.fr/stacomi/stacomir
+BugReports: https://forgemia.inra.fr/stacomi/stacomir/-/issues
 Collate: 'create_generic.R' 'data.R' 'fun_table_per_dis.R'
         'fun_write_monthly.R' 'fungraph.R' 'fungraph_glasseel.R'
         'funschema.R' 'funstat.R' 'funtable.R' 'ref_choice.R'
         'ref_coe.R' 'ref_dc.R' 'ref_df.R' 'ref_env.R' 'ref_horodate.R'
         'ref_list.R' 'ref_par.R' 'ref_parqual.R' 'ref_parquan.R'
-        'ref_period.R' 'ref_stage.R' 'ref_taxa.R' 'ref_textbox.R'
-        'ref_timestep.R' 'ref_timestep_daily.R' 'ref_year.R'
-        'report_annual.R' 'report_dc.R' 'report_df.R' 'utilities.R'
-        'report_env.R' 'report_ge_weight.R' 'report_ope.R'
-        'report_mig.R' 'report_sample_char.R' 'report_mig_char.R'
-        'report_mig_mult.R' 'report_mig_env.R'
-        'report_mig_interannual.R' 'report_sea_age.R'
-        'report_silver_eel.R' 'report_species.R' 'setAs.R' 'stacomi.R'
-        'stacomiR-package.R'
+        'ref_stage.R' 'ref_taxa.R' 'ref_textbox.R' 'ref_timestep.R'
+        'ref_timestep_daily.R' 'ref_year.R' 'report_annual.R'
+        'report_dc.R' 'report_df.R' 'utilities.R' 'report_env.R'
+        'report_ge_weight.R' 'report_ope.R' 'report_mig.R'
+        'report_sample_char.R' 'report_mig_char.R' 'report_mig_mult.R'
+        'report_mig_env.R' 'report_mig_interannual.R'
+        'report_sea_age.R' 'report_silver_eel.R' 'report_species.R'
+        'setAs.R' 'stacomi.R' 'stacomiR-package.R'
 LazyLoad: yes
 LazyData: true
 Depends: R (>= 4.0.0), methods, stacomirtools (>= 0.6.0.1)
 Imports: magrittr, intervals, RColorBrewer, stringr, RPostgres,
         ggplot2, reshape2, graphics, utils, stats, lattice, grDevices,
         Hmisc (>= 4.1-1), lubridate, dplyr, xtable, mgcv, rlang, pool,
-        withr, scales
+        DBI, withr, scales
 Suggests: testthat, viridis, knitr, rmarkdown
 Author: Cedric Briand [aut, cre],
   Marion Legrand [aut],
@@ -46,9 +46,9 @@ Author: Cedric Briand [aut, cre],
   Lafage Denis [ctb],
   Grall Sebastien [ctb]
 Maintainer: Cedric Briand <cedric.briand00@gmail.com>
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.1
 NeedsCompilation: no
 VignetteBuilder: knitr
-Packaged: 2022-07-18 07:48:09 UTC; cedric.briand
+Packaged: 2024-03-03 20:22:20 UTC; cedric.briand
 Repository: CRAN
-Date/Publication: 2022-07-18 09:20:02 UTC
+Date/Publication: 2024-03-03 20:40:02 UTC

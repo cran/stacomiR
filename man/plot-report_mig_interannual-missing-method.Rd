@@ -5,27 +5,42 @@
 \alias{plot.report_mig_interannual}
 \title{Plot method for report_mig_interannual}
 \usage{
-\S4method{plot}{report_mig_interannual,missing}(x, plot.type = "standard", timesplit = "mois", silent = FALSE)
+\S4method{plot}{report_mig_interannual,missing}(
+  x,
+  plot.type = "standard",
+  timesplit = "month",
+  year_choice = NULL,
+  alpha = 1,
+  silent = FALSE
+)
 }
 \arguments{
 \item{x}{An object of class \link{report_mig_interannual-class}}
 
 \item{plot.type}{Default standard}
 
-\item{timesplit}{Used for plot.type barchart or dotplot, Default mois (month) other possible values are semaine (week), quinzaine (2 weeks),
-English values within parenthesis are also accepted.}
+\item{timesplit}{Used for plot.type barchart or dotplot, Default month other possible values are day, week, 2 weeks, month
+French values "jour" "semaine" "quinzaine" "mois"  are also accepted.}
+
+\item{year_choice}{The year chosen to calculate statistics which will be plotted against the historical series,
+should be a character vector of length one e.g. '2012', default NULL, when NULL the latest year is selected.}
+
+\item{alpha, }{argument passed when plot.type=barchart, pointrange, standard default 1}
 
 \item{silent}{Stops displaying the messages.
-\itemize{
-        \item{plot.type="line": one line per daily report_mig}
-        \item{plot.type="standard": the current year is displayed against a ribbon of historical values"}
-        \item{plot.type="density": creates density plot to compare seasonality, data computed by 15 days period}
-        \item{plot.type="step" : creates step plots to compare seasonality, the year chosen in the interface is the
+\describe{
+        \item{plot.type="line"}{One line per daily report_mig, a reference year is highlighted with year_choice, this graph
+does not react to argument timesplit}
+        \item{plot.type="standard"}{The year selected in year_choice is displayed against a ribbon of historical values}
+        \item{plot.type="density"}{Creates density plot to compare seasonality, data computed by 15 days period, this graph ignore
+the timesplit argument}
+        \item{plot.type="step"}{Creates step plots to compare seasonality, the year chosen in year_choice (or the interface if silent =FALSE, and year_choice=NULL, is the
 latest if silent=TRUE, or it can be selected in the droplist. It is highlighted against the other with a dotted line}
-        \item{plot.type="barchart": comparison of daily migration of one year against periodic migration for the other years available in the chronicle,
+        \item{plot.type="barchart"}{Comparison of daily migration of one year against periodic migration for the other years available in the chronicle,
                                     different periods can be chosen with argument timesplit}
-        \item{plot.type="pointrange": Pointrange graphs, different periods can be chosen with argument timesplit}
-     \item{plot.type="seasonal": plot to display summary statistics about the migration period}
+        \item{plot.type="pointrange"}{Pointrange graphs, different periods can be chosen with argument timesplit}
+     \item{plot.type="seasonal"}{Plot to display summary statistics about the migration period, different periods can be chosen with argument timesplit,
+this graph ignores argument year_choice}
 }}
 }
 \value{

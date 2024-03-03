@@ -68,7 +68,7 @@ setMethod("supprime", signature = signature("ref_coe"), definition = function(ob
 					"WITH deleted AS (", 
 					"DELETE FROM ", get_schema(), "tj_coefficientconversion_coe ",
 					"WHERE coe_date_debut >= '",object@datedebut,"'",
-					" AND coe_date_fin  <= '", object@datefin, "'",
+					" AND coe_date_debut  <= '", object@datefin, "'",
 					" AND  coe_tax_code='", tax, "' and coe_std_code='", std,
 					"' and coe_qte_code='1'",
 					" RETURNING *)",

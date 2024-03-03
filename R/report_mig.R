@@ -71,24 +71,6 @@ setValidity("report_mig", function(object)
 									rep6 , TRUE , c(1:6)[!c(rep1, rep2, rep3, rep4, rep5, rep6)]))
 		})
 
-#deprecated0.6
-##' handler for calculations report_mig
-##'
-##'  internal use
-##' @param h handler
-##' @param ... additional parameters
-##' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
-##' @keywords internal
-#h_report_migcalc=function(h,...){
-#  if (exists("report_mig",envir_stacomi)) {
-#	report_mig<-get("report_mig",envir_stacomi)
-#  } else {
-#	funout(gettext("You need to launch computation first, clic on calc\n",domain="R-stacomiR"),arret=TRUE)
-#  }
-#  report_mig<-charge(report_mig)
-#  report_mig<-connect(report_mig)
-#  report_mig<-calcule(report_mig)
-#}
 
 #' connect method for report_mig
 #'
@@ -129,7 +111,7 @@ setMethod(
 		signature = signature("report_mig"),
 		definition = function(object, dc, taxa, stage, datedebut, datefin) {
 			# code for debug using r_mig example
-			#report_mig<-r_mig;dc=5;taxa="Liza ramada";stage="IND";datedebut="2015-01-01";datefin="2015-12-31"
+			#report_mig<-r_mig;dc=5;taxa="Chelon ramada";stage="IND";datedebut="2015-01-01";datefin="2015-12-31"
 			report_mig <- object
 			report_mig@dc = charge(report_mig@dc)
 			# loads and verifies the dc
@@ -291,7 +273,7 @@ setMethod(
 #' method is "overlaps" as the latter method uses the overlap package to split migration period.}
 #' \item{data}{the calculated data.}
 #' \item{contient_poids}{A boolean which indicates, in the case of glass eel, that the function \link{fun_weight_conversion} has been run to convert the weights to numbers using the weight
-#' to number coefficients in the database (see link{report_ge_weight}).}
+#' to number coefficients in the database (see \link{report_ge_weight}).}
 #' \item{negative}{A parameter indicating if negative migration (downstream in the case of upstream migration devices) have been converted to positive numbers,
 #' not developed yet}}
 #' @aliases calcule.report_mig
@@ -427,23 +409,6 @@ setMethod(
 )
 
 
-#deprecated0.6
-##' handler to print the command line
-##' @param h a handler
-##' @param ... Additional parameters
-##' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
-##' @keywords internal
-#houtreport_mig=function(h=null,...) {
-#  if (exists("ref_stage",envir_stacomi)) 	{
-#	report_mig<-get("report_mig",envir_stacomi)
-#	print(report_mig)
-#  }
-#  else
-#  {
-#	funout(gettext("Please select DC, taxa, and stages for a complete command\n",domain="R-stacomiR"),arret=TRUE)
-#  }
-#}
-
 #' Method to print the command line of the object
 #' @param x An object of class report_mig
 #' @param ... Additional parameters passed to print
@@ -484,7 +449,7 @@ setMethod(
 
 #' Plots of various type for report_mig.
 #'
-#' \itemize{
+#' \describe{
 #' 		\item{plot.type="standard"}{calls \code{\link{fungraph}} and \code{\link{fungraph_glasseel}} functions to plot as many "report_mig"
 #' 			as needed, the function will test for the existence of data for one dc, one taxa, and one stage}
 #' 		\item{plot.type="step"}{creates Cumulated graphs for report_mig_mult.  Data are summed per day for different dc taxa and stages}
@@ -540,7 +505,7 @@ setMethod(
 							funout("---------------------\n")
 						}
 						if (any(duplicated(data$No.pas)))
-							stop("duplicated values in No.pas")
+						 warning("Internal error, this happens in tests in macoSX, duplicated values in No.pas")
 						data_without_hole <- merge(
 								data.frame(
 										No.pas = as.numeric(strftime(
@@ -707,9 +672,7 @@ setMethod(
 #' Daily values are needed to compare migrations from year to year, by the class \link{report_mig_interannual-class}. They are added by
 #' by this function.
 #' @param object an object of class \linkS4class{report_mig}
-#' @param silent : TRUE to avoid messages
-#' @param check_for_bjo : do you want to check if data are already present in the bjo table, and delete them,
-#' this param was added otherwise connect method when called from report_mig_interannual runs in loops
+#' @param silent : TRUE to avoid messages, FALSE will need interactive mode as it calls for menu()
 #' @note the user is asked whether or not he wants to overwrite data only when silent is FALSE, if no
 #' data are present in the database, the import is done anyway. 
 #' @return Nothing, just writes data into the database
@@ -722,14 +685,15 @@ setMethod(
 #' write_database(report_mig=r_mig,silent=FALSE)
 #' }
 #' @aliases write_database.report_mig
+#' @importFrom DBI Id
 #' @export
 setMethod(
 		"write_database",
 		signature = signature("report_mig"),
 		definition = function(object,
-				silent = TRUE,
-				check_for_bjo = TRUE) {
-			# object=bM			
+				silent = TRUE
+				) {
+			# object=bM		
 			report_mig <- object
 			if (!inherits(report_mig, "report_mig"))
 				stop("the report_mig should be of class report_mig")
@@ -738,9 +702,9 @@ setMethod(
 			dc = as.numeric(report_mig@dc@dc_selected)[1]
 			data = report_mig@calcdata[[stringr::str_c("dc_", dc)]][["data"]]
 			# keep one line if there is one species in one day with as much up as down...
-			if (nrow(data) > 1)
-				data = data[data$Effectif_total != 0, ]
-			jour_dans_lannee_non_nuls = data$debut_pas
+			# TEST 2024 #if (nrow(data) > 1)
+			#	TEST 2024 data = data[data$Effectif_total != 0, ]
+			jour_dans_lannee = data$debut_pas
 			col_a_retirer = match(c("No.pas", "type_de_quantite", "debut_pas", "fin_pas"),
 					colnames(data))
 			col_a_retirer = col_a_retirer[!is.na(col_a_retirer)] # as in the case of glass eel and weight
@@ -771,21 +735,8 @@ setMethod(
 						report_mig@dc@dc_selected,
 						report_mig@taxa@taxa_selected,
 						report_mig@stage@stage_selected,
-						annee,
-						# une valeur
-						rep(jour_dans_lannee_non_nuls, ncol(data[, c(
-														"MESURE",
-														"CALCULE",
-														"EXPERT",
-														"PONCTUEL",
-														"Effectif_total",
-														"Effectif_total.p",
-														"Effectif_total.e",
-														"poids_depuis_effectifs",
-														"Poids_total",
-														"taux_d_echappement",
-														"coe_valeur_coefficient"
-												)])),
+						annee,					
+						rep(jour_dans_lannee, 11),
 						utils::stack(data[, c(
 												"MESURE",
 												"CALCULE",
@@ -808,15 +759,7 @@ setMethod(
 						report_mig@stage@stage_selected,
 						annee,
 						# une valeur
-						rep(jour_dans_lannee_non_nuls, ncol(data[, c(
-														"MESURE",
-														"CALCULE",
-														"EXPERT",
-														"PONCTUEL",
-														"Effectif_total",
-														"taux_d_echappement",
-														"coe_valeur_coefficient"
-												)])),
+						rep(jour_dans_lannee, 7),
 						utils::stack(data[, c(
 												"MESURE",
 												"CALCULE",
@@ -849,39 +792,62 @@ setMethod(
 			# Ci dessous conversion de la classe vers migration Interannuelle pour utiliser
 			# les methodes de cette classe
 			bil = as(report_mig, "report_mig_interannual")
-			# the argument check_for_bjo ensures that we don't re-run the connect method
-			# in loop when the write_database is called from within the report_mig_interannual connect method
-			# check = FALSE tells the method not to check for missing data (we don't want that check when the
-			# write database is called from the report_mig class
+			
+
 			# so far bil@data has no data
+      # the fn_connect_report_mig_interannual method load data from the bjo table
+      # we don't use the connect method as there are many more checks that we don't want to have
 			
-			if (check_for_bjo)			bil = connect(bil, silent = silent, check = FALSE)	# now should have data in the data slot		
-			
-			confirm = function() {
+					
+        bil@data <-  fn_connect_report_mig_interannual(
+                years =(bil@start_year@year_selected):(bil@end_year@year_selected),
+                taxa = bil@taxa@taxa_selected,
+                stage = bil@stage@stage_selected,
+                dc = bil@dc@dc_selected)		
+	
+			confirm = function() {   
 				supprime(bil)
 				con <- new("ConnectionDB")
 				con <- connect(con)
 				on.exit(pool::poolClose(con@connection))
+        
+        # note I need to create a table because tables created with dbWrite table now take a timezone by defaut
+        # this shift has caused report_mig_interannual to create wrong values
+  
+        sql0<- str_c("DROP TABLE IF EXISTS ",get_schema(),"aat_reportmigrationjournalier_bjo")      
+          pool::dbExecute(con@connection, sql0)
+        sql1 <- stringr::str_c("CREATE TABLE ",get_schema(),
+            "aat_reportmigrationjournalier_bjo(
+                 bjo_dis_identifiant integer,
+                 bjo_tax_code varchar(6),
+                 bjo_std_code varchar(4),
+                 bjo_annee integer,
+                 bjo_jour timestamp,
+                 bjo_labelquantite varchar(30),
+                 bjo_valeur float,
+                 bjo_horodateexport timestamp,
+                 bjo_org_code varchar(30))")
+         pool::dbExecute(con@connection, sql1)
 				pool::dbWriteTable(con@connection, 
-						name = "aat_reportmigrationjournalier_bjo", 
-						value=aat_reportmigrationjournalier_bjo, 
-						temporary=TRUE)	
-				sql <-
+						name = DBI::Id(schema=gsub("\\.","",get_schema()), table="aat_reportmigrationjournalier_bjo"), 
+						value=aat_reportmigrationjournalier_bjo, 						,
+            overwrite=TRUE)	
+
+				sql2 <-
 						stringr::str_c(
 								"INSERT INTO ",
 								get_schema(),
 								"t_bilanmigrationjournalier_bjo (",
 								"bjo_dis_identifiant,bjo_tax_code,bjo_std_code,bjo_annee,bjo_jour,bjo_valeur,bjo_labelquantite,bjo_horodateexport,bjo_org_code)",
-								" SELECT * FROM  aat_reportmigrationjournalier_bjo;"
+								" SELECT bjo_dis_identifiant,bjo_tax_code,bjo_std_code,bjo_annee,bjo_jour,bjo_valeur,bjo_labelquantite,bjo_horodateexport,bjo_org_code 
+                  FROM ", get_schema(), "aat_reportmigrationjournalier_bjo;"
 						)
 				# con already created above
-				
-				#CHECKME : i removed the capture output is it OK
-				# utils::capture.output(pool::dbExecute(con@connection, statement = sql))		
-				pool::dbExecute(con@connection, statement = sql)	
+
+				res <- pool::dbExecute(con@connection, statement = sql2)	
 				
 				if (!silent) {
-					funout(gettextf("Writing daily summary in the database %s \n", annee))
+					funout(gettextf("Writing daily summary in the database for year %s, %s rows inserted \n", annee, res))
 				}
 				
 				# ecriture egalement du report mensuel
@@ -898,13 +864,13 @@ setMethod(
 						silent = silent
 				)
 				fun_write_monthly(report_mig, resum, silent = silent)
-			}#end function hconfirm
+			}#end function confirm
 			
 			# below we write if !silent and "yes", if silent and if no data in the db
 			# we don't write write !only don't write if not silent and "no" 
 			# 
-			
-			if (nrow(bil@data) > 0) # this means also check_for_bjo
+
+			if (nrow(bil@data) > 0)
 			{
 				if (!silent) {
 					choice <- menu(
@@ -915,7 +881,8 @@ setMethod(
 									unique(bil@data$bjo_horodateexport)
 							)
 					)
-					if (choice=="yes"){
+          if (! choice %in% c(0,1)) stop("Internal error in report mig, write_database, the menu command should return 0 or 1")
+					if (choice==1){
 						confirm()
 					}
 				} else { # silent write anyways

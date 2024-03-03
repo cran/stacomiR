@@ -40,3 +40,13 @@ test_that("test color table",
 			
 			
 		})
+
+
+context("fun_schema")
+test_that("test funschema",
+		{
+      skip_on_cran()
+			env_set_test_stacomi()
+			table <- fun_schema()
+			expect_gt(nrow(table),0)
+		})

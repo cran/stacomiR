@@ -24,9 +24,9 @@ this method inserts data in the t_reportjournalier_bjo table.
 
 \item{\code{data}}{A \code{data.frame} data loaded from the daily migration table t_bilanmigrationjournalier_bjo}
 
-\item{\code{taxa}}{An object of class \link{ref_taxa-class}}
+\item{\code{taxa}}{An object of class \link{ref_taxa-class}, there can only be one taxa}
 
-\item{\code{stage}}{An object of class \link{ref_stage-class}}
+\item{\code{stage}}{An object of class \link{ref_stage-class}, there can only be one stage}
 
 \item{\code{start_year}}{An object of class \link{ref_year-class}. ref_year allows to choose year of beginning}
 
@@ -70,6 +70,7 @@ stacomi(
 	  stage=c("PANG"),
 	  start_year="1990",
 	  end_year="2015",
+    year_choice=NULL,
 	  silent=TRUE)
   r_mig_interannual <- charge(r_mig_interannual)
   r_mig_interannual <- connect(r_mig_interannual, check=TRUE)	
@@ -83,12 +84,12 @@ data("r_mig_interannual")
 # the first plot is of little interest, it allows to see what data 
 # are available... simple lines
 # For irregular operations like those reported at the enfrenaux eel ladder....
-plot(r_mig_interannual,plot.type="line",silent=TRUE)
+plot(r_mig_interannual,plot.type="line", year_choice=2015, silent=TRUE)
 
 # a plot to show the seasonality, this graph may be misleading if the
 # migration is not monitored all year round. Note the y unit is not very informative
 # you need to have the viridis package loaded to run this example
-plot(r_mig_interannual,plot.type="density",silent=TRUE)
+plot(r_mig_interannual,plot.type="density",year_choice=2015, silent=TRUE)
 \dontrun{
   if (requireNamespace("ggplot2", quietly = TRUE)&
 	  requireNamespace("viridis", quietly = TRUE)){
@@ -100,7 +101,7 @@ plot(r_mig_interannual,plot.type="density",silent=TRUE)
   #############################################
 # the standard plot is showing daily values
   ###########################################
-  plot(r_mig_interannual,plot.type="standard",silent=TRUE)
+  plot(r_mig_interannual,plot.type="standard",year_choice=2015,silent=TRUE)
 # Manual edition of the graph produced
   if (requireNamespace("ggplot2", quietly = TRUE)){
     g1<-get("g1",envir=envir_stacomi)
@@ -148,17 +149,17 @@ plot(r_mig_interannual,plot.type="density",silent=TRUE)
 # with the silent=TRUE argument, it's always the latest year that is selected,
 # otherwise the user is prompted with a choice, to select the year he wants
 # to compare will all others...
-  plot(r_mig_interannual,plot.type="barchart",timesplit="quinzaine",silent=TRUE)
+  plot(r_mig_interannual,plot.type="barchart",timesplit="quinzaine",year_choice=2015,silent=TRUE)
 # Comparison with historical values. Each year and 2 weeks values 
 # is a point on the graph...
-  plot(r_mig_interannual,plot.type="pointrange",timesplit="mois",silent=TRUE)
+  plot(r_mig_interannual,plot.type="pointrange",timesplit="mois",year_choice=2015,silent=TRUE)
   ###############################################
 # Step plot
 # different years shown in the graph
 # the current year (or the selected year if silent=FALSE)
 # is displayed with a dotted line
   ################################################
-  plot(r_mig_interannual,plot.type="step",silent=TRUE)
+  plot(r_mig_interannual,plot.type="step",year_choice=2015,silent=TRUE)
   if (requireNamespace("ggplot2", quietly = TRUE)&
 	  requireNamespace("viridis", quietly = TRUE)){
 	g<-get("g",envir=envir_stacomi)	+ ggplot2::theme_minimal()
@@ -174,16 +175,21 @@ plot(r_mig_interannual,plot.type="density",silent=TRUE)
   data("r_mig_interannual_vichy")
 # the following show how data are processed to get
 # statistics for seaonal migration, daily values
-  r_mig_interannual_vichy<-calcule(r_mig_interannual_vichy,timesplit="jour",silent=TRUE)
+  r_mig_interannual_vichy<-calcule(r_mig_interannual_vichy,
+      timesplit="jour",year_choice=2012,silent=TRUE)
 #r_mig_interannual_vichy@calcdata #check this to see the results
 # statistics for seaonal migration, weekly values
-  r_mig_interannual_vichy<-calcule(r_mig_interannual_vichy,timesplit="semaine",silent=TRUE)
+  r_mig_interannual_vichy<-calcule(r_mig_interannual_vichy,timesplit="semaine"
+                                   ,year_choice=2012,silent=TRUE)
 #r_mig_interannual_vichy@calcdata 
   
 # the plot method also runs the calcule method
-  plot(r_mig_interannual_vichy,plot.type="seasonal",timesplit="semaine",silent=TRUE)
-  plot(r_mig_interannual_vichy,plot.type="seasonal",timesplit="mois",silent=TRUE)
-  plot(r_mig_interannual_vichy,plot.type="seasonal",timesplit="jour",silent=TRUE)
+  plot(r_mig_interannual_vichy,plot.type="seasonal",
+      timesplit="semaine", year_choice=2012, silent=TRUE)
+  plot(r_mig_interannual_vichy,plot.type="seasonal",
+      timesplit="mois", year_choice=2012, silent=TRUE)
+  plot(r_mig_interannual_vichy,plot.type="seasonal",
+      timesplit="jour",year_choice=2012, silent=TRUE)
   
   
   ###############################################
@@ -203,9 +209,9 @@ stacomi(database_expected = TRUE, sch = 'logrami')
 	  silent=TRUE)
   bmi_des<-connect(bmi_des)	
   bmi_des<-calcule(bmi_des,timesplit="semaine")
-  plot(bmi_des,plot.type="seasonal",timesplit="semaine")
-  plot(bmi_des,plot.type="seasonal",timesplit="jour")
-  plot(bmi_des,plot.type="seasonal",timesplit="mois")
+  plot(bmi_des,plot.type="seasonal",timesplit="semaine",year_choice=2014)
+  plot(bmi_des,plot.type="seasonal",timesplit="jour",year_choice=2014)
+  plot(bmi_des,plot.type="seasonal",timesplit="mois",year_choice=2014)
 }	
 
 

@@ -5,7 +5,7 @@
 \alias{summary.report_mig_interannual}
 \title{summary for report_mig_interannual
 provides summary statistics for the latest year (if silent=TRUE), or the year selected in the interface,
-if silent=FALSE. Mean, min and max are historical statistics with the selected year excluded from the
+if silent=FALSE. Mean, min and max are historical statistics and they always include the current year from the
 historical dataset.}
 \usage{
 \S4method{summary}{report_mig_interannual}(object, year_choice = NULL, silent = FALSE, ...)
@@ -25,7 +25,7 @@ A list, one element per DC
 \description{
 summary for report_mig_interannual
 provides summary statistics for the latest year (if silent=TRUE), or the year selected in the interface,
-if silent=FALSE. Mean, min and max are historical statistics with the selected year excluded from the
+if silent=FALSE. Mean, min and max are historical statistics and they always include the current year from the
 historical dataset.
 }
 \author{

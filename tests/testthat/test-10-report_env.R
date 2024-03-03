@@ -3,7 +3,7 @@ context("report_env")
 
 test_that("test creating an instance of report_env", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_env <- new("report_env")
 			r_env <- choice_c(
@@ -15,14 +15,14 @@ test_that("test creating an instance of report_env", {
 			)
 			r_env <- connect(r_env, silent = TRUE)
 			expect_true(nrow(r_env@data) > 0,
-					"The is a problem when loading data in the data slot")
+					"There is a problem when loading data in the data slot")
 			
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 		})
 
 test_that("test plot method", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_env <- new("report_env")
 			r_env <- choice_c(
@@ -33,7 +33,7 @@ test_that("test plot method", {
 					silent = TRUE
 			)
 			r_env <- connect(r_env, silent = TRUE)
-			expect_error(suppressWarnings(r_env <- plot(r_env)), NA)
+			expect_error(plot(r_env, silent=TRUE), NA)
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 			
 		})

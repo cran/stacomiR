@@ -3,7 +3,7 @@
 \docType{data}
 \name{r_mig}
 \alias{r_mig}
-\title{Video counting of thin lipped mullet (Liza ramada) in 2015 in the Vilaine (France)}
+\title{Video counting of Marine lamprey (Petromyzon marinus) in 2012 in the Vilaine (France)}
 \format{
 An object of class report_mig with 8 slots:
 \describe{
@@ -34,6 +34,6 @@ r_mig
 }
 \description{
 This dataset corresponds to the data collected at the vertical slot fishway
-in 2015, video recording of the thin lipped mullet Liza ramada migration
+in 2012, video recording marine lamprey migration
 }
 \keyword{data}

@@ -2,7 +2,7 @@ context("report_sample_char")
 
 test_that("Test that view lot_ope_car exists", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			req <- new("RequeteDB")
 			sch <- rlang::env_get(envir_stacomi, "sch")
 			req@sql <- paste("select * from ", sch, " vue_lot_ope_car limit 10")
@@ -14,7 +14,7 @@ test_that("Test that view lot_ope_car exists", {
 
 test_that("Test an instance of report_sample_char loaded with choice_c", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()			
 			r_sample_char <- new("report_sample_char")
 			#options(warn = -1)
@@ -41,8 +41,8 @@ test_that("Test an instance of report_sample_char loaded with choice_c", {
 
 test_that("Test methods in report_sample_char", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
-			# overriding user schema to point to iav
+			stacomi(database_expected = TRUE, sch ="test")
+			# overriding user schema to point to test
 			env_set_test_stacomi()	
 			r_sample_char <- new("report_sample_char")
 			#options(warn = 2)
@@ -70,7 +70,7 @@ test_that("Test methods in report_sample_char", {
 test_that("Test charge method for report_sample_char", {
 			skip_on_cran()
 			env_set_test_stacomi()		
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			r_sample_char <- new("report_sample_char")
 			#options(warn = 2)
 			r_sample_char <- suppressWarnings(
@@ -99,7 +99,7 @@ test_that("Test charge method for report_sample_char", {
 test_that("Test plot print method for report_sample_char", {
 			skip_on_cran()
 			env_set_test_stacomi()		
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			r_sample_char <- new("report_sample_char")
 			#options(warn = 2)
 			r_sample_char <- suppressWarnings(

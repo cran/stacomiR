@@ -111,11 +111,11 @@ setMethod(
 
 #' charge method for report_silver_eel class
 #'
-#' this method verifies that boxes have been clicked in the user interface and gets the objects pasted in
+#' this method is used by the graphical interface load the user's choice and get the objects pasted in
 #' envir_stacomi. It is not necessary to run this method when loading from the command line using the
 #' choice_c method
 #' @param object An object of class \link{report_silver_eel-class}
-#' @param h a handler
+#' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_silver_eel-class}  with slots filled from values assigned in \code{envir_stacomi} environment
 #' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of the class
@@ -124,7 +124,8 @@ setMethod(
 setMethod(
   "charge",
   signature = signature("report_silver_eel"),
-  definition = function(object, h) {
+  definition = function(object,
+      silent = FALSE) {
     if (exists("ref_dc", envir_stacomi)) {
       object@dc <- get("ref_dc", envir_stacomi)
     } else {
@@ -160,23 +161,30 @@ setMethod(
         arret = TRUE
       )
     }
-    if (exists("report_arg_date_debut", envir_stacomi)) {
+    if (exists("report_silver_eel_date_debut", envir_stacomi)) {
       object@horodatedebut@horodate <-
-        get("report_arg_date_debut", envir_stacomi)
+        get("report_silver_eel_date_debut", envir_stacomi)
     } else {
       funout(gettext("You need to choose the starting date\n", domain = "R-stacomiR"),
              arret = TRUE)
     }
-    if (exists("report_arg_date_fin", envir_stacomi)) {
+    if (exists("report_silver_eel_date_fin", envir_stacomi)) {
       object@horodatefin@horodate <-
-        get("report_arg_date_fin", envir_stacomi)
+        get("report_silver_eel_date_fin", envir_stacomi)
     } else {
       funout(gettext("You need to choose the ending date\n", domain = "R-stacomiR"),
              arret = TRUE)
     }
-    
-    return(object)
     validObject(object)
+    if (!silent)
+      funout(
+          gettext(
+              "Writing report_silver_eel in the environment envir_stacomi : write r_silver<-get('r_silver',envir_stacomi) ",
+              domain = "R-stacomiR"
+          )
+      )    
+    assign("r_silver", object, envir_stacomi)
+    return(object)
   }
 )
 
@@ -229,8 +237,8 @@ setMethod(
       charge_with_filter(
         object = r_silver@par,
         r_silver@dc@dc_selected,
-        r_silver@taxa@taxa_selected,
-        r_silver@stage@stage_selected
+        2038,
+        'AGG'
       )
     r_silver@par <- choice_c(r_silver@par, par, silent = silent)
     r_silver@horodatedebut <- choice_c(
@@ -387,7 +395,7 @@ setMethod(
 #'
 #' @param x An object of class \link{report_silver_eel-class}
 #' @param plot.type Default "1"
-#'  \itemize{
+#'  \describe{
 #' 		\item{plot.type="1"}{Lattice plot of Durif's stages according to Body Length and Eye Index (average of vertical and horizontal diameters).
 #' If several DC are provided then a comparison of data per dc is provided}
 #' 		\item{plot.type="2"}{Lattice plot giving a comparison of Durif's stage proportion over time, if several DC are provided an annual comparison
@@ -1067,7 +1075,7 @@ setMethod(
 #' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @keywords internal
 funplotreport_silver_eel = function(action, ...) {
-  r_silver <- get(x = "report_arg", envir = envir_stacomi)
+  r_silver <- get(x = "report_silver_eel", envir = envir_stacomi)
   r_silver <- charge(r_silver)
   r_silver <- connect(r_silver)
   r_silver <- calcule(r_silver)
@@ -1083,7 +1091,7 @@ funplotreport_silver_eel = function(action, ...) {
 #' @param data A dataset with columns BL, W, Dv, Dh, FL corresponding to body length (mm),
 #' Weight (g), vertical eye diameter (mm), vertical eye diameter (mm), and pectoral fin length (mm)
 #' @returns A data.frame with durif stages per individual
-#' @author Laurent Beaulaton \email{laurent.beaulaton@onema.fr}
+#' @author Laurent Beaulaton \email{laurent.beaulaton@ofb.fr}
 #' @export
 fun_stage_durif = function(data) {
   # see section Good Practise in ? data

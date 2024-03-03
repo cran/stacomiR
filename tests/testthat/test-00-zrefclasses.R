@@ -50,7 +50,7 @@ context("ref_df")
 test_that("Test that ref_df choice_c method loads character, numeric, but not rubbish",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_df <- new("ref_df")
 			ref_df <- charge(ref_df)
@@ -65,7 +65,7 @@ context("ref_dc")
 test_that("Test ref_dc ",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_dc <- new("ref_dc")
 			ref_dc <- charge(ref_dc)
@@ -78,7 +78,7 @@ context("ref_taxa")
 test_that("Test ref_taxa charge",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_taxa <- new("ref_taxa")
 			expect_silent(ref_taxa <- charge(ref_taxa))
@@ -89,7 +89,7 @@ test_that("Test ref_taxa charge",
 test_that("Test choice method for reftaxa ",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_taxa <- new("ref_taxa")
 			ref_taxa <- charge(ref_taxa)
@@ -107,7 +107,7 @@ context("ref_stage")
 test_that("Test ref_stage charge",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_stage <- new("ref_stage")
 			expect_silent(ref_stage <- charge(ref_stage))
@@ -116,7 +116,7 @@ test_that("Test ref_stage charge",
 test_that("Test choice_c method for ref_stage ",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_stage <- new("ref_stage")
 			ref_stage <- charge(ref_stage)
@@ -133,11 +133,11 @@ context("ref_coe")
 test_that("Test that ref_coe charge method works",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_coe <- new("ref_coe")
-			ref_coe@datedebut<-strptime('01/01/1996',format='%d/%m/%Y')
-			ref_coe@datefin<-strptime('01/01/1997',format='%d/%m/%Y')
+			ref_coe@datedebut<-strptime('01/01/2010',format='%d/%m/%Y')
+			ref_coe@datefin<-strptime('01/01/2011',format='%d/%m/%Y')
 			expect_error(ref_coe <- charge(ref_coe), NA)
 		})
 
@@ -145,7 +145,7 @@ context("ref_par")
 test_that("Test that ref_par works",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()
 			ref_par <- new("ref_par")
 			ref_par <- charge(ref_par)
@@ -164,7 +164,7 @@ context("ref_parqual")
 test_that("Test that ref_parqual works",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()			
 			ref_parqual <- new("ref_parqual")
 			ref_parqual <- charge(ref_parqual)
@@ -189,7 +189,7 @@ context("ref_parquan")
 test_that("Test that ref_parquan works",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()			
 			ref_parquan <- new("ref_parquan")
 			ref_parquan <- charge(ref_parquan)
@@ -210,7 +210,7 @@ context("ref_env")
 test_that("Test that ref_env works",
 		{
 			skip_on_cran()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			env_set_test_stacomi()			
 			ref_env <- new("ref_env")
 			ref_env <- charge(ref_env)
@@ -218,5 +218,18 @@ test_that("Test that ref_env works",
 			expect_gt(nr1,0, label = "nrow ref_env@data", expected.label = "0")
 			ref_env <- choice_c(ref_env, stationMesure="temp_gabion")
 			expect_identical(ref_env@env_selected,"temp_gabion")
+			
+		})
+
+
+context("ref_textbox")
+test_that("Test that ref_textbox works",
+		{
+			skip_on_cran()
+			stacomi(database_expected=TRUE, sch ="test")
+			env_set_test_stacomi()			
+			ref_textbox <- new("ref_textbox")
+			expect_error(ref_textbox <- charge(ref_textbox,title='un titre',label='20'),NA)
+	
 			
 		})

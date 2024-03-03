@@ -68,13 +68,15 @@ options(
 		stacomiR.host ="localhost",
 		stacomiR.port = "5432",
 		stacomiR.user = user,
-		stacomiR.user = password						
+		stacomiR.password = password						
 )	
   r_mig_mult <- new("report_mig_mult")
   r_mig_mult <- choice_c(r_mig_mult,
 	  dc=c(5,6,12),
 	  taxa=c("Anguilla anguilla"),
-	  stage=c("AGG","AGJ","CIV"),datedebut="2011-01-01",datefin="2011-12-31")
+	  stage=c("AGG","AGJ","CIV"),
+    datedebut="2011-01-01",
+    datefin="2011-12-31")
   r_mig_mult <- charge(r_mig_mult)
   # launching charge will also load classes associated with the report
   # e.g. report_ope, report_df, report_dc

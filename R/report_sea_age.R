@@ -118,7 +118,7 @@ setMethod(
 #' This method verifies that boxes have been clicked in the user interface and gets the objects pasted in
 #' envir_stacomi
 #' @param object An object of class \link{report_sea_age-class}
-#' @param h a handler
+#' @param silent Boolean, if TRUE, information messages are not displayed
 #' @return An object of class \link{report_sea_age-class} with slots filled with user choice
 #' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class \link{report_sea_age-class} with slots filled from values assigned in \code{envir_stacomi} environment
@@ -127,7 +127,7 @@ setMethod(
 setMethod(
 		"charge",
 		signature = signature("report_sea_age"),
-		definition = function(object, h) {
+		definition = function(object, silent=FALSE) {
 			if (exists("ref_dc", envir_stacomi)) {
 				object@dc <- get("ref_dc", envir_stacomi)
 			} else {
@@ -192,6 +192,13 @@ setMethod(
 			}
 			return(object)
 			validObject(object)
+      if (!silent)
+        funout(
+            gettext(
+                "Writing report_sea_age in the environment envir_stacomi : write r_seaa=get('r_seaa',envir_stacomi) ",
+                domain = "R-stacomiR"
+            )
+        )
 			assign("r_seaa", object, envir_stacomi)
 		}
 )
@@ -339,7 +346,7 @@ setMethod(
 #'
 #' @param x An object of class \link{report_sea_age-class}
 #' @param plot.type Default "1"
-#'  \itemize{
+#'  \describe{
 #' 		\item{plot.type="1"}{density plot by sea age}
 #' 		\item{plot.type="2"}{Density plot by sea age and dc}
 #' }

@@ -5,12 +5,12 @@
 \alias{charge.report_sea_age}
 \title{Loads data and check that all choices in the graphical interface have been made.}
 \usage{
-\S4method{charge}{report_sea_age}(object, h)
+\S4method{charge}{report_sea_age}(object, silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_sea_age-class}}
 
-\item{h}{a handler}
+\item{silent}{Boolean, if TRUE, information messages are not displayed}
 }
 \value{
 An object of class \link{report_sea_age-class} with slots filled with user choice

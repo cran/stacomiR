@@ -26,7 +26,7 @@
 	  horodatefin="2015-12-31",
 	  silent=TRUE)
   r_dc<-connect(r_dc)
-}
+
 ##
 	
   # this dataset has been loaded by the previous lines
@@ -43,7 +43,7 @@
   plot(r_dc,plot.type="4",main="trial title")
 # the following will write in the datawd folder
    summary(r_dc)
-
+}
 
 
 

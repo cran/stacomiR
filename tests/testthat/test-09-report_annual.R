@@ -3,16 +3,16 @@ context("report_annual")
 
 test_that("Test an instance of report_annual loaded with choice_c", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()	
 			r_ann <- new("report_annual")
 			r_ann <- choice_c(
 					r_ann,
-					dc = c(5, 6, 12),
+					dc = c(5, 6),
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ", "AGG"),
-					start_year = "1996",
-					end_year = "2015",
+					start_year = "2010",
+					end_year = "2013",
 					silent = TRUE
 			)
 			r_ann <- connect(r_ann, silent = TRUE)
@@ -24,17 +24,17 @@ test_that("Test an instance of report_annual loaded with choice_c", {
 
 test_that("Test methods in report_annual", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()			# should not produce any error
 			expect_error({
 						r_ann <- new("report_annual")
 						r_ann <- choice_c(
 								r_ann,
-								dc = c(5, 6, 12),
+								dc = c(5, 6),
 								taxa = c("Anguilla anguilla"),
 								stage = c("AGJ", "AGG"),
-								start_year = "1996",
-								end_year = "2015",
+								start_year = "2010",
+								end_year = "2013",
 								silent = TRUE
 						)
 						r_ann <- connect(r_ann, silent = TRUE)
@@ -60,7 +60,7 @@ test_that("Test methods in report_annual", {
 test_that("Complement to example",
 		{
 			
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_ann)
 			xtr_ann <- stacomiR::xtable(
 					r_ann,
@@ -133,22 +133,22 @@ test_that("Complement to example",
 test_that("test xtable method for report_annual", {
 			
 			skip_on_cran()
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			env_set_test_stacomi()			
 			r_ann <- new("report_annual")
 			r_ann <- choice_c(
 					r_ann,
-					dc = c(5, 6, 12),
+					dc = c(5, 6),
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ", "AGG"),
-					start_year = "1996",
-					end_year = "2015",
+					start_year = "2010",
+					end_year = "2013",
 					silent = TRUE
 			)
 			r_ann <- connect(r_ann)
 			xtr_mig_annual <- stacomiR::xtable(
 					r_ann,
-					dc_name = c("Passe bassins", "Piege anguille RG", "Piege anguille RD"),
+					dc_name = c("Passe bassins", "Piege anguille RG"),
 					tax_name = "Anguille",
 					std_name = c("Arg.", "Jaun.")
 			)
@@ -164,7 +164,7 @@ test_that("test xtable method for report_annual", {
 					"report_annual should have an xtable method")
 			xtr_mig_annual <- stacomiR::xtable(
 					r_ann,
-					dc_name = c("Passe bassins", "Piege anguille RG", "Piege anguille RD"),
+					dc_name = c("Passe bassins", "Piege anguille RG"),
 					tax_name = "Anguille",
 					std_name = c("Arg.", "Jaun.")
 			)
@@ -231,15 +231,15 @@ test_that("test plot methods for report_annual", {
 test_that("test that plot method does not return wrong axis", {
 			skip_on_cran()
 			env_set_test_stacomi()	
-			stacomi(database_expected = TRUE, sch="logrami")
+			stacomi(database_expected = TRUE, sch="test")
 			r_ann <- new("report_annual")
 			r_ann <- choice_c(
 					r_ann,
-					dc = c(105),
+					dc = c(20),
 					taxa = c("Salmo salar"),
 					stage = c(5),
-					start_year = "2009",
-					end_year = "2011",
+					start_year = "2010",
+					end_year = "2012",
 					silent = TRUE
 			)
 			r_ann <- connect(r_ann, silent = TRUE)

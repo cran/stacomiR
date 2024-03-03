@@ -140,7 +140,7 @@ setMethod("plot", signature(x = "report_env", y = "missing"), definition = funct
             1, just = "center")))
         lesGraphes = list()
         if (length(unique(dat$env_stm_identifiant)) != nrow(r_env@stationMesure@data)) {
-            funout(gettext("Some monitoring stations lack associated values (no environmental data)\n",
+            if(!silent) funout(gettext("Some monitoring stations lack associated values (no environmental data)\n",
                 domain = "R-stacomiR"))
         }
 
@@ -157,18 +157,17 @@ setMethod("plot", signature(x = "report_env", y = "missing"), definition = funct
             # all measures for the selected station
             nameColonne <- as.character(stm$stm_libelle)
             datstm <- stacomirtools::chnames(dat, "env_valeur_quantitatif", nameColonne)
-            datstm <- datstm[datstm$env_stm_identifiant == stmidentifiant, ]
-
+            datstm <- datstm[datstm$env_stm_identifiant == stmidentifiant, ] 
             # creating the plot
-            g <- ggplot(datstm, aes_string(x = "env_date_debut", y = nameColonne))
-            g <- g + geom_line(aes_string(colour = nameColonne)) + scale_y_continuous(stm$stm_libelle) +
+            g <- ggplot(datstm, aes(x = env_date_debut, y = !!rlang::sym(nameColonne)))
+            g <- g + geom_line(aes(colour = !!rlang::sym(nameColonne))) + scale_y_continuous(stm$stm_libelle) +
                 scale_x_datetime(name = "date")
 
             # printing plot on screen
             print(g, vp = vplayout(i, 1))
         }
     } else {
-        funout(gettext("No environmental conditions values for selected monitoring stations (report_env.R)\n",
+      if(!silent) funout(gettext("No environmental conditions values for selected monitoring stations (report_env.R)\n",
             domain = "R-stacomiR"), arret = TRUE)
     }
 		return(invisible(NULL))

@@ -24,7 +24,7 @@ report_mig with calcdata slot filled. It is a list with one element per counting
 method is "overlaps" as the latter method uses the overlap package to split migration period.}
 \item{data}{the calculated data.}
 \item{contient_poids}{A boolean which indicates, in the case of glass eel, that the function \link{fun_weight_conversion} has been run to convert the weights to numbers using the weight
-to number coefficients in the database (see link{report_ge_weight}).}
+to number coefficients in the database (see \link{report_ge_weight}).}
 \item{negative}{A parameter indicating if negative migration (downstream in the case of upstream migration devices) have been converted to positive numbers,
 not developed yet}}
 }

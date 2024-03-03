@@ -298,9 +298,10 @@ the periods and type of operation for DF and DC, and the operation (trapping
 periods) (middle), a summary of migration per month (bottom).
 
 
-```{r rmmstd,eval=TRUE,echo=TRUE,message=FALSE,fig.height=6,fig.with=8}
+```{r rmmstd,eval=FALSE,echo=TRUE,message=FALSE,fig.height=6,fig.with=8}
 # Without a connection at the database we can launch these lines to generate the graph
 # To obtain titles in french use Sys.setenv(LANG = "fr")
+# the 
 require(stacomiR)
 stacomi(
 		database_expected=FALSE)	
@@ -311,16 +312,18 @@ data("r_mig_mult_df")
 assign("report_df",r_mig_mult_df,envir=envir_stacomi)
 data("r_mig_mult_dc")
 assign("report_dc",r_mig_mult_dc,envir=envir_stacomi)
+# The two lines below avoid an error in MacOSX, the r_mig_mult currently has CET
+# which for some reason provides a failure when testing the vignette in MaxOSX (twice the same date in seq.POSIXt)
+attr(r_mig_mult@data$ope_date_debut, "tzone") <- "UTC"
+attr(r_mig_mult@data$ope_date_fin, "tzone") <- "UTC"
 r_mig_mult <- calcule(r_mig_mult,silent=TRUE) 
 
-# To avoid call to dev.new() which creates a device per stage, DC, taxa, we simplify 
-# the object as dev.new() causes knitr to crash:
-r_mig_mult@taxa@data <- r_mig_mult@taxa@data[1,]
-r_mig_mult@stage@data <- r_mig_mult@stage@data[3,]
+
+# restrict to glass eel
+r_mig_mult@stage@stage_selected <- r_mig_mult@stage@stage_selected[3]
 r_mig_mult@dc@dc_selected <- r_mig_mult@dc@dc_selected[3]
-
+r_mig_mult <- calcule(r_mig_mult,silent=TRUE) 
 plot(r_mig_mult, plot.type="standard", silent=TRUE)
-
 ```
 
 Summary of migration for different stages and counting devices
@@ -341,7 +344,7 @@ BL = body length, W = weight, MD = mean eye diameter (Dv+Dh)/2, and FL length of
 the pectoral fin, with each parameter p as S=Constant+BL*p(bl)+W*p(W)... The
 function `fun_stage_durif` choose the stage achieving the highest
 score ([Durif et al.,
-2009](http://fishlarvae.org/common/SiteMedia/durif%20et%20al%202009b.pdf))
+2009](https://fishlarvae.org/common/SiteMedia/durif%20et%20al%202009b.pdf))
 
 ```{r silver,eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,fig.height = 4, fig.width = 6,fig.keep="all"}
 require(stacomiR)

@@ -10,8 +10,8 @@
   plot.type = 1,
   silent = FALSE,
   main = NULL,
-  color_type_oper = c(`Fonc normal` = "#76BEBE", `Arr ponctuel` = "#FF6700",
-    `Arr maint` = "#9E0142", Dysfonc = "#EE1874", `Non connu` = "#999999"),
+  color_type_oper = c(`Fonc normal` = "#76BEBE", `Arr ponctuel` = "#FF6700", `Arr maint`
+    = "#9E0142", Dysfonc = "#EE1874", `Non connu` = "#999999"),
   color_etat = c(`TRUE` = "#0F313A", `FALSE` = "#CEB99A")
 )
 }
@@ -39,7 +39,7 @@ c("Fonc normal" = "#76BEBE",
 Nothing but prints the different plots.
 }
 \description{
-\itemize{
+\describe{
 \item{plot.type=1}{A barplot of the operation time per month}
 \item{plot.type=2}{Barchat giving the time per type of operation }
 \item{plot.type=2}{Rectangle plots drawn along a line}

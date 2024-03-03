@@ -235,9 +235,9 @@ setMethod("calcule", signature = signature("report_species"), definition = funct
 #' 
 #' @param x An object of class \link{report_species-class}
 #' @param plot.type Default pie
-#' #' \itemize{
-#'   \item{plot.type='pie': A pie}' 
-#'   \item{plot.type='barchart' : A barchart}
+#' #' \describe{
+#'   \item{plot.type='pie'}{A pie}' 
+#'   \item{plot.type='barchart'}{A barchart}
 #' }
 #' @param color Default NULL, a vector of colors of length corresponding to the number of taxa-stage
 #' different values, use unique(bilesp@calcdata$taxa_stage) to get that number. The color applies to both

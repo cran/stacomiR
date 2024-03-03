@@ -28,7 +28,7 @@ the total weight is 'Poids_total'+'poids_depuis_effectifs' and corresponds to we
 CALCULE corresponds to calulated number, MESURE to measured numbers, EXPERT to punctual expertise of migration (for instance measured in other path, or known migration
 of fishes passing the dam but not actually counted, PONCTUEL to fishes counted by visual identification but not by the counting apparatus (in case of technical problem for instance)}
 \item{contient_poids}{A boolean which indicates, in the case of glass eel, that the function \link{fun_weight_conversion} has been run to convert the weights to numbers using the weight
-to number coefficients in the database (see link{report_ge_weight}).}
+to number coefficients in the database (see \link{report_ge_weight}).}
 \item{negative}{A parameter indicating if negative migration (downstream in the case of upstream migration devices) have been converted to positive numbers,
 not developed yet}}
 }

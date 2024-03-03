@@ -3,7 +3,7 @@
 \name{print,report_mig-method}
 \alias{print,report_mig-method}
 \alias{print.report_mig}
-\title{handler to print the command line}
+\title{Method to print the command line of the object}
 \usage{
 \S4method{print}{report_mig}(x, ...)
 }
@@ -11,23 +11,10 @@
 \item{x}{An object of class report_mig}
 
 \item{...}{Additional parameters passed to print}
-
-\item{h}{a handler}
 }
 \description{
-handler to print the command line
+Method to print the command line of the object
 }
 \author{
-Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
-
 cedric.briand
 }
-\keyword{Method}
-\keyword{command}
-\keyword{internal}
-\keyword{line}
-\keyword{object}
-\keyword{of}
-\keyword{print}
-\keyword{the}
-\keyword{to}

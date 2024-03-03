@@ -5,17 +5,17 @@ context("report_mig_mult")
 test_that("Test an instance of report_mig_mult", {
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)		
+			stacomi(database_expected=TRUE, sch ="test")		
 			report_mig_mult <- new("report_mig_mult")
 			#options(warn = -1)
 			report_mig_mult <- suppressWarnings(
 					choice_c(
 							report_mig_mult,
-							dc = c(6, 7),
-							taxa = c("Anguilla anguilla", "Salmo salar"),
-							stage = c("AGG", "AGJ", "CIV"),
-							datedebut = "2012-01-01",
-							datefin = "2012-12-31",
+							dc = c(19,20),
+							taxa = c( "Salmo salar"),
+							stage = c("5"),
+							datedebut = "2011-01-01",
+							datefin = "2011-12-31",
 							silent = TRUE
 					)
 			)
@@ -30,13 +30,13 @@ test_that("Test another instance of report_mig_mult", {
 			
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			#options(warn = -1)
 			report_mig_mult <- suppressWarnings(
 					choice_c(
 							report_mig_mult,
-							dc = c(6, 7),
+							dc = c(6, 21, 31),
 							taxa = c(2038, 2220),
 							stage = c("AGG", "AGJ", "CIV"),
 							datedebut = "2012-01-01",
@@ -55,7 +55,7 @@ test_that("Test another instance of report_mig_mult", {
 test_that("Tests one instance with error (dc does not exist)",
 		{			
 			skip_on_cran()
-			stacomi(database_expected=TRUE)	
+			stacomi(database_expected=TRUE, sch ="test")	
 			env_set_test_stacomi()
 			
 			report_mig_mult <- new("report_mig_mult")
@@ -79,12 +79,12 @@ test_that("Test charge method for report_mig_mult",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(
 					report_mig_mult,
-					dc = c(6, 7),
+					dc = c(6, 20),
 					taxa = c(2038),
 					stage = c("AGG", "AGJ", "CIV"),
 					datedebut = "2012-01-01",
@@ -104,12 +104,12 @@ test_that("Test connect method for report_mig_mult",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(
 					report_mig_mult,
-					dc = c(6, 7),
+					dc = c(6, 20),
 					taxa = c(2038),
 					stage = c("AGG", "AGJ", "CIV"),
 					datedebut = "2012-01-01",
@@ -136,12 +136,12 @@ test_that("Test funtable and funstat",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(
 					report_mig_mult,
-					dc = c(6, 7),
+					dc = c(6, 20),
 					taxa = c(2038),
 					stage = c("AGJ"),
 					datedebut = "2012-01-01",
@@ -182,7 +182,7 @@ test_that("Test funtable for glass eel weights",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(
@@ -226,12 +226,12 @@ test_that("Test summary",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(
 					report_mig_mult,
-					dc = c(6, 7),
+					dc = c(6, 20),
 					taxa = c(2038),
 					stage = c("AGJ"),
 					datedebut = "2012-01-01",
@@ -250,12 +250,12 @@ test_that("Test plot",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(
 					report_mig_mult,
-					dc = c(6, 7),
+					dc = c(6, 20),
 					taxa = c(2038),
 					stage = c("AGJ","CIV"),
 					datedebut = "2012-01-01",
@@ -279,7 +279,7 @@ test_that("Test that step plot returns only one curve",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)				
+			stacomi(database_expected=TRUE, sch ="test")				
 			report_mig_mult <- new("report_mig_mult")
 			options(warn = -1)
 			report_mig_mult <- choice_c(

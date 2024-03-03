@@ -4,20 +4,20 @@ context("report_mig_char")
 test_that("test creating an instance of report_mig_char and connect method (logrami required)",
           {
             skip_on_cran()
-            stacomi(database_expected = TRUE, sch ="logrami")
+            stacomi(database_expected = TRUE, sch ="test")
 						
 						env_set_test_stacomi()            # here parqual is not in the list
 						r_mig_char <- new("report_mig_char")
             # so this is equivalent to parqual=NULL
             r_mig_char <- choice_c(
               r_mig_char,
-              dc = c(107, 108, 101),
+              dc = c(19,20),
               taxa = c("Salmo salar"),
               stage = c('5', '11', 'BEC', 'BER', 'IND'),
               parquan = c('A124', 'C001'),
               parqual = NULL,
-              horodatedebut = "2009-01-01",
-              horodatefin = "2012-12-31",
+              horodatedebut = "2012-01-01",
+              horodatefin = "2014-12-31",
               silent = TRUE
             )
             # r_mig_char<-charge(r_mig_char) not necessary there
@@ -33,20 +33,20 @@ test_that("test creating an instance of report_mig_char and connect method (logr
 
 test_that("test setasqualitative method", {
   skip_on_cran()
-  stacomi(database_expected = TRUE, sch = "logrami")
+  stacomi(database_expected = TRUE, sch = "test")
 	env_set_test_stacomi()
 	r_mig_char <- new("report_mig_char")
   # here parqual is not in the list
   # so this is equivalent to parqual=NULL
   r_mig_char <- choice_c(
     r_mig_char,
-    dc = c(107, 108, 101),
+    dc = c(19,20),
     taxa = c("Salmo salar"),
     stage = c('5', '11', 'BEC', 'BER', 'IND'),
     parquan = c('A124', 'C001'),
     parqual = NULL,
-    horodatedebut = "2009-01-01",
-    horodatefin = "2012-12-31",
+    horodatedebut = "2012-01-01",
+    horodatefin = "2014-12-31",
     silent = TRUE
   )
   # r_mig_char<-charge(r_mig_char) not necessary there
@@ -90,12 +90,12 @@ test_that("test setasqualitative method", {
 
 test_that("test calcule method", {
   skip_on_cran()
-  stacomi(database_expected = TRUE, sch ="logrami")
+  stacomi(database_expected = TRUE, sch ="test")
 	env_set_test_stacomi()
 	r_mig_char <- new("report_mig_char")
   r_mig_char <- choice_c(
     r_mig_char,
-    dc = c(107, 108, 101),
+    dc = c(19,20),
     taxa = c("Salmo salar"),
     stage = c('5', '11', 'BEC', 'BER', 'IND'),
     parquan = c('A124', 'C001'),
@@ -133,12 +133,12 @@ test_that("test calcule method", {
 
 test_that("test charge method", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch ="logrami")
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()
 			r_mig_char <- new("report_mig_char")
 			r_mig_char <- choice_c(
 					r_mig_char,
-					dc = c(107, 108, 101),
+					dc = c(19,20),
 					taxa = c("Salmo salar"),
 					stage = c('5', '11', 'BEC', 'BER', 'IND'),
 					parquan = c('A124', 'C001'),
@@ -155,12 +155,12 @@ test_that("test charge method", {
 
 test_that("test plot and xtable and summary method", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch ="logrami")
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()
 			r_mig_char <- new("report_mig_char")
 			r_mig_char <- choice_c(
 					r_mig_char,
-					dc = c(107, 108, 101),
+					dc = c(19,20),
 					taxa = c("Salmo salar"),
 					stage = c('5', '11', 'BEC', 'BER', 'IND'),
 					parquan = c('A124', 'C001'),
@@ -191,7 +191,7 @@ test_that("test plot and xtable and summary method", {
 			r_mig_char <- new("report_mig_char")
 			r_mig_char <- choice_c(
 					r_mig_char,
-					dc = c(107, 108, 101),
+					dc = c(19,20),
 					taxa = c("Salmo salar"),
 					stage = c('5', '11', 'BEC', 'BER', 'IND'),
 					parquan = c('C001'),
@@ -201,7 +201,7 @@ test_that("test plot and xtable and summary method", {
 					silent = TRUE
 			)
 			r_mig_char <- connect(r_mig_char)
-			r_mig_char <- calcule(r_mig_char)
+			r_mig_char <- calcule(r_mig_char, silent=TRUE)
 			expect_error(r_mig_char <- setasqualitative(
 					r_mig_char,
 					par = 'C001',
@@ -228,7 +228,7 @@ test_that("test plot and xtable and summary method", {
 			# test with several years
 			r_mig_char <- choice_c(
 					r_mig_char,
-					dc = c(107, 108, 101),
+					dc = c(19,20),
 					taxa = c("Salmo salar"),
 					stage = c('5', '11', 'BEC', 'BER', 'IND'),
 					parquan = c('A124', 'C001'),

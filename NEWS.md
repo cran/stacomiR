@@ -1,16 +1,38 @@
+# stacomiR 0.6.1
+* fixed problems with vignette in MacOSX
+* fixed problems with Rcheck (manual, old rd artifact, tests ...)
+* fixed deprecated `aes_string` in ggplot2
+* fixed problems with arguments in two methods manual (CRAN note)
+* `report_mig` now only uses a function from `report_mig_interannual` and not longer runs its connect method, this simplifies the loading.
+* fix bug due to change in behaviour after using dbwrite table which now creates a table with local timestamp and cause
+ values to shift one day in `report_mig_interannual` when inserting from the temporary table
+* dev added information for user about the current connexion (host, dbname) in `report_mig_mult` when silent = FALSE
+* dev added info about the number of lines in `supprime (report_mig_interannual)` and `write_database (report_mig)`
+* fix bug when calling `plot(report_sample_char)` the values where always collected from envir_stacomi.
+* fix bug in plot standard report mig char.
+* test added test test coverage now increases to 85 %.
+* fix [#30](https://forgemia.inra.fr/stacomi/stacomir/-/issues/30) missing month in summary `report_mig_interannual` 
+* fix problem of vignette building in mac_OSX
+* test trouble with codecovr during tests
+* fix [#31](https://forgemia.inra.fr/stacomi/stacomir/-/issues/31) Report_annual does not issue a count when no data are present in the db for one year
+* dev [#14](https://forgemia.inra.fr/stacomi/stacomir/-/issues/14) Added function to get schema list
+* dev [#19](https://forgemia.inra.fr/stacomi/stacomir/-/issues/19) Choose year of reference in `report_mig_interannual`
+* fix bug in `plot.report_mig_mult` standard some colors not printed due to changed name.
+* fix bug in plot report mig mult wrong legend for standard graph (glass eel was OK)
+
 # stacomiR 0.6.0.7
 
 * created function to load schema
-* fixed problem with report_mig_char example (broken since new qualitative parameter for age was inserted in the database)
+* fixed problem with `report_mig_char` example (broken since new qualitative parameter for age was inserted in the database)
 * fixed problem with x scale ugly https://forgemia.inra.fr/stacomi/stacomir/-/issues/27 fixed 
 
 
 # stacomiR 0.6.0.6
 
-* allows to load ggplots after plot for report_dc and report_df
+* allows to load ggplots after plot for `report_dc` and `report_df`
 * fixes the problem of method for plot no longer working with signature(x = "report_dc", y = "ANY") and changed to
 "missing"
-* allows to pass arguments for colors in plot.report_dc
+* allows to pass arguments for colors in `plot.report_dc`
 * fixed problems with broken translation see https://forgemia.inra.fr/stacomi/stacomir/-/issues/20
 
 # stacomiR 0.6.0.5

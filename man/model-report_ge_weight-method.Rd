@@ -26,12 +26,12 @@ glass eel or yellow eels.
 }
 \details{
 Depending on model.type several models are produced
-\itemize{
-\item{model.type='seasonal'.}{ The simplest model uses a seasonal variation, it is
+\describe{
+\item{model.type='seasonal'.}{The simplest model uses a seasonal variation, it is
     fitted with a sine wave curve allowing a cyclic variation 
     w ~ a*cos(2*pi*(d'-T)/365)+b with a period T. The modified day d' used is this model is set
     at 1 the 1st of august doy = d' + d0; d0 = 212, doy=julian days}
-\item{model.type='seasonal1'.}{ A time component is introduced in the model, which allows
+\item{model.type='seasonal1'.}{A time component is introduced in the model, which allows
   for a long term variation along with the seasonal variation. This long term variation is
   is fitted with a gam, the time variable is set at zero at the beginning of the first day of observed values.
   The seasonal variation is modeled on the same modified julian time as model.type='seasonal'
@@ -42,7 +42,7 @@ Depending on model.type several models are produced
   curve similar to the sine curve used in seasonal.  The formula for this is \eqn{sin(\omega vt) + cos(\omega vt)}{sin(omega vt) + cos(omega vt)}, 
  where vt is the time index variable \eqn{\omega}{omega} is a constant that describes how the index variable relates to the full period
   (here, \eqn{2\pi/365=0.0172}{2pi/365=0.0172}). The model is written as following \eqn{w~cos(0.0172*doy)+sin(0.0172*doy)+s(time).}}
-\item{model.type='manual'.}{ The dataset don (the raw data), coe (the coefficients already present in the
+\item{model.type='manual'.}{The dataset don (the raw data), coe (the coefficients already present in the
   database, and newcoe the dataset to make the predictions from, are written to the environment envir_stacomi. 
   please see example for further description on how to fit your own model, build the table of coefficients,
   and write it to the database.}

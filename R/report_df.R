@@ -191,7 +191,7 @@ setMethod(
 
 #' Different plots for report_df
 #'
-#' \itemize{
+#' \describe{
 #'      \item{plot.type=1}{A barplot of the operation time per month}
 #' 		\item{plot.type=2}{Barchat giving the time per type of operation }
 #' 		\item{plot.type=2}{Rectangle plots drawn along a line}

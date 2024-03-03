@@ -3,7 +3,7 @@ context("report_mig_env")
 
 test_that("test creating an instance of report_mig_env", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()
 			r_mig_env <- new("report_mig_env")
 			r_mig_env <- choice_c(
@@ -12,8 +12,8 @@ test_that("test creating an instance of report_mig_env", {
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ", "AGG", "CIV"),
 					stationMesure = c("temp_gabion", "coef_maree", "phases_lune"),
-					datedebut = "2008-01-01",
-					datefin = "2008-12-31",
+					datedebut = "2010-01-01",
+					datefin = "2010-12-31",
 					silent = TRUE
 			)
 			r_mig_env <- charge(r_mig_env, silent = TRUE)
@@ -32,7 +32,7 @@ test_that("test creating an instance of report_mig_env", {
 
 test_that("test plot method", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_mig_env <- new("report_mig_env")
 			r_mig_env <- choice_c(
@@ -41,8 +41,8 @@ test_that("test plot method", {
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ", "AGG", "CIV"),
 					stationMesure = c("temp_gabion", "coef_maree", "phases_lune"),
-					datedebut = "2008-01-01",
-					datefin = "2008-12-31",
+					datedebut = "2010-01-01",
+					datefin = "2010-12-31",
 					silent = TRUE
 			)
 			r_mig_env <- charge(r_mig_env, silent = TRUE)

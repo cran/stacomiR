@@ -4,19 +4,18 @@
 \alias{fun_report_mig_interannual}
 \title{statistics per time period}
 \usage{
-fun_report_mig_interannual(dat, annee = NULL, timesplit = NULL)
+fun_report_mig_interannual(dat, year = NULL, timesplit = NULL)
 }
 \arguments{
 \item{dat}{a data frame with columns ("bjo_annee","bjo_jour","bjo_labelquantite","bjo_valeur")}
 
-\item{annee}{The year to exclude from the historical series (it will be plotted against the historical series)}
+\item{year}{The year to exclude from the historical series (it will be plotted against the historical series)}
 
-\item{timesplit}{"week" "2 week" "month" as provided to seq.POSIXt, default NULL}
+\item{timesplit}{"week" "2 weeks" "month" as provided to seq.POSIXt, default NULL}
 }
 \value{
 a data frame with mean, max, and min calculated for each timesplit
 }
 \description{
-function called for report_mig_mult objects renames columns
-replaces nulls, and calculates reports with time period larger than day
+statistics per time period
 }

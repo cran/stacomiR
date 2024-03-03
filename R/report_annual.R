@@ -116,6 +116,7 @@ setMethod(
 #' @return An instantiated object with values filled with user choice
 #' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @return An object of class \link{report_annual-class} including a dataframe with column effectif, comprising the sum of report_mig counts
+#' @importFrom dplyr anti_join arrange bind_rows
 #' @aliases connect.report_annual
 setMethod(
 		"connect",
@@ -142,7 +143,7 @@ setMethod(
 					"t_lot_lot on lot_ope_identifiant=ope_identifiant
 							where ope_dic_identifiant in ",
 					dc,
-					" and extract(year from ope_date_debut)>=",
+					" and extract(year from ope_date_fin)>=",
 					start_year,
 					" and	 extract(year from ope_date_debut)<=",
 					end_year,
@@ -241,8 +242,23 @@ setMethod(
 				)
 				req@sql <- stringr::str_replace_all(req@sql, "[\r\n\t]" , "")
 				req <- stacomirtools::query(req)
-				r_ann@data = getquery(req)
-				
+				resdata <- getquery(req)
+
+				all_comb <- expand.grid(
+						annee = start_year:end_year,
+						ope_dic_identifiant = r_ann@dc@dc_selected,
+				    lot_tax_code = r_ann@taxa@taxa_selected,
+						lot_std_code =  r_ann@stage@stage_selected
+						)
+				missing <- dplyr::anti_join(all_comb,resdata[,c("annee", "ope_dic_identifiant", "lot_tax_code", 
+										"lot_std_code")], by = c("annee", "ope_dic_identifiant", "lot_tax_code", "lot_std_code"))
+				if (nrow(missing) > 0){
+				missing$effectif = 0
+				r_ann@data <- dplyr::bind_rows(resdata,missing)
+				} else {
+					r_ann@data <-	resdata
+				}
+				r_ann@data <- dplyr::arrange(r_ann@data,ope_dic_identifiant, lot_tax_code, lot_std_code, annee)		
 			}
 			return(r_ann)
 		}
@@ -533,7 +549,7 @@ setMethod(
 						legend.text = dat0$ope_dic_identifiant
 						barplot(mat, legend.text = legend.text, ...)
 					} else {
-						barplot(mat, ...)
+						barplot(mat, legend.text=legend.text)
 					}
 					
 				} else if (length(lestax) == 1 & length(lesdic) == 1) {

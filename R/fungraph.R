@@ -46,7 +46,7 @@ fungraph = function(report_mig,
       "stopped" = tp[6],
 			"Fonc normal" =  tp[1],
 			"Arr ponctuel" = tp[2], 
-			"Arr maintenance" = tp[3],
+			"Arr maint" = tp[3],
 			"Dysfonc" = tp[5], 						
 			"Non connu" =  tp[7],
       "ponctuel" = "indianred",
@@ -62,7 +62,7 @@ fungraph = function(report_mig,
       "stopped" =		color[2],
 			"Fonc normal" = color[3],
 			"Arr ponctuel" = color[4],
-			"Arr maintenance" = color[5],
+			"Arr maint" = color[5],
 			"Dysfonc" = color[6],
 			"Non connu" = color[7],
       "mesure" =		color[8],
@@ -355,30 +355,29 @@ fungraph = function(report_mig,
 				color= mypalette[report_df@data$libelle],
         date = FALSE
       )
-    nomperiode <- vector()
-    color_periodes <-
-      vector() # a vector of colors, one per period type in listeperiode
+    nom_periodes <- vector()
+    color_periodes <- vector() # a vector of colors, one per period type in listeperiode
     for (j in 1:length(listeperiode)) {
       #recuperation du vecteur de noms (dans l'ordre) e partir de la liste
-      nomperiode[j] <- substr(listeperiode[[j]]$nom, 1, 17)
+      nom_periodes[j] <- substr(listeperiode[[j]]$nom, 1, 17)
       #ecriture pour chaque type de periode
-      color_periode = listeperiode[[j]]$color
+      color_periodes[j] = listeperiode[[j]]$color
       rect(
         xleft = graphdate(listeperiode[[j]]$debut),
         ybottom = 1.1,
         xright = graphdate(listeperiode[[j]]$fin),
         ytop = 2,
-        col = color_periode,
+        col = color_periodes[j],
         border = NA,
         lwd = 1
       )
-      color_periodes <- c(color_periodes, color_periode)
+ 
     }
     
     legend  (
       x = debut,
       y = 1.2,
-      legend = c(gettext("stop", domain = "R-stacomiR"), nomperiode),
+      legend = c(gettext("working", domain = "R-stacomiR"),gettext("stop", domain = "R-stacomiR"), nom_periodes),
       pch = c(15, 15),
       col = c(mypalette["working"], mypalette["stopped"], color_periodes),
       bty = "n",
@@ -478,17 +477,17 @@ fungraph = function(report_mig,
 				color= mypalette[report_df@data$libelle],
         date = FALSE
       )
-    nomperiode <- vector()
+    nom_periodes <- vector()
     color_periodes <- vector()
     for (j in 1:length(listeperiode)) {
-      nomperiode[j] <- substr(listeperiode[[j]]$nom, 1, 17)
-      color_periode <- listeperiode[[j]]$color
+      nom_periodes[j] <- substr(listeperiode[[j]]$nom, 1, 17)
+      color_periodes[j] <- listeperiode[[j]]$color
       rect(
         xleft = graphdate(listeperiode[[j]]$debut),
         ybottom = 1.1,
         xright = graphdate(listeperiode[[j]]$fin),
         ytop = 2,
-        col = color_periode,
+        col = color_periodes[j],
         border = NA,
         lwd = 1
       )
@@ -497,7 +496,7 @@ fungraph = function(report_mig,
     legend  (
       x = debut,
       y = 1.2,
-      legend = gettext("working", "stopped", nomperiode, domain = "R-stacomiR"),
+      legend = gettext("working", "stopped", nom_periodes, domain = "R-stacomiR"),
       pch = c(15, 15),
       col = c(mypalette["working"], mypalette["stopped"], color_periodes),
       bty = "n",

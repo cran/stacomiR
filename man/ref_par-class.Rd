@@ -32,7 +32,6 @@ Other referential objects:
 \code{\link{ref_list-class}},
 \code{\link{ref_parqual-class}},
 \code{\link{ref_parquan-class}},
-\code{\link{ref_period-class}},
 \code{\link{ref_stage-class}},
 \code{\link{ref_taxa-class}},
 \code{\link{ref_year-class}}

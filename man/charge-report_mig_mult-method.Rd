@@ -16,10 +16,10 @@
 An object of class \link{report_mig_mult-class} with slots filled from values assigned in \code{envir_stacomi} environment
 }
 \description{
-Unique the other report classes where the charge method is only used by the graphical interface 
-to collect and test objects in the environment envir_stacomi, and see if the right choices have
-been made in the graphical interface, this method is used to load data on migration control operations
+For the report_mig_mult class the charge method must be run 
+to load data on migration control operations
 fishway operations, and counting devices operations as data from those are displayed in the main plots.
+For other classes the charge method is only used by the graphical interface (shiny)
 }
 \author{
 Cedric Briand \email{cedric.briand@eptb-vilaine.fr}

@@ -26,10 +26,10 @@
 NULL
 
 # Variables used in aes arguments generate a note as being assigned to
-# .GlobalEnv, either use aes_string, or listing them below removes the warning
+# .GlobalEnv listing them below removes the warning
 # in Rcheck.
 utils::globalVariables(c("quinzaine", "mois", "val_quant", "time.sequence", "Effectifs",
-				"..density..", "Cumsum", "Date", "Effectif", "Effectif_total", "annee", "car_val_identifiant",
+				 "Cumsum", "Date", "Effectif", "Effectif_total", "annee", "car_val_identifiant", # "..density.."
 				"car_valeur_quantitatif", "coef", "date_format", "debut_pas", "effectif", "effectif_CALCULE",
 				"effectif_EXPERT", "effectif_MESURE", "effectif_PONCTUEL", "effectif_total",
 				"report_df", "quantite_CALCULE", "quantite_EXPERT", "quantite_MESURE", "quantite_PONCTUEL",
@@ -42,7 +42,7 @@ utils::globalVariables(c("quinzaine", "mois", "val_quant", "time.sequence", "Eff
 				"stage", "ouv", "Q0", "Q100", "Q5", "Q50", "Q95", "age", "bjo_annee", "bjo_labelquantite",
 				"bjo_valeur", "doy", "pred_weight", "pred_weight_lwr", "pred_weight_upr", "total",
 				"w", "year", "sta", "tableauCEst", "stm_libelle", "env_valeur_quantitatif", "env_val_identifiant",
-				"DC", "color", "id"))
+				"DC", "color", "id", "day","density","fortnight","env_date_debut","comp","std_value"))
 
 # variable used by dplyr
 utils::globalVariables(c("n0", "newid", "xmin", "xmax", "fin_pas", "value", "type_de_quantite",

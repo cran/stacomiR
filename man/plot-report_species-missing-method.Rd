@@ -11,9 +11,9 @@
 \item{x}{An object of class \link{report_species-class}}
 
 \item{plot.type}{Default pie
-#' \itemize{
-  \item{plot.type='pie': A pie}' 
-  \item{plot.type='barchart' : A barchart}
+#' \describe{
+  \item{plot.type='pie'}{A pie}' 
+  \item{plot.type='barchart'}{A barchart}
 }}
 
 \item{color}{Default NULL, a vector of colors of length corresponding to the number of taxa-stage

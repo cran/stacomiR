@@ -11,7 +11,7 @@
 \item{x}{An object of class \link{report_sea_age-class}}
 
 \item{plot.type}{Default "1"
- \itemize{
+ \describe{
         \item{plot.type="1"}{density plot by sea age}
         \item{plot.type="2"}{Density plot by sea age and dc}
 }}

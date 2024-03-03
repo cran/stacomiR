@@ -4,13 +4,13 @@ context("report_sea_age")
 test_that("test creating an instance of report_sea_age with data loaded (logrami required)",
 		{
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch ="logrami")
+			stacomi(database_expected = TRUE, sch ="test")
 			r_seaa <- new("report_sea_age")
 			env_set_test_stacomi()    
 			r_seaa <- suppressWarnings(
 					choice_c(
 							r_seaa,
-							dc = c(107, 108, 101),
+							dc = c(19,20),
 							horodatedebut = "2012-01-01",
 							horodatefin = "2012-12-31",
 							limit1hm = 675,
@@ -26,12 +26,12 @@ test_that("test creating an instance of report_sea_age with data loaded (logrami
 
 test_that("test charge + connect method", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch= "logrami")
+			stacomi(database_expected = TRUE, sch= "test")
 			env_set_test_stacomi()
 			r_seaa <- new("report_sea_age")
 			suppressWarnings(r_seaa <- choice_c(
 							r_seaa,
-							dc = c(107, 108, 101),
+							dc = c(19,20),
 							horodatedebut = "2012-01-01",
 							horodatefin = "2012-12-31",
 							limit1hm = 675,
@@ -46,14 +46,14 @@ test_that("test charge + connect method", {
 
 test_that("test that loading bad limits fails", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch= "logrami")
+			stacomi(database_expected = TRUE, sch= "test")
 			env_set_test_stacomi()
 			r_seaa <- new("report_sea_age")
 			
 			expect_error(
 					r_seaa <- choice_c(
 							r_seaa,
-							dc = c(107, 108, 101),
+							dc = c(19,20),
 							horodatedebut = "2012-01-01",
 							horodatefin = "2012-12-31",
 							limit1hm = 675,
@@ -67,12 +67,12 @@ test_that("test that loading bad limits fails", {
 
 test_that("test calcule method r_seaa", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch= "logrami")
+			stacomi(database_expected = TRUE, sch= "test")
 			env_set_test_stacomi()
 			r_seaa <- new("report_sea_age")
 			suppressWarnings(r_seaa <- choice_c(
 							r_seaa,
-							dc = c(107, 108, 101),
+							dc = c(19,20),
 							horodatedebut = "2012-01-01",
 							horodatefin = "2012-12-31",
 							limit1hm = 675,
@@ -88,7 +88,7 @@ test_that("test calcule method r_seaa", {
 
 test_that("test plot summary print r_seaa", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE, sch= "logrami")
+			stacomi(database_expected = TRUE, sch= "test")
 			env_set_test_stacomi()
 			data(r_seaa)
 			expect_error(plot(r_seaa, plot.type=1,  silent=TRUE), NA)
@@ -102,12 +102,12 @@ test_that("test plot summary print r_seaa", {
 	
 	test_that("test write supprime print r_seaa", {
 				skip_on_cran()
-				stacomi(database_expected = TRUE, sch= "logrami")
+				stacomi(database_expected = TRUE, sch= "test")
 				env_set_test_stacomi()
 				r_seaa <- new("report_sea_age")
 				suppressWarnings(r_seaa <- choice_c(
 								r_seaa,
-								dc = c(107, 108, 101),
+								dc = c(19,20),
 								horodatedebut = "2012-01-01",
 								horodatefin = "2012-12-31",
 								limit1hm = 675,

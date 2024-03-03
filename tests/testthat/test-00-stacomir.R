@@ -24,26 +24,30 @@ test_that("Test that user host and password are set for test",{
 
 context("Database connection")
 
-test_that("Test that stacomirtools connects",{
+test_that("Test that stacomirtools connects",{			
 			skip_on_cran()
 			env_set_test_stacomi()
 			envir_stacomi <- new.env(parent = asNamespace("stacomiR"))
-			con <- new("ConnectionDB")
-			con@user <- user
-			con@password <- password
+			con <- new("ConnectionDB")			
+			con@dbname <- "bd_contmig_nat_test"
+			con@host <- 		"localhost"
+			con@port <-		"5432"
+			con@user <-  getOption("stacomiR.user", default="postgres")
+			con@password <- getOption("stacomiR.password", default="postgres")	
 			con <- connect(con)
 			expect_is(connect(con),'ConnectionDB')
 			expect_equal(con@status,"Connection OK")
 			pool::poolClose(con@connection)
 			rm("envir_stacomi")
-		})
+		}
+)
 
 
 test_that("Test that positive count for nrow(ref.tr_taxon_tax)",{
 			skip_on_cran()
 			envir_stacomi <- new.env(parent = asNamespace("stacomiR"))
 			env_set_test_stacomi()
-			base <- c("bd_contmig_nat","localhost","5432",user,password)	  
+			base <- c("bd_contmig_nat_test","localhost","5432",getOption("stacomiR.user", default="postgres"),getOption("stacomiR.password", default="postgres"))	  
 			requete=new("RequeteDB")
 			requete <- connect(requete,base)
 			requete@sql="select count(*) from ref.tr_taxon_tax"
@@ -56,11 +60,11 @@ test_that("Test that positive count for nrow(ref.tr_taxon_tax)",{
 test_that("Tests positive count for sch.t_operation_ope",{
 			skip_on_cran()
 			envir_stacomi <- new.env(parent = asNamespace("stacomiR"))
-			env_set_test_stacomi()		
-			base <- c("bd_contmig_nat","localhost","5432",user,password)	  
+			env_set_test_stacomi()	
+			base <- c("bd_contmig_nat_test","localhost","5432",user,password)	  
 			requete=new("RequeteDB")
 			requete <- connect(requete,base)
-			sch <- paste("iav",".",sep="")	  
+			sch <- paste("test",".",sep="")	  
 			requete@sql=paste("select count(*) from ",sch,"t_operation_ope",sep="")
 			requete <- stacomirtools::query(requete)
 			
@@ -74,7 +78,7 @@ context("Loading program")
 test_that("Test that working environment is created",{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			expect_true(exists("envir_stacomi"))
 			
 		})
@@ -82,17 +86,17 @@ test_that("Test that working environment is created",{
 test_that("Test get_schema",{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected=TRUE)
+			stacomi(database_expected=TRUE, sch ="test")
 			sch <- get_schema()
-			expect_equal(sch,"iav.")		
+			expect_equal(sch,"test.")		
 			rm("sch", envir=envir_stacomi)
 			sch <- get_schema(default="volga.")
 			expect_equal(sch,"volga.")
-			stacomi(database_expected = TRUE,  sch = "logrami")
+			stacomi(database_expected = TRUE,  sch = "test")
 			sch <- get_schema()
-			expect_equal(sch,"logrami.")
+			expect_equal(sch,"test.")
 			org <- get_org()
-			expect_equal(org,"LOGRAMI")
+			expect_equal(org,"TEST")
 		})
 
 # pour schema rlang::env_get(envir_stacomi, "sch")
@@ -105,7 +109,7 @@ test_that("Test that tickets have been launched",
 			envir_stacomi <- new.env(parent = asNamespace("stacomiR"))
 			env_set_test_stacomi()	  
 			req=new("RequeteDB")
-			sch <- "iav."
+			sch <- "test."
 			req@sql <- paste("select * from ",sch," ts_maintenance_main")
 			req <- stacomirtools::query(req)
 			result <- req@query
@@ -152,8 +156,9 @@ test_that("All foreign keys are present",
 			skip_on_cran()
 			env_set_test_stacomi()	
 			skip_if_not(test_foreign_keys,"skipping foreign key test, set options in test/helper to change this")
-  		req=new("RequeteDB")
-			env_set_test_stacomi()	 
+      base <- c("bd_contmig_nat_test","localhost","5432","postgres","postgres")      
+  		req <- new("RequeteDB") 
+      req <- connect(req,base)
 			req@sql=paste(stringr::str_c("SELECT
 									distinct on (tc.constraint_name) tc.constraint_name, tc.table_name							
 									FROM 
@@ -164,6 +169,7 @@ test_that("All foreign keys are present",
 									ON ccu.constraint_name = tc.constraint_name
 									WHERE constraint_type = 'FOREIGN KEY' and  tc.constraint_schema='",paste(schema),"';"))
 			req <- query(req)
+      
 			result <- req@query
 			fk <- structure(list(constraint_name = c("c_fk_act_lot_identifiant", 
 									"c_fk_act_mqe_reference", "c_fk_act_org_code", "c_fk_bjo_org_code", 

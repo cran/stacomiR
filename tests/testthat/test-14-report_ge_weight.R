@@ -4,33 +4,33 @@ context("report_ge_weight")
 
 test_that("test creating instance report_ge_weight", {
 
-			stacomi(database_expected = FALSE)	
+			stacomi(database_expected = FALSE, sch ="test")	
 			r_gew <- new("report_ge_weight")
 			expect_s4_class(r_gew, "report_ge_weight")
 		})
 
 test_that("test choice_c method for report_ge_weight", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_gew <- new("report_ge_weight")
 			expect_error(r_gew<-choice_c(r_gew,
 					dc=c(6),			
 					start_year="2009",
-					end_year="2015",
+					end_year="2013",
 					selectedvalue=">1",
 					silent=TRUE), NA)
 		})
 
 test_that("test connect method for report_ge_weight", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_gew <- new("report_ge_weight")
 			r_gew<-choice_c(r_gew,
 							dc=c(6),			
 							start_year="2009",
-							end_year="2015",
+							end_year="2013",
 							selectedvalue=">1",
 							silent=TRUE)
 		expect_message({r_gew <- connect(r_gew)}, NA)	
@@ -41,13 +41,13 @@ test_that("test connect method for report_ge_weight", {
 
 test_that("test calcule method report_ge_weight", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			r_gew <- new("report_ge_weight")
 			r_gew <- choice_c(r_gew,
 					dc=c(6),			
 					start_year="2009",
-					end_year="2015",
+					end_year="2013",
 					selectedvalue=">1",
 					silent=TRUE)
 			expect_silent(r_gew <- connect(r_gew, silent=TRUE))	
@@ -59,7 +59,7 @@ test_that("test calcule method report_ge_weight", {
 		})
 
 test_that("test that plot method works", {
-			stacomi(database_expected = FALSE)	
+			stacomi(database_expected = FALSE, sch ="test")	
 			data("r_gew")
 			expect_error({
 # A ggplot showing the trend in weight
@@ -74,7 +74,7 @@ test_that("test that plot method works", {
 		})
 
 test_that("test that model method works", {
-			stacomi(database_expected = FALSE)	
+			stacomi(database_expected = FALSE, sch ="test")	
 			data("r_gew")		
 			assign("datawd","", envir = envir_stacomi)
 			# First model with nls, see Guerault and Desaunay (1993) 
@@ -86,14 +86,14 @@ test_that("test that model method works", {
 
 test_that("test supprime method ref_coe et write method report_ge_weight", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()	
 			assign("datawd","", envir = envir_stacomi)
 			r_gew <- new("report_ge_weight")
 			r_gew <- choice_c(r_gew,
 					dc=c(6),			
 					start_year="2009",
-					end_year="2015",
+					end_year="2013",
 					selectedvalue="tous",
 					silent=TRUE)
 			r_gew <- connect(r_gew, silent=TRUE)
@@ -102,3 +102,26 @@ test_that("test supprime method ref_coe et write method report_ge_weight", {
 			expect_error(write_database(r_gew, silent=TRUE), NA)		
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 		})
+
+
+test_that("test bug in report ge weight", {
+      skip_on_cran()
+      stacomi(database_expected = TRUE, sch ="test")
+      r_gew<-new("report_ge_weight")
+      r_gew@liste<-charge(object=r_gew@liste,listechoice=c("=1",">1","tous"),label="")
+# here I'm using weights when number are larger than 1i.e.wet weight
+# always choose a date from one year to the next eg 2010 to 2011
+# as the dates are from august to august
+      r_gew<-choice_c(r_gew,
+          dc=c(6),			
+          start_year="2010",
+          end_year="2013",
+          selectedvalue="tous",
+          silent=TRUE)
+      r_gew<-connect(r_gew)	
+      r_gew<-calcule(r_gew)
+      expect_gt(mean(r_gew@calcdata$data$w),0.26)
+      expect_lt(mean(r_gew@calcdata$data$w),0.27)
+    })
+
+

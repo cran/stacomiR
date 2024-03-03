@@ -10,3 +10,4 @@ dev.*
 ^\.gitlab-ci.yml$
 ^LICENSE$
 ^cran-comments.md$
+public

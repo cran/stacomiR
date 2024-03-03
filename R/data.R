@@ -42,10 +42,10 @@
 "r_mig_mult"
 
 
-#' Video counting of thin lipped mullet (Liza ramada) in 2015 in the Vilaine (France)
+#' Video counting of Marine lamprey (Petromyzon marinus) in 2012 in the Vilaine (France)
 #' 
 #' This dataset corresponds to the data collected at the vertical slot fishway
-#' in 2015, video recording of the thin lipped mullet Liza ramada migration
+#' in 2012, video recording marine lamprey migration
 #'
 #' @format An object of class report_mig with 8 slots:
 #' \describe{
@@ -279,7 +279,7 @@
 #' @references Durif, C.M., Guibert, A., and Elie, P. 2009.
 #' Morphological discrimination of the silvering stages of the European eel. 
 #' In American Fisheries Society Symposium. pp. 103-111.
-#'  \url{http://fishlarvae.org/common/SiteMedia/durif\%20et\%20al\%202009b.pdf}
+#'  \url{https://fishlarvae.org/common/SiteMedia/durif\%20et\%20al\%202009b.pdf}
 "coef_durif"
 
 #' Wet weight of glass eel from the trapping ladder (Arzal, Vilaine France) 

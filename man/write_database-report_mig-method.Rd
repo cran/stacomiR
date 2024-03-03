@@ -5,15 +5,12 @@
 \alias{write_database.report_mig}
 \title{Command line method to write the daily and monthly counts to the t_bilanmigrationjournalier_bjo table}
 \usage{
-\S4method{write_database}{report_mig}(object, silent = TRUE, check_for_bjo = TRUE)
+\S4method{write_database}{report_mig}(object, silent = TRUE)
 }
 \arguments{
 \item{object}{an object of class \linkS4class{report_mig}}
 
-\item{silent}{: TRUE to avoid messages}
-
-\item{check_for_bjo}{: do you want to check if data are already present in the bjo table, and delete them,
-this param was added otherwise connect method when called from report_mig_interannual runs in loops}
+\item{silent}{: TRUE to avoid messages, FALSE will need interactive mode as it calls for menu()}
 }
 \value{
 Nothing, just writes data into the database

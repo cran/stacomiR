@@ -18,6 +18,7 @@ load_stacomi <- function(...) {
 		host <- options("stacomiR.host")[[1]]
 		port <- options("stacomiR.port")[[1]]
 		user <- options("stacomiR.user")[[1]]
+		password <- options("stacomiR.password")[[1]]
 		if (user=="") {
 			# this is the default options at start
 			# if interactive will try to set the options upon loading
@@ -26,9 +27,14 @@ load_stacomi <- function(...) {
 				options("stacomiR.user"=user)
 				password <- readline(prompt="Enter password: ")	
 				options("stacomiR.password"=password)
+			} else {
+				user <- "group_stacomi"
+				password <- "group_stacomi"
+				warning('no user set by default, reverted to user <- "postgres" and  password <- "postgres", 
+								you can change it with options("stacomiR.user"=user) and options("stacomiR.password"=password)')
 			}
 		}
-		password <- options("stacomiR.password")[[1]]
+		
 		
 		con = new("ConnectionDB")
 		e = expression(con <- connect(con))
@@ -47,8 +53,10 @@ load_stacomi <- function(...) {
 		
 		if (test) {
 			requete = new("RequeteDB")
-			requete@sql = paste0("select count(*) from ", sch, "t_lot_lot")
+			requete@sql = paste0("select count(*) from ref.tr_taxon_tax")
+			message <- NULL
 			requete <- stacomirtools::query(requete)
+			if (grepl("Error",requete@status)) stop(requete@status)			
 			if (nrow(requete@query) == 0) {
 				# the database link is not working or the 
 				# schema
@@ -88,9 +96,9 @@ load_stacomi <- function(...) {
 #' To change the language use Sys.setenv(LANG = 'fr') or Sys.setenv(LANG = 'en')
 #' @param database_expected Boolean, if \code{TRUE} pre launch tests will be run to test the connection validity
 #' @param datawd The data working directory
-#' @param sch The schema in the stacomi database default 'iav.'
+#' @param sch The schema in the stacomi database default 'test'.
 #' @return Nothing, called for its side effect of loading
-#' @usage stacomi(database_expected=TRUE, datawd = "~", sch = "iav")
+#' @usage stacomi(database_expected=TRUE, datawd = "~", sch = "test")
 #' @author Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
 #' @examples
 #' 
@@ -109,8 +117,10 @@ load_stacomi <- function(...) {
 #'		stacomiR.user = readline(prompt = "Enter user: "),
 #'		stacomiR.password = readline(prompt = "Enter password: ")
 #')
+#' # another usefull option to print all queries run by stacomiR to the console
+#'  options('stacomiR.printqueries'= TRUE)
 #' @export
-stacomi = function(database_expected = TRUE,  datawd = "~", sch = "iav") {	
+stacomi = function(database_expected = TRUE,  datawd = "~", sch = "test") {	
 	assign("database_expected", database_expected, envir = envir_stacomi)
 	# values assigned in the envir_stacomi
 	assign("datawd", datawd, envir = envir_stacomi)

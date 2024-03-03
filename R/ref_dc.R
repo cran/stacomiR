@@ -91,20 +91,21 @@ setMethod(
             "t_dispositiffranchissement_dif ON dif_dis_identifiant=dic_dif_identifiant",
             " JOIN ",
             get_schema(),
-            "tj_dfesttype_dft ON dif_dis_identifiant=dft_df_identifiant",
-            " JOIN ",
-            get_schema(),
             "t_ouvrage_ouv on dif_ouv_identifiant=ouv_identifiant",
             " JOIN ",
             get_schema(),
             "t_station_sta on ouv_sta_code=sta_code",
-            " JOIN ref.tr_typedf_tdf ON tdf_code=dft_tdf_code",
             " JOIN ref.tr_typedc_tdc ON dic_tdc_code=tdc_code",
-            " WHERE  dft_rang=1",
+            " LEFT JOIN (SELECT * FROM ",
+            get_schema(),
+            "tj_dfesttype_dft",
+            " JOIN ref.tr_typedf_tdf ON tdf_code=dft_tdf_code",
+            " WHERE  dft_rang=1) sub ON dif_dis_identifiant=dft_df_identifiant",
             " ORDER BY dis_identifiant;",
             sep = ""
         )
         requete <- stacomirtools::query(requete)
+				if (grepl("Error",requete@status)) stop(requete@status)	
         # funout(gettext('The query to load counting devices is done
         # \n',domain='R-stacomiR'))
         object@data <- requete@query

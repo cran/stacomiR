@@ -2,7 +2,7 @@ context("report_df")
 
 test_that("Test an instance of report_df", {
 			skip_on_cran()
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			env_set_test_stacomi()
 			r_df <- new("report_df")
 			r_df <- choice_c(
@@ -33,7 +33,7 @@ test_that("Test an instance of report_df", {
 
 test_that("report_df charge method works", {
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()
 			r_df <- new("report_df")
 			r_df <- choice_c(
@@ -52,7 +52,7 @@ test_that("report_df charge method works", {
 
 
 test_that("report_df plot method works", {
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_df)
 			r_df <- r_df
 			# expect_error(expr,NA) tests for an absence of error
@@ -76,7 +76,7 @@ test_that("report_df plot method works", {
 
 test_that("report_df summary method works", {
 			skip_on_cran()
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_df)
 			r_df <- r_df
 			#expected <- ifelse(Sys.getlocale(category = "LC_TIME")=="French_France.utf8", "statistiques", "summary")
@@ -87,7 +87,7 @@ test_that("report_df summary method works", {
 
 test_that("report_df print method works", {
 			skip_on_cran()
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			data(r_df)
 			r_df <- r_df
 			expect_output(print(r_df))

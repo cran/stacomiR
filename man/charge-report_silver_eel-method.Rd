@@ -5,12 +5,12 @@
 \alias{charge.report_silver_eel}
 \title{charge method for report_silver_eel class}
 \usage{
-\S4method{charge}{report_silver_eel}(object, h)
+\S4method{charge}{report_silver_eel}(object, silent = FALSE)
 }
 \arguments{
 \item{object}{An object of class \link{report_silver_eel-class}}
 
-\item{h}{a handler}
+\item{silent}{Boolean, if TRUE, information messages are not displayed}
 }
 \value{
 An object of class \link{report_silver_eel-class}  with slots filled from values assigned in \code{envir_stacomi} environment
@@ -18,7 +18,7 @@ An object of class \link{report_silver_eel-class}  with slots filled from values
 An object of the class
 }
 \description{
-this method verifies that boxes have been clicked in the user interface and gets the objects pasted in
+this method is used by the graphical interface load the user's choice and get the objects pasted in
 envir_stacomi. It is not necessary to run this method when loading from the command line using the
 choice_c method
 }

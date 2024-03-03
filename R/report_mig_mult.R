@@ -49,10 +49,10 @@ setValidity("report_mig_mult", function(object) {
 
 #' charge method for report_mig_mult
 #' 
-#' Unique the other report classes where the charge method is only used by the graphical interface 
-#' to collect and test objects in the environment envir_stacomi, and see if the right choices have
-#' been made in the graphical interface, this method is used to load data on migration control operations
-#' fishway operations, and counting devices operations as data from those are displayed in the main plots. 
+#' For the report_mig_mult class the charge method must be run 
+#' to load data on migration control operations
+#' fishway operations, and counting devices operations as data from those are displayed in the main plots.
+#' For other classes the charge method is only used by the graphical interface (shiny) 
 #' 
 #' @param object An object of class \link{report_mig_mult-class}
 #' @param silent Default FALSE, if TRUE the program should no display messages
@@ -128,7 +128,7 @@ setMethod("charge", signature = signature("report_mig_mult"), definition = funct
 		})
 
 
-#' command line interface for report_mig_mult class
+#' command line used to build report_mig_mult class
 #' 
 #' The choice_c method fills in the data slot for ref_dc, ref_taxa, ref_stage and then 
 #' uses the choice_c methods of these object to 'select' the data.
@@ -194,7 +194,7 @@ setMethod("choice_c", signature = signature("report_mig_mult"), definition = fun
 #' CALCULE corresponds to calulated number, MESURE to measured numbers, EXPERT to punctual expertise of migration (for instance measured in other path, or known migration
 #' of fishes passing the dam but not actually counted, PONCTUEL to fishes counted by visual identification but not by the counting apparatus (in case of technical problem for instance)}
 #' \item{contient_poids}{A boolean which indicates, in the case of glass eel, that the function \link{fun_weight_conversion} has been run to convert the weights to numbers using the weight
-#' to number coefficients in the database (see link{report_ge_weight}).}
+#' to number coefficients in the database (see \link{report_ge_weight}).}
 #' \item{negative}{A parameter indicating if negative migration (downstream in the case of upstream migration devices) have been converted to positive numbers,
 #' not developed yet}}
 #' @aliases calcule.report_mig_mult
@@ -207,6 +207,7 @@ setMethod("calcule", signature = signature("report_mig_mult"), definition = func
 			report_mig_mult <- object
 			debut = report_mig_mult@timestep@dateDebut
 			fin = end_date(report_mig_mult@timestep)
+      
 			time.sequence <- seq.POSIXt(from = debut, to = fin, by = as.numeric(report_mig_mult@timestep@step_duration))
 			report_mig_mult@time.sequence <- time.sequence
 			lestableaux <- list()
@@ -295,9 +296,19 @@ setMethod("calcule", signature = signature("report_mig_mult"), definition = func
 setMethod("connect", signature = signature("report_mig_mult"), definition = function(object,
 				silent = FALSE) {
 			# recuperation du report_mig report_mig_mult<-bmM
-			
+      # if not silent display information about the connection
+      if (!silent) {
+        host <-	options("stacomiR.host")				
+        funout(gettextf("host:%s", host, domain = "R-StacomiR"))
+        port <- options("stacomiR.port")
+        funout(gettextf("port:%s", port, domain = "R-StacomiR"))
+        # getting the database name
+        dbname <- options("stacomiR.dbname")
+        funout(gettextf("dbname:%s", dbname, domain = "R-StacomiR"))
+      }
+      
 			report_mig_mult <- object
-			
+
 			# retrieve the argument of the function and passes it to report_mig_mult
 			# easier to debug
 			req = new("RequeteDBwheredate")
@@ -377,7 +388,7 @@ setMethod("connect", signature = signature("report_mig_mult"), definition = func
 
 #' Plots of various type for report_mig_mult
 #' 
-#' \itemize{
+#' \describe{
 #'   \item{plot.type='standard'}{calls \code{\link{fungraph}} and \code{\link{fungraph_glasseel}} functions to plot as many 'report_mig'
 #'   as needed, the function will test for the existence of data for one dc, one taxa, and one stage}
 #'   \item{plot.type='step'}{creates Cumulated graphs for report_mig_mult.  Data are summed per day for different dc taxa and stages}
@@ -414,7 +425,7 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 				for (dcnum in 1:length(lesdc)) {
 					for (taxanum in 1:nrow(the_taxa)) {
 						for (stagenum in 1:nrow(the_stages)) {
-							# dcnum=1;taxnum=1;stagenum=1
+							# dcnum=1;taxanum=1;stagenum=1
 							taxa <- the_taxa[taxanum, "tax_nom_latin"]
 							stage <- the_stages[stagenum, "std_libelle"]
 							dc <- lesdc[dcnum]
@@ -517,10 +528,10 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 										`11` = "#912E0F", `12` = "#33004B")) + ggtitle(gettextf("Cumulative count %s, %s, %s, %s",
 										dis_commentaire, paste(the_taxa$tax_nom_latin, collapse=", "), paste(the_stages$std_libelle, collapse=","), annee))
 				print(p)
-				assign("p", p, envir = envir_stacomi)
+				assign("p_step", p, envir = envir_stacomi)
 				assign("grdata", grdata_without_hole, envir_stacomi)
 				if (!silent)
-					funout(gettext("The plot has been assigned to p in envir_stacomi,write p<-get('p',envir_stacomi) to retrieve the object"))
+					funout(gettext("The plot has been assigned to p_step in envir_stacomi,write p<-get('p_step',envir_stacomi) to retrieve the object"))
 				if (!silent)
 					funout(gettext("The data for the plot have been assigned to envir_stacomi,write grdata<-get('grdata',envir_stacomi) to retrieve the object"))
 				
@@ -547,9 +558,9 @@ setMethod("plot", signature(x = "report_mig_mult", y = "missing"), definition = 
 				}
 				
 				print(p)
-				assign("p", p, envir = envir_stacomi)
+				assign("p_multiple", p, envir = envir_stacomi)
 				if (!silent)
-					funout(gettext("The plot has been assigned to p in envir_stacomi,write p<-get('p',envir_stacomi) to retrieve the object"))
+					funout(gettext("The plot has been assigned to p_multiple in envir_stacomi,write p<-get('pmultiple',envir_stacomi) to retrieve the object"))
 				assign("grdata", grdata, envir_stacomi)
 				if (!silent)
 					funout(gettext("The data for the plot have been assigned to envir_stacomi,write grdata<-get('grdata',envir_stacomi) to retrieve the object"))
@@ -599,8 +610,8 @@ setMethod("summary", signature = signature(object = "report_mig_mult"), definiti
 							if (nrow(data) > 0) {
 								
 								if (any(duplicated(data$No.pas)))
-									stop("duplicated values in No.pas")
-								data_without_hole <- merge(data.frame(No.pas = as.numeric(strftime(report_mig_mult@time.sequence,
+									warning("duplicated values in No.pas")
+             	data_without_hole <- merge(data.frame(No.pas = as.numeric(strftime(report_mig_mult@time.sequence,
 																format = "%j")) - 1, debut_pas = report_mig_mult@time.sequence),
 										data, by = c("No.pas", "debut_pas"), all.x = TRUE)
 								data_without_hole$CALCULE[is.na(data_without_hole$CALCULE)] <- 0
@@ -897,7 +908,7 @@ fun_report_mig_mult <- function(time.sequence, datasub, negative = FALSE) {
 	# 2021 same issue when running the vignette but don't see any difference in the browser() ?
 	# maybe due to different time settings on the machine so it's converted to a warning
 	if (!abs(round(sum(datasub$value, na.rm = TRUE), 2) - round(sum(datasub2$value,
-							na.rm = TRUE), 2)) < 0.1) warnings(
+							na.rm = TRUE), 2)) < 0.1) warning(
 				paste("the numbers are different between raw numbers",
 						round(sum(datasub$value, na.rm = TRUE), 2),
 						"and number recalculated per day",

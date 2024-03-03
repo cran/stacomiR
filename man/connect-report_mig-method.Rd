@@ -3,7 +3,7 @@
 \name{connect,report_mig-method}
 \alias{connect,report_mig-method}
 \alias{connect.report_mig}
-\title{handler for calculations report_mig}
+\title{connect method for report_mig}
 \usage{
 \S4method{connect}{report_mig}(object, silent = FALSE)
 }
@@ -11,25 +11,10 @@
 \item{object}{An object of class \link{report_mig-class}}
 
 \item{silent}{Boolean default FALSE, if TRUE information messages not displayed}
-
-\item{h}{handler}
-
-\item{...}{additional parameters}
 }
 \value{
 report_mig with slot \code{@data} filled from the database
 }
 \description{
-internal use
+uses the report_mig_mult method
 }
-\author{
-Cedric Briand \email{cedric.briand@eptb-vilaine.fr}
-}
-\keyword{connect}
-\keyword{for}
-\keyword{internal}
-\keyword{method}
-\keyword{report_mig}
-\keyword{report_mig_mult}
-\keyword{the}
-\keyword{uses}

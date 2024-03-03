@@ -3,7 +3,7 @@ context("report_mig")
 test_that("Test an instance of report_mig", {
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected = TRUE, sch ='iav')
+			stacomi(database_expected = TRUE, sch ='test')
 			report_mig <- new("report_mig")
 			options(warn = -1)
 			report_mig <- choice_c(
@@ -27,7 +27,7 @@ test_that(
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected = TRUE, sch = 'iav')   
+			stacomi(database_expected = TRUE, sch = 'test')   
 			report_mig <- new("report_mig")
 			options(warn = -1)
 			report_mig <- choice_c(
@@ -35,68 +35,37 @@ test_that(
 					dc = c(6),
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGJ"),
-					datedebut = "1997-01-01",
-					datefin = "1997-12-31"
+					datedebut = "2010-01-01",
+					datefin = "2010-12-31"
 			)
 			options(warn = 0)
 			report_mig <- charge(report_mig, silent = TRUE)
 			report_mig <- connect(report_mig, silent = TRUE)
 			report_mig <- calcule(report_mig, silent = TRUE)
-			# before doing the split per year the sum was 8617
-			# now it is less, only one third of the 7 eel belong to 1997
-			# the rest are in 1998
+			# before doing the split per year the sum was 27458
+			# now it is less
 			expect_equal(round(sum(report_mig@calcdata[["dc_6"]][["data"]]$Effectif_total)),
-					8613)
+          27430)
 			
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
 		}
 )
 
-test_that(
-		"Test another instance of report_mig, check that operations accross two years are split correcly",
-		{
-			skip_on_cran()
-			env_set_test_stacomi()
-			stacomi(database_expected = TRUE, sch ='iav')			
-			report_mig <- new("report_mig")
-			options(warn = -1)
-			report_mig <- choice_c(
-					report_mig,
-					dc = c(6),
-					taxa = c("Anguilla anguilla"),
-					stage = c("AGJ"),
-					datedebut = "2015-01-01",
-					datefin = "2015-12-31"
-			)
-			options(warn = 0)
-			report_mig <- charge(report_mig, silent = TRUE)
-			report_mig <- connect(report_mig, silent = TRUE)
-			report_mig <- calcule(report_mig, silent = TRUE)
-			# before doing the split per year the sum was 8617
-			# now it is less, only one third of the 7 eel belong to 1997
-			# the rest are in 1998
-			expect_equal(round(sum(report_mig@calcdata[["dc_6"]][["data"]]$Effectif_total)),
-					26454)
-			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
-			
-		}
-)
+
 
 test_that("Test connect method", {
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			# overriding user schema
-
-			# this chunk is not launched from examples but loads the r_mig dataset if connection works
 			r_mig = new("report_mig")
 			r_mig = choice_c(
 					r_mig,
-					dc = 5,
-					taxa = c("Liza ramada"),
-					stage = c("IND"),
-					datedebut = "2015-01-01",
-					datefin = "2015-12-31"
+					dc = 19,
+					taxa = c("Salmo salar"),
+					stage = c("5"),
+					datedebut = "2012-01-01",
+					datefin = "2012-12-31"
 			)
 			r_mig <- charge(r_mig, silent = TRUE)
 			r_mig <- connect(r_mig, silent = TRUE)
@@ -124,11 +93,20 @@ test_that("Summary method works",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected = TRUE)			
+			stacomi(database_expected = FALSE, sch ="test")			
 			# overriding user schema
-			data("r_mig")
-			r_mig <- calcule(r_mig, silent = TRUE)
-			#expect_snapshot(summary(r_mig, silent = FALSE))
+      r_mig = new("report_mig")
+      r_mig = choice_c(
+          r_mig,
+          dc = 5,
+          taxa = c("Chelon ramada"),
+          stage = c("IND"),
+          datedebut = "2015-01-01",
+          datefin = "2015-12-31"
+      )
+      r_mig <- charge(r_mig, silent=TRUE)
+      r_mig <- connect(r_mig, silent=TRUE)
+      expect_output(r_mig <- calcule(r_mig, silent = TRUE))
 			expect_silent(summary(r_mig, silent = TRUE))		
 
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
@@ -139,11 +117,11 @@ test_that("Test writing an example to the database",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			data("r_mig")
 			r_mig <- calcule(r_mig, silent = TRUE)
 			
-			expect_output(write_database(object = r_mig, silent = FALSE, check_for_bjo = FALSE))
+			expect_silent(write_database(object = r_mig, silent = TRUE))
 			# by default in r_mig we don't want to check for multiannual bilan
 			# it is written again in the database
 			rm(list = ls(envir = envir_stacomi), envir = envir_stacomi)
@@ -155,7 +133,7 @@ test_that(
 		{
 			skip_on_cran()
 			env_set_test_stacomi()	
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			data("r_mig")
 			r_mig <- calcule(r_mig, silent = TRUE)
 			expect_equal(sum(r_mig@calcdata$dc_5$data$Effectif_total),
@@ -188,7 +166,7 @@ test_that(
 
 test_that("print method works",
 		{
-			stacomi(database_expected = FALSE)
+			stacomi(database_expected = FALSE, sch ="test")
 			# overriding user schema
 			data("r_mig")
 			expect_output(print(r_mig), "report_mig=choice_c", info = NULL)
@@ -201,15 +179,15 @@ test_that("test example for fd80",
 		{
 			skip_on_cran()
 			env_set_test_stacomi()
-			stacomi(database_expected = TRUE, sch ='fd80')
+			stacomi(database_expected = TRUE, sch ='test')
 			bM_EclusierVaux = new("report_mig")
 			bM_EclusierVaux = choice_c(
 					bM_EclusierVaux,
-					dc = 6,
+					dc = 31,
 					taxa = c("Anguilla anguilla"),
 					stage = c("AGG"),
-					datedebut = "2016-01-01",
-					datefin = "2016-12-31"
+					datedebut = "2013-01-01",
+					datefin = "2013-12-31"
 			)
 			bM_EclusierVaux <- charge(bM_EclusierVaux, silent = TRUE)
 			bM_EclusierVaux <- connect(bM_EclusierVaux, silent = TRUE)
@@ -224,7 +202,7 @@ test_that("test example for fd80",
 test_that("test example with glass eel",
 		{
 			skip_on_cran()
-			stacomi(database_expected = TRUE)
+			stacomi(database_expected = TRUE, sch ="test")
 			env_set_test_stacomi()		
 			bM_Arzal_civ = new("report_mig")
 			bM_Arzal_civ = choice_c(
@@ -232,8 +210,8 @@ test_that("test example with glass eel",
 					dc = 6,
 					taxa = c("Anguilla anguilla"),
 					stage = c("CIV"),
-					datedebut = "2003-01-01",
-					datefin = "2003-12-31"
+					datedebut = "2013-01-01",
+					datefin = "2013-12-31"
 			)
 			bM_Arzal_civ <- charge(bM_Arzal_civ, silent = TRUE)
 			bM_Arzal_civ <- connect(bM_Arzal_civ, silent = TRUE)

@@ -11,7 +11,7 @@
 \item{x}{An object of class \link{report_silver_eel-class}}
 
 \item{plot.type}{Default "1"
- \itemize{
+ \describe{
         \item{plot.type="1"}{Lattice plot of Durif's stages according to Body Length and Eye Index (average of vertical and horizontal diameters).
 If several DC are provided then a comparison of data per dc is provided}
         \item{plot.type="2"}{Lattice plot giving a comparison of Durif's stage proportion over time, if several DC are provided an annual comparison
